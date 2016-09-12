@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="BaseActionBar">
+        <attr name="actionbarType">
+            <enum name="COMMON" value="0" />
+            <enum name="SINGLE_IMG" value="2" />
+            <enum name="TOP" value="1" />
+        </attr>
+
+        <attr name="isBlack" format="boolean"/>
+        <attr name="searchEnable" format="boolean" />
+        <attr name="refreshEnable" format="boolean" />
+
+        <attr name="actionbarBackground" format="reference" />
+        <attr name="actionbarBackground_w" format="reference" />
+        <attr name="actionbarTitle" format="string" />
+
+        <attr name="leftButtonDescription" format="reference" />
+        <attr name="leftIcon" format="reference" />
+        <attr name="leftIcon_w" format="reference" />
+        <attr name="leftTabTitle" format="reference"/>
+
+        <attr name="rightButtonDescription" format="reference" />
+        <attr name="rightIcon" format="reference" />
+        <attr name="rightIcon_w" format="reference" />
+        <attr name="rightTabTitle" format="reference"/>
+
+        <attr name="titleColor" format="reference|color"/>
+        <attr name="titleImage" format="reference"/>
+        <attr name="titleImage_w" format="reference"/>
+
+        <attr name="textColor" format="reference|color"/>
+    </declare-styleable>
+
+    <declare-styleable name="SubSamplingScaleImageView">
+        <attr name="src" format="reference"/>
+        <attr name="assetName" format="string"/>
+        <attr name="panEnabled" format="boolean"/>
+        <attr name="zoomEnabled" format="boolean"/>
+        <attr name="quickScaleEnabled" format="boolean"/>
+        <attr name="tileBackgroundColor" format="color"/>
+    </declare-styleable>
+
+    <attr name="divideColor" format="reference|color"/>
+    <attr name="divideItemColor" format="reference|color"/>
+    <attr name="textGroupColor" format="reference|color"/>
+    <attr name="textNameColor" format="reference|color"/>
+    <attr name="textPrimaryColor" format="reference|color"/>
+    <attr name="textSecondaryColor" format="reference|color"/>
+    <attr name="textRoundColor" format="reference|color"/>
+    <attr name="loginDivideMenu" format="reference"/>
+    <attr name="loginLogoHighBury" format="reference"/>
+    <attr name="loginText" format="reference"/>
+    <attr name="loginTitleBackground" format="reference"/>
+    <attr name="popupTopBackground" format="reference"/>
+    <attr name="popupLeftBackground" format="reference"/>
+    <attr name="popupRightBackground" format="reference"/>
+    <attr name="profileThumbBackground" format="reference"/>
+    <attr name="tableItemBackground" format="reference"/>
+    <attr name="backgroundColor" format="reference|color"/>
+    <attr name="backgroundSecondaryColor" format="reference|color"/>
+    <attr name="drawerItemTextColor" format="reference"/>
+    <attr name="drawerItemBackground" format="reference"/>
+    <attr name="settingGroupBackground" format="reference|color"/>
+    <attr name="settingListBackground" format="reference"/>
+    <attr name="toolBarBackground" format="reference"/>
+    <attr name="viewpagerBackground" format="reference|color"/>
+    <attr name="cancelDrawable" format="reference"/>
+    <attr name="cancelWDrawable" format="reference"/>
+    <attr name="commentDrawable" format="reference"/>
+    <attr name="shareDrawable" format="reference"/>
+    <attr name="prevDrawable" format="reference"/>
+    <attr name="prevWDrawable" format="reference"/>
+    <attr name="writeDrawable" format="reference"/>
+    <attr name="deleteDrawable" format="reference"/>
+    <attr name="menuDrawable" format="reference"/>
+    <attr name="menuWDrawable" format="reference"/>
+    <attr name="moreDrawable" format="reference"/>
+    <attr name="moreWDrawable" format="reference"/>
+    <attr name="searchDrawable" format="reference"/>
+    <attr name="borderInTranceDrawable" format="reference"/>
+    <attr name="followDrawable" format="reference"/>
+</resources>

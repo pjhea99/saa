@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:background="?attr/backgroundColor"
+    android:layout_height="47.5dip">
+        <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="20.0dip">
+
+            <com.grotesque.saa.common.widget.TypefacedTextView
+                android:textSize="14.0dip"  android:textStyle="bold" android:textColor="@color/brunch_mint" android:id="@+id/headerTitleView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="20.0dip" android:text="브런치 소셜 핫이슈" />
+        </LinearLayout>
+    <View android:background="?attr/divideColor" android:layout_width="fill_parent" android:layout_height="1.0px" android:layout_gravity="bottom"/>
+</FrameLayout>

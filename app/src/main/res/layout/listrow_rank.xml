@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:background="?tableItemBackground"
+    android:layout_width="fill_parent" android:layout_height="40.0dip">
+    <RelativeLayout android:id="@+id/rl_wrapper_rank" android:layout_width="fill_parent" android:layout_height="40.0dip"
+        android:fitsSystemWindows="true">
+        <com.grotesque.saa.common.widget.TypefacedTextView
+            android:gravity="center"
+            android:id="@+id/rank"
+            android:layout_width="50.0dip"
+            android:layout_height="fill_parent"
+            android:textColor="?attr/drawerItemTextColor"
+            android:background="@color/brunchTransparent"/>
+        <View android:id="@+id/separator_rank_name"
+            android:background="@color/brunchTransparent"
+            android:layout_width="1.0dip"
+            android:layout_height="fill_parent"
+            android:layout_toRightOf="@id/rank" />
+        <com.grotesque.saa.common.widget.TypefacedTextView
+            android:gravity="center"
+            android:id="@+id/points"
+            android:layout_width="50.0dip"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true" 
+            android:textColor="?attr/drawerItemTextColor"
+            android:background="@color/brunchTransparent" />
+        <View android:id="@+id/separator_goal_diff_points"
+            android:background="@color/brunchTransparent"
+            android:layout_width="1.0dip"
+            android:layout_height="fill_parent"
+            android:layout_toLeftOf="@id/points" />
+        <com.grotesque.saa.common.widget.TypefacedTextView
+            android:gravity="center"
+            android:id="@+id/goal_diff"
+            android:layout_width="50.0dip"
+            android:layout_height="fill_parent"
+            android:layout_toLeftOf="@id/separator_goal_diff_points"
+            android:textColor="?attr/drawerItemTextColor"
+            android:background="@color/brunchTransparent"
+            />
+        <View android:id="@+id/separator_played_goal_diff"
+            android:background="@color/brunchTransparent"
+            android:layout_width="1.0dip"
+            android:layout_height="fill_parent"
+            android:layout_toLeftOf="@id/goal_diff" />
+        <com.grotesque.saa.common.widget.TypefacedTextView
+            android:gravity="center" android:id="@+id/played"
+            android:layout_width="50.0dip" android:layout_height="fill_parent"
+            android:layout_toLeftOf="@id/separator_played_goal_diff" android:textColor="?attr/drawerItemTextColor"
+            android:background="@color/brunchTransparent"
+            />
+        <View android:id="@+id/separator_name_played"
+            android:background="@color/brunchTransparent"
+            android:layout_width="1.0dip"
+            android:layout_height="fill_parent"
+            android:layout_toLeftOf="@id/played" />
+        <com.grotesque.saa.common.widget.TypefacedTextView
+            android:gravity="center_vertical"
+            android:id="@+id/name"
+            android:paddingLeft="10.0dip"
+            android:paddingRight="10.0dip"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:singleLine="true"
+            android:layout_toLeftOf="@id/separator_name_played"
+            android:layout_toRightOf="@id/separator_rank_name" android:textColor="?attr/drawerItemTextColor"
+            android:background="@color/brunchTransparent"
+            />
+    </RelativeLayout>
+</FrameLayout>

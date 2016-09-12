@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@color/white" android:layout_width="fill_parent" android:layout_height="wrap_content" android:minHeight="@dimen/editor_edit_title_height"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <FrameLayout android:id="@+id/rl_title" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <ImageView android:id="@+id/img_cover" android:layout_width="fill_parent" android:layout_height="@dimen/editor_edit_title_height" android:scaleType="centerCrop" />
+        <EditText
+            android:textSize="@dimen/editor_edit_title_text_size" android:textColor="#ff333333" android:textColorHint="@color/editor_edit_title_hint_color" android:gravity="center|left" android:layout_gravity="center_vertical" android:id="@+id/edittext_title" android:background="@null" android:paddingLeft="@dimen/editor_edit_title_padding_left" android:paddingTop="1.0dip" android:paddingRight="@dimen/editor_edit_title_padding_right" android:focusableInTouchMode="true" android:descendantFocusability="beforeDescendants" android:layout_width="fill_parent" android:layout_height="wrap_content" android:minHeight="@dimen/editor_edit_title_height" android:hint="제목" android:singleLine="true" android:maxLength="30" android:inputType="textAutoCorrect|textCapSentences" android:imeOptions="actionNext" android:textCursorDrawable="@drawable/comment_cursor" />
+        <ImageButton android:layout_gravity="end|center" android:id="@+id/imgbtn_edit_cover" android:background="@null" android:layout_width="@dimen/editor_edit_btn_size" android:layout_height="@dimen/editor_edit_btn_size" android:layout_marginRight="@dimen/editor_edit_btn_margin_right"  android:scaleType="fitXY" />
+    </FrameLayout>
+    <View android:background="@color/editor_edit_title_bottom_divider" android:layout_width="fill_parent" android:layout_height="@dimen/editor_edit_title_bottom_divider_height" />
+</LinearLayout>

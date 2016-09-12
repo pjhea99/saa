@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.grotesque.saa.common.fragment.ActionBarFrameLayout android:orientation="vertical" android:background="@color/black" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <FrameLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+        <com.grotesque.saa.common.widget.VerticalViewPager
+            android:id="@+id/vertical_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <LinearLayout android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <com.grotesque.saa.common.actionbar.BaseActionBar android:id="@+id/actionBar" android:layout_width="fill_parent" android:layout_height="wrap_content" toolbar:actionbarType="COMMON" toolbar:actionbarBackground="@drawable/comm_bg_home_top" toolbar:isBlack="true" toolbar:textColor="@color/black" toolbar:actionbarTitle="게시판" toolbar:leftIcon="@drawable/selector_comm_ico_menu" toolbar:rightIcon="@drawable/selector_comm_btn_search" toolbar:leftButtonDescription="@string/cd_toolbar_close" toolbar:rightButtonDescription="@string/cd_toolbar_search"
+                xmlns:android="http://schemas.android.com/apk/res/android" xmlns:toolbar="http://schemas.android.com/apk/res-auto" />
+            <FrameLayout android:id="@+id/boardContainer" android:background="#fff8f8f8"  android:layout_width="fill_parent" android:layout_height="match_parent" android:layout_weight="1.0"
+                xmlns:android="http://schemas.android.com/apk/res/android">
+                <android.support.v4.widget.SwipeRefreshLayout android:id="@+id/swipeContainer" android:layout_width="fill_parent" android:layout_height="fill_parent">
+                    <android.support.v7.widget.RecyclerView android:id="@+id/boardList" android:layout_width="fill_parent" android:layout_height="fill_parent" android:listSelector="@color/brunchTransparent" android:divider="@color/common_listview_divider" android:dividerHeight="@dimen/common_one_px" android:headerDividersEnabled="false" android:footerDividersEnabled="false" android:background="#fff8f8f8" />
+                </android.support.v4.widget.SwipeRefreshLayout>
+                <RelativeLayout android:id="@+id/tabLayout" android:layout_width="match_parent" android:layout_height="40.0dip" android:background="#fff">
+                    <TextView android:id="@+id/tab_indicator_notice" android:layout_width="wrap_content" android:layout_height="20.0dip" android:drawableRight="@drawable/selector_board_notice_pointer" android:text="공지" android:textColor="@drawable/selector_text_color" android:textSize="16.0dip" android:gravity="center"  android:layout_marginTop="10.0dip" android:layout_marginLeft="20.0dip"/>
+
+                    <FrameLayout android:id="@+id/tab_indicator_card_board" android:background="@drawable/selector_board_list_tab_button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10.0dip" android:layout_marginRight="10.0dip" android:layout_alignParentRight="true">
+                        <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/btn_card_view" />
+                    </FrameLayout>
+                    <FrameLayout android:id="@+id/tab_indicator_basic_board" android:background="@drawable/selector_board_list_tab_button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10.0dip" android:layout_marginRight="10.0dip" android:layout_toLeftOf="@id/tab_indicator_card_board">
+                        <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/btn_list_view" />
+                    </FrameLayout>
+                    <View android:layout_width="match_parent" android:layout_height="1px" android:background="@color/chateau_gray" android:layout_alignParentBottom="true"/>
+                </RelativeLayout>
+                <LinearLayout android:gravity="center" android:orientation="vertical" android:id="@+id/emptyView" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="fill_parent">
+                    <ImageView android:background="@drawable/comm_img_logo_brunch" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                    <TextView android:textSize="14.0dip" android:textColor="#ff666666" android:gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="20.0dip" android:layout_marginTop="12.0dip" android:layout_marginRight="20.0dip" android:text="@string/feed_empty_title" />
+                    <TextView android:textSize="12.0dip" android:textColor="#ffcbcbcb" android:gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="40.0dip" android:layout_marginTop="10.0dip" android:layout_marginRight="40.0dip" android:text="@string/feed_empty_description" android:lineSpacingExtra="5.0dip" />
+                    <TextView android:textSize="13.0dip" android:textColor="#ff959595" android:gravity="center" android:id="@+id/emptyButtonView" android:background="@drawable/comm_bg_basic_grey" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="13.0dip" android:layout_marginBottom="50.0dip" android:text="@string/feed_empty_button" />
+                </LinearLayout>
+                <LinearLayout android:layout_gravity="center|top" android:orientation="horizontal" android:id="@+id/newBadgeView" android:background="@drawable/comm_bg_feed_new" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="13.0dip">
+                    <TextView android:textSize="13.0dip" android:textColor="#ff1b1b1b" android:layout_gravity="center" android:id="@+id/newCountView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="15.0dip" android:layout_marginTop="5.0dip" android:layout_marginBottom="4.0dip" />
+                    <ImageView android:layout_gravity="center" android:background="@drawable/comm_ico_feed_arrow" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:layout_marginRight="15.0dip" />
+                </LinearLayout>
+            </FrameLayout>
+
+        </LinearLayout>
+        <include layout="@layout/dialog_progress_loading" android:id="@+id/loading_progress" android:visibility="gone"/>
+
+    </FrameLayout>
+   <com.grotesque.saa.common.widget.NavigationView android:id="@+id/navigationView" android:visibility="gone" android:layout_width="match_parent" android:layout_height="match_parent"/>
+</com.grotesque.saa.common.fragment.ActionBarFrameLayout>

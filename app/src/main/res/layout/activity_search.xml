@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:id="@+id/container" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout android:orientation="vertical" android:background="@color/search_bg" android:layout_width="fill_parent" android:layout_height="fill_parent"
+      xmlns:android="http://schemas.android.com/apk/res/android">
+        <com.grotesque.saa.common.toolbar.SearchToolbar android:id="@+id/searchBar" android:layout_width="fill_parent" android:layout_height="@dimen/brunch_toolbar_height"
+          xmlns:android="http://schemas.android.com/apk/res/android" />
+        <android.support.v7.widget.RecyclerView android:id="@+id/recyclerView" android:visibility="visible" android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_weight="1.0"
+          xmlns:android="http://schemas.android.com/apk/res/android" />
+    </LinearLayout>
+    <com.rey.material.widget.ProgressView android:id="@+id/loading_progress" android:layout_width="50.0dip" android:layout_height="50.0dip" android:layout_gravity="center" app:pv_autostart="true"
+        app:pv_circular="true"
+        app:pv_progressMode="indeterminate"
+        app:pv_progressStyle="@style/CircularProgress"
+        android:visibility="gone"/>
+    <com.grotesque.saa.common.widget.TypefacedTextView android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/emptyText" android:text="검색 결과가 없습니다." android:textColor="@color/translucent_gray" android:visibility="gone"/>
+</FrameLayout>

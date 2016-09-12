@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="progress_colors">
+        <item>#CC00c3bd</item>
+        <item>#DD00c3bd</item>
+        <item>#EE00c3bd</item>
+        <item>#FF00c3bd</item>
+    </array>
+
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="aluminum_gray">#ff999999</color>
+    <color name="black">#ff000000</color>
+    <color name="chateau_gray">#ffa4a4a4</color>
+    <color name="white">#ffffffff</color>
+    <color name="translucent_white">#78ffffff</color>
+    <color name="translucent_gray">#78787878</color>
+    <color name="yellow">#fcca43</color>
+    <color name="azure_blue">#007FFF</color>
+    <color name="pocari_blue">#00a4ff</color>
+    <color name="twitter_blue">#00aced</color>
+    <color name="epl_blue">#04f5ff</color>
+    <color name="free_speech_red">#CC0000</color>
+    <color name="epl_red">#e90052</color>
+    <color name="brunchTransparent">#00000000</color>
+    <color name="plain_point">#ffd92020</color>
+    <color name="light_gray">#ffafafaf</color>
+    <color name="white_gray">#ffededed</color>
+
+    <color name="brunch_black">#ff333333</color>
+    <color name="brunch_mint">#ff00c3bd</color>
+    <color name="brunch_tap_title_color">#ff838383</color>
+    <color name="brunch_tap_title_color_selected">#ff00c3bd</color>
+    <color name="brunch_title_color">#ff1b1b1b</color>
+    <color name="brunch_title_count_color">@color/brunch_mint</color>
+
+    <color name="common_listview_divider">#ffeeeeee</color>
+
+    <color name="comment_context">#ff333333</color>
+    <color name="comment_edit_focused">#fff8f8f8</color>
+    <color name="comment_edit_text">#ff959595</color>
+    <color name="comment_link_highlight">#ff00c3bd</color>
+    <color name="comment_ok_pressed">#ffbbbbbb</color>
+    <color name="comment_sticker_bg">#66000000</color>
+    <color name="comment_suggest">#ff333333</color>
+    <color name="comment_suggest_highlight">@color/brunch_mint</color>
+    <color name="comment_time">#ff959595</color>
+    <color name="comment_user_name">#ff666666</color>
+
+
+    <color name="drawer_item">#ff333333</color>
+    <color name="drawer_item_highlight">#ff00c3bd</color>
+
+
+    <color name="editor_common_7f_white">#7fffffff</color>
+    <color name="editor_common_e5_white">#e5ffffff</color>
+    <color name="editor_content_text_hint_color">#ffa1a1a1</color>
+    <color name="editor_cover_content_show_text_color">#e5959595</color>
+    <color name="editor_cover_subtitle_text_color">#ff888888</color>
+    <color name="editor_cover_subtitle_text_hint_color">#ffa1a1a1</color>
+    <color name="editor_cover_title_text_color">#ff888888</color>
+    <color name="editor_cover_title_text_hint_color">#ff959595</color>
+    <color name="editor_cover_top_bar_text_color">#ff1b1b1b</color>
+    <color name="editor_defalt_text_color">#ff333333</color>
+    <color name="editor_edit_title_bottom_divider">#ffeeeeee</color>
+    <color name="editor_edit_title_color">#ff1b1b1b</color>
+    <color name="editor_edit_title_hint_color">#ff959595</color>
+    <color name="editor_edit_title_sub_color">#ff333333</color>
+    <color name="editor_edit_title_sub_hint_color">#ffa1a1a1</color>
+    <color name="editor_edit_window_divider">#ffeeeeee</color>
+    <color name="editor_gallery_folder_list_selected_color">#fff8f8f8</color>
+    <color name="editor_image_caption_text_color">#ff959595</color>
+    <color name="editor_setting_magazine_normal">#ff333333</color>
+    <color name="editor_setting_magazine_selected">#ff00c3bd</color>
+    <color name="editor_text_1">#ff1b1b1b</color>
+    <color name="editor_text_10">#ff2e84b6</color>
+    <color name="editor_text_2">#fff4c216</color>
+    <color name="editor_text_3">#fff6665b</color>
+    <color name="editor_text_4">#ffec4c6a</color>
+    <color name="editor_text_5">#ff5c5cb2</color>
+    <color name="editor_text_6">#ff333333</color>
+    <color name="editor_text_7">#ff959595</color>
+    <color name="editor_text_8">#ff16b06d</color>
+    <color name="editor_text_9">#ff00c3bd</color>
+    <color name="editor_tool_bar_bg">#ffffffff</color>
+    <color name="editor_tool_bar_bg_keypad_up">#fff8f8f8</color>
+    <color name="editor_tool_bar_bottom_divider">#ffdddddd</color>
+    <color name="editor_tool_bar_top_divider">#ffdddddd</color>
+    <color name="editor_top_bar_bg">#e5ffffff</color>
+    <color name="editor_top_bar_bottom_divider">#ffdddddd</color>
+    <color name="editor_top_bar_title_text_color">#ff1b1b1b</color>
+
+    <color name="search_bg">#fff8f8f8</color>
+    <color name="search_hint">#ffbfbfbf</color>
+    <color name="search_more_tag_color">#ff666666</color>
+    <color name="search_row_divide_color">#ffdddddd</color>
+    <color name="search_tab">#ff838383</color>
+    <color name="search_tab_selected">@color/brunch_mint</color>
+    <color name="search_tag_color">#ff333333</color>
+    <color name="search_tag_color_highlight">@color/brunch_mint</color>
+
+    <color name="seek_bar_bg">#82000000</color>
+    <color name="seek_bar_fg_start">#cc00c3bd</color>
+    <color name="seek_bar_fg_end">#cc00bcb6</color>
+    <color name="seek_bar_thumb">#4c000000</color>
+</resources>

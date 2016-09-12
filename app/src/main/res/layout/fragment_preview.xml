@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.grotesque.saa.common.fragment.ActionBarFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent" android:background="@color/white"
+    android:layout_height="match_parent">
+    <com.grotesque.saa.common.actionbar.BaseActionBar android:id="@+id/actionBar" android:layout_width="fill_parent" android:layout_height="wrap_content" toolbar:actionbarType="COMMON" toolbar:isBlack="true" toolbar:textColor="@color/black" toolbar:actionbarBackground="@drawable/comm_bg_home_top" toolbar:actionbarTitle="미리보기" toolbar:leftIcon="@drawable/selector_comm_btn_prev" toolbar:rightIcon="@drawable/selector_comm_btn_apply" toolbar:leftButtonDescription="@string/cd_toolbar_back" toolbar:rightButtonDescription="@string/cd_toolbar_confirm"
+        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:toolbar="http://schemas.android.com/apk/res-auto" />
+    <WebView android:id="@+id/webview_preview" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="60.0dip" android:layout_marginLeft="10.0dip" android:layout_marginRight="10.0dip" android:layout_marginBottom="10.0dip"/>
+</com.grotesque.saa.common.fragment.ActionBarFrameLayout>

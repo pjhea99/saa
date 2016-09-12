@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/Controller_Center_Brightness_MainArea" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <ImageView android:id="@+id/Controller_Center_BrightnessValue_BG" android:layout_width="@dimen/player_img_shadow03_width" android:layout_height="@dimen/player_img_shadow03_height" android:scaleType="fitXY" android:layout_centerInParent="true" />
+        <com.grotesque.saa.common.widget.VerticalSeekBar android:gravity="left" android:id="@+id/Controller_Brightness_Seekbar" android:clickable="false" android:layout_width="@dimen/player_controller_brightness_seekbar_width" android:layout_height="fill_parent" />
+        <LinearLayout android:gravity="center" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <ImageView android:clickable="false" android:layout_width="@dimen/player_img_brightness_white_width" android:layout_height="@dimen/player_img_brightness_white_height" android:layout_marginBottom="@dimen/player_controller_brightness_margin_center" android:src="@drawable/player_img_brightness_white" android:scaleType="fitCenter" />
+            <com.grotesque.saa.common.widget.TypefacedTextView android:textSize="@dimen/player_controller_brightness_text_size" android:typeface="sans" android:textColor="#ffffffff" android:id="@+id/Controller_Center_BrightnessValue" android:clickable="false" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

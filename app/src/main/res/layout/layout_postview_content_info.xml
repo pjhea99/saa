@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:id="@+id/ll_postview_cover_text" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:background="?backgroundSecondaryColor" android:orientation="vertical" android:id="@+id/rl_postview_cover_body" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <LinearLayout android:orientation="vertical" android:id="@+id/ll_title" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="20.0dip" android:layout_marginRight="20.0dip" android:layout_marginTop="50.0dip">
+            <View android:id="@+id/view_align_indicator" android:background="@color/brunch_mint" android:visibility="gone" android:layout_width="20.0dip" android:layout_height="1.0dip" android:layout_marginBottom="14.5dip" />
+            <TextView android:textSize="13.0dip" android:textColor="@color/brunch_mint" android:gravity="left" android:id="@+id/txt_cover_board_name" android:background="@drawable/view_div_title_line_green" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="14.5dip" android:text="매거진이름" />
+            <TextView android:textSize="29.0dip" android:textColor="?attr/textPrimaryColor" android:gravity="left" android:id="@+id/txt_coverview_title" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="제목" android:maxLines="3" android:layout_below="@id/txt_cover_board_name" android:lineSpacingExtra="1.0dip" />
+            <TextView android:visibility="gone" android:textSize="15.0dip" android:textColor="#ff666666" android:gravity="left" android:id="@+id/txt_coverview_title_sub" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="3.5dip" android:text="소제목" android:maxLines="2" android:layout_below="@id/txt_coverview_title" android:lineSpacingExtra="3.0dip" />
+        </LinearLayout>
+        <LinearLayout android:orientation="horizontal" android:id="@+id/ll_cover_info" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="20.0dip" android:layout_marginRight="20.0dip" android:layout_marginBottom="16.0dip" android:layout_marginTop="10.0dip">
+            <ImageView android:id="@+id/img_writer_by" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/comm_ico_view_by" />
+            <TextView android:textSize="13.0dip" android:textColor="#ff959595" android:id="@+id/txt_postview_writer_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="3.0dip" android:text="알래스카킴" />
+            <View android:layout_width="0.0dip" android:layout_height="13.0dip" android:layout_weight="100.0" />
+            <TextView android:textSize="13.0dip" android:textColor="#ffcecece" android:id="@+id/txt_postview_write_time" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Feb 4. 2015" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

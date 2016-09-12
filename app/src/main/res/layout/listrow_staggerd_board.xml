@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center_horizontal" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginBottom="9.0dip"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" android:background="@drawable/keyword_bg_content" android:paddingBottom="1.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <FrameLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <com.facebook.drawee.view.SimpleDraweeView android:id="@+id/imageView" android:layout_width="155.0dip" android:layout_height="180.0dip" android:minHeight="120.0dip" android:maxHeight="215dip" android:adjustViewBounds="true" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/commentCountView" android:layout_gravity="center" android:textSize="24.0dip" android:textColor="@color/brunch_mint" android:text="+16"/>
+        </FrameLayout>
+        <LinearLayout android:orientation="vertical" android:id="@+id/textBoxLayout" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <View android:id="@+id/topGapView" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="3.0dip" />
+            <TextView android:textSize="14.0dip" android:textColor="#ff333333" android:ellipsize="end" android:id="@+id/titleView" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="12.0dip" android:layout_marginTop="11.0dip" android:layout_marginRight="12.0dip" android:layout_marginBottom="10.0dip" android:text="일이삼사오육칠팔구십" android:maxLines="2" android:lineSpacingExtra="2.0dip" />
+
+            <View android:id="@+id/gapView" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_weight="1.0" />
+            <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="12.0dip" android:layout_marginTop="1.5dip" android:layout_marginRight="12.0dip" android:layout_marginBottom="12.0dip">
+                <TextView android:textSize="11.0dip" android:textColor="#ff959595" android:id="@+id/byView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="by" />
+                <TextView android:textSize="12.0dip" android:textColor="#ff959595" android:ellipsize="end" android:id="@+id/userView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="4.0dip" android:maxWidth="100.0dip" android:singleLine="true" />
+                <ImageView android:layout_gravity="center_vertical" android:background="@drawable/comm_div_dot" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" />
+                <TextView android:textSize="12.0dip" android:textColor="#ff959595" android:id="@+id/timeView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

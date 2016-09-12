@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="urlArray">
+        <item>http://highbury.co.kr/bbs/board.php?bo_table=free_new4</item>
+        <item>http://highbury.co.kr/bbs/board.php?bo_table=movie</item>
+        <item>http://highbury.co.kr/bbs/board.php?bo_table=editorial</item>
+        <item>http://highbury.co.kr/bbs/board.php?bo_table=players</item>
+        <item>http://highbury.co.kr/bbs/board.php?bo_table=free_new3</item>
+        <item>http://highbury.co.kr/bbs/board.php?bo_table=free_new2</item>
+    </string-array>
+
+    <string-array name="boTable">
+        <item>free_new4</item>
+        <item>movie</item>
+        <item>editorial</item>
+        <item>players</item>
+        <item>free_new3</item>
+        <item>free_new2</item>
+    </string-array>
+    <string-array name="boardTitle">
+        <item>Calcio</item>
+        <item>자유</item>
+        <item>미디어</item>
+        <item>스포츠</item>
+        <item>게임</item>
+        <item>질문</item>
+        <item>칼치오토리</item>
+        <item>스페셜 리포트</item>
+        <item>중계</item>
+    </string-array>
+</resources>

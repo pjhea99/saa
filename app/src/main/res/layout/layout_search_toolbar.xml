@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center_vertical" android:id="@+id/searchToolbar" android:background="@drawable/comm_bg_home_top" android:layout_width="fill_parent" android:layout_height="@dimen/brunch_toolbar_height"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageButton android:id="@+id/search_cancelButton" android:background="@null" android:paddingLeft="@dimen/actionbar_left_padding" android:layout_width="@dimen/actionbar_left_icon_width" android:layout_height="@dimen/actionbar_icon_height" android:src="@drawable/selector_comm_btn_prev" android:contentDescription="@string/cd_toolbar_back" />
+    <EditText android:textSize="17.0dip" android:id="@+id/search_edit" android:background="@color/brunchTransparent" android:layout_width="0.0dip" android:layout_height="wrap_content" android:layout_marginTop="1.0dip" android:layout_marginRight="15.0dip" android:hint="@string/search_title_hint" android:singleLine="true" android:layout_weight="1.0" android:imeOptions="actionSearch" />
+    <ImageButton android:id="@+id/search_clearButton" android:background="@null" android:paddingRight="@dimen/actionbar_right_padding" android:visibility="invisible" android:layout_width="@dimen/actionbar_right_icon_width" android:layout_height="@dimen/actionbar_icon_height" android:src="@drawable/comm_btn_delete_normal" android:contentDescription="@string/cd_toolbar_delete_key" />
+</LinearLayout>

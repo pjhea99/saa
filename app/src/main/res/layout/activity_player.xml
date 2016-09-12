@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <VideoView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/videoView"
+        android:layout_centerInParent="true" />
+    <com.grotesque.saa.common.widget.ControllerView
+        android:fitsSystemWindows="true"
+        android:id="@+id/controllerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <com.grotesque.saa.common.widget.ControllerBrightnessAreaView
+        android:fitsSystemWindows="true"
+        android:id="@+id/brightnessSeekBar"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"/>
+    <com.grotesque.saa.common.widget.ControllerVolumeAreaView
+        android:fitsSystemWindows="true"
+        android:id="@+id/volumeSeekBar"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"/>
+</RelativeLayout>

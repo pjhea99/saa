@@ -1,0 +1,71 @@
+<resources>
+    <string name="app_name">세랴</string>
+    <string name="board_free">자유 게시판</string>
+    <string name="board_calcio">CALCIO 게시판</string>
+    <string name="board_media">미디어 게시판</string>
+    <string name="cd_toolbar_back">뒤로</string>
+    <string name="cd_toolbar_close">닫기</string>
+    <string name="cd_toolbar_comment">댓글 %d 버튼</string>
+    <string name="cd_toolbar_complete">완료</string>
+    <string name="cd_toolbar_confirm">확인</string>
+    <string name="cd_toolbar_delete">삭제</string>
+    <string name="cd_toolbar_delete_key">텍스트 지우기</string>
+    <string name="cd_toolbar_edit">수정</string>
+    <string name="cd_toolbar_invisible">비공개</string>
+    <string name="cd_toolbar_likeit">라이킷 버튼</string>
+    <string name="cd_toolbar_likeit_count">라이킷 %d 버튼</string>
+    <string name="cd_toolbar_more">옵션</string>
+    <string name="cd_toolbar_penalty">신고</string>
+    <string name="cd_toolbar_search">검색</string>
+    <string name="cd_toolbar_share">공유 %d 버튼</string>
+    <string name="cd_toolbar_side_menu">사이드메뉴</string>
+    <string name="cd_toolbar_statistics">통계</string>
+    <string name="cd_toolbar_unlikeit">라이킷 해지 버튼</string>
+
+    <string name="comment_submit">댓글</string>
+    <string name="comment_edit">수정</string>
+    <string name="comment_reply">답변</string>
+    <string name="comment_input_hint">댓글을 입력하세요</string>
+    <string name="drawer_item_home">홈</string>
+    <string name="drawer_item_board">게시판</string>
+    <string name="drawer_item_draft">쪽지함</string>
+    <string name="drawer_item_schedule">일정</string>
+    <string name="drawer_item_video">영상</string>
+    <string name="drawer_item_magazine">매거진</string>
+    <string name="drawer_item_notification">알림</string>
+    <string name="drawer_item_live">중계</string>
+    <string name="drawer_item_rank">순위</string>
+    <string name="drawer_item_statistics">통계</string>
+    <string name="drawer_item_write">글쓰기</string>
+
+    <string name="editor_content_text_hint">내용을 입력하세요</string>
+    <string name="editor_image_caption_hint">이미지를 설명해보세요</string>
+
+    <string name="feed_empty_button">브런치 홈 바로가기</string>
+      <string name="feed_empty_description">"새로운 글이 없습니다.
+브런치 홈에서 마음에 드는
+작가와 글을 지금 바로 만나보세요."</string>
+    <string name="feed_empty_title">새 글이 없습니다.</string>
+    <string name="feed_new_count">새글 %s개</string>
+
+    <string name="notification_fail">이미지 업로드에 실패 하였습니다...</string>
+    <string name="notification_share_link">Share link</string>
+    <string name="notifaction_success">이미지 업로드에 성공 하였습니다</string>
+    <string name="notification_progress">이미지 업로딩...</string>
+
+    <string name="permission_finish_message_by_must_have">권한을 획득할 수 없어 세랴를 정상적으로 사용할 수 없습니다.</string>
+
+    <string name="search_title_hint">검색어를 입력해 주세요</string>
+    <string name="search_no_result_message">검색 결과가 없습니다.</string>
+    <string name="search_tab_title">제목</string>
+    <string name="search_tab_content">내용</string>
+    <string name="search_tab_writer">작성자</string>
+
+    <string name="sample_title">예시 제목입니다. 테스트 제목입니다.</string>
+    <string name="sapmle_sub_title">예시 내용입니다. 테스트 내용입니다. 세리아 매니아. Only italy only about seria A</string>
+    <string name="sample_writer">작성자</string>
+    <string name="sample_reply">20</string>
+    <string name="sample_date">2017.07.21</string>
+
+    <string name="video_id_not_valid">죄송합니다, 유튜브 영상 주소에 문제가 있는거 같습니다.</string>
+</resources>

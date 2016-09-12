@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:id="@+id/post_body" android:layout_width="fill_parent" android:layout_height="wrap_content" android:minHeight="@dimen/editor_content_text_default_size"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout android:id="@+id/rl_wrapper_edittext" android:background="@drawable/border_in_trance_out_trance" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_margin="@dimen/editor_content_margin">
+        <EditText android:hint="@string/editor_content_text_hint" android:textSize="@dimen/editor_content_text_default_size" android:textColor="#ff333333" android:textColorHint="@color/editor_content_text_hint_color" android:textColorLink="@color/brunch_mint" android:gravity="top" android:id="@+id/edittext_text" android:background="@drawable/border_in_trance_out_trance" android:focusableInTouchMode="true" android:descendantFocusability="beforeDescendants" android:layout_width="fill_parent" android:layout_height="fill_parent" android:maxLength="10000000" android:lineSpacingExtra="9.0dip" android:inputType="textAutoCorrect|textCapSentences|textMultiLine" android:imeOptions="actionDone" android:textCursorDrawable="@drawable/comment_cursor" />
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/ActivityVodController_Main" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <View android:id="@+id/ActivityVodController_BaseBG" android:background="@drawable/player_img_dimmed_xml"  android:layout_width="fill_parent" android:layout_height="fill_parent" />
+    <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:id="@+id/ActivityVodController_BottomField" android:paddingLeft="@dimen/ActivityVodController_BottomField_PaddingLeft" android:paddingRight="@dimen/ActivityVodController_BottomField_PaddingRight" android:layout_width="fill_parent" android:layout_height="@dimen/ActivityVodController_BottomField_Height" android:layout_alignParentBottom="true">
+
+        <SeekBar android:id="@+id/ActivityVodController_BottomField_Seekbar" android:layout_width="0.0dip" android:layout_height="wrap_content" android:max="100" android:progress="0" android:secondaryProgress="0" android:layout_weight="1.0"  android:thumb="@drawable/player_btn_playcontrol"
+            android:indeterminate="false" android:splitTrack="false" android:layout_centerVertical="true" />
+        <TextView android:textSize="8.0dip" android:textColor="#ff0aeb7f" android:gravity="center" android:id="@+id/ActivityVodController_BottomField_CurrentPosition_TextView" android:paddingTop="@dimen/ActivityVodController_BottomField_CurrentPosition_PaddingTop" android:layout_width="wrap_content" android:layout_height="fill_parent" android:layout_marginRight="@dimen/ActivityVodController_BottomField_CurrentPosition_MarginRight" />
+        <View android:background="#33ffffff" android:layout_width="0.75dip" android:layout_height="6.75dip" />
+        <TextView android:textSize="8.0dip" android:textColor="#7fffffff" android:gravity="center" android:id="@+id/ActivityVodController_BottomField_Duration_TextView" android:paddingTop="@dimen/ActivityVodController_BottomField_Duration_PaddingTop" android:layout_width="wrap_content" android:layout_height="fill_parent" android:layout_marginLeft="@dimen/ActivityVodController_BottomField_Duration_MarginLeft" />
+
+    </LinearLayout>
+    <RelativeLayout android:id="@+id/ActivityVodController_CenterField" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginTop="@dimen/ActivityVodController_TopField_Height" android:layout_marginBottom="@dimen/ActivityVodController_BottomField_Height">
+        <ImageButton android:id="@+id/ActivityVodController_CenterField_PlayButton" android:background="@android:color/transparent" android:padding="16.0dip" android:layout_width="103.0dip" android:layout_height="@dimen/ActivityVodController_CenterField_PlayButton_Height" android:src="@drawable/btn_player_center_field_playpause" android:scaleType="fitCenter" android:layout_centerInParent="true" />
+    </RelativeLayout>
+
+</RelativeLayout>

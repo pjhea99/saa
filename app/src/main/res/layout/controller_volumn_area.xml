@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <ImageView android:id="@+id/Controller_Center_SoundValue_BG" android:layout_width="@dimen/player_img_shadow03_width" android:layout_height="@dimen/player_img_shadow03_height" android:scaleType="fitXY" android:layout_centerInParent="true" />
+        <com.grotesque.saa.common.widget.VerticalSeekBar android:id="@+id/Controller_Sound_Seekbar" android:clickable="false" android:layout_width="@dimen/player_controller_volume_seekbar_width" android:layout_height="fill_parent" android:layout_alignParentRight="true" />
+        <LinearLayout android:gravity="center" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <ImageView android:id="@+id/Controller_Center_SoundIcon" android:clickable="false" android:layout_width="@dimen/player_img_volume_white_width" android:layout_height="@dimen/player_img_volume_white_height" android:layout_marginBottom="@dimen/player_controller_volume_margin_center" android:src="@drawable/player_img_volume_white" android:scaleType="fitCenter" />
+            <com.grotesque.saa.common.widget.TypefacedTextView android:textSize="@dimen/player_controller_volume_text_size" android:typeface="sans" android:textColor="#ffffffff" android:id="@+id/Controller_Center_SoundValue" android:clickable="false" android:layout_width="wrap_content" android:layout_height="wrap_content" android:includeFontPadding="false" />
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

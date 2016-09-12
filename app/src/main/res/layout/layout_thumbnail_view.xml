@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView android:layout_width="match_parent" android:layout_height="wrap_content" android:src="@drawable/ic_placeholder_video" android:adjustViewBounds="true"/>
+    <ImageView android:id="@+id/img_thumbnail" android:layout_width="match_parent" android:layout_height="wrap_content" android:adjustViewBounds="true"/>
+    <View android:layout_width="match_parent" android:layout_height="fill_parent" android:background="#4c000000"/>
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/text_error" android:textSize="18.0sp" android:textColor="@color/white" android:layout_gravity="center" android:gravity="center"/>
+    <ImageView android:id="@+id/img_play_ico" android:visibility="visible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/selector_editor_img_play" android:layout_gravity="center" />
+
+</FrameLayout>

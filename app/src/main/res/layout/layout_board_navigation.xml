@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/white" android:layout_height="match_parent">
+        <RelativeLayout android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_weight="100.0">
+            <ImageButton android:id="@+id/imgbtn_select_board_dialog_close" android:background="@drawable/view_btn_select_board_normal" android:paddingLeft="@dimen/actionbar_left_padding" android:layout_width="@dimen/actionbar_left_icon_width" android:layout_height="@dimen/actionbar_icon_height" android:src="@drawable/selector_comm_btn_cancel" android:layout_alignParentLeft="true" android:layout_alignParentTop="true" />
+            <LinearLayout android:gravity="center_horizontal" android:orientation="vertical" android:paddingTop="2.5dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerInParent="true">
+                <TextView android:gravity="center" android:textSize="22.0dip" android:textColor="#ff333333" android:id="@+id/txt_share_title1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="가고자 하는 게시판을\n선택해 주세요." android:lineSpacingExtra="2.0dip"/>
+                <GridLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="20.0dip" android:rowCount="3" android:columnCount="3">
+                    <FrameLayout android:id="@+id/flbtn_select_board_calcio" android:background="@drawable/view_btn_select_board_normal" android:layout_width="60.0dip" android:layout_height="60.0dip" android:layout_margin="10.0dip">
+                        <LinearLayout android:orientation="vertical" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content">
+                            <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:src="@drawable/selector_comm_btn_calcio" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:gravity="center" android:textSize="8.0sp" android:text="CALCIO" android:textColor="@drawable/selector_text_color"/>
+                        </LinearLayout>
+                    </FrameLayout>
+                    <FrameLayout android:id="@+id/flbtn_select_board_free"  android:background="@drawable/view_btn_select_board_normal" android:layout_width="60.0dip" android:layout_height="60.0dip" android:layout_margin="10.0dip">
+                        <LinearLayout android:orientation="vertical" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content">
+                            <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:src="@drawable/selector_comm_btn_free" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:gravity="center" android:textSize="8.0sp" android:text="FREE" android:textColor="@drawable/selector_text_color"/>
+                        </LinearLayout>
+                    </FrameLayout>
+                    <FrameLayout android:id="@+id/flbtn_select_board_media" android:background="@drawable/view_btn_select_board_normal" android:layout_width="60.0dip" android:layout_height="60.0dip" android:layout_margin="10.0dip">
+                        <LinearLayout android:orientation="vertical" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content">
+                            <ImageView  android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:src="@drawable/selector_comm_btn_media" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="center" android:layout_gravity="center" android:textSize="8.0sp" android:text="MEDIA" android:textColor="@drawable/selector_text_color"/>
+                        </LinearLayout>
+                    </FrameLayout>
+                    <FrameLayout android:id="@+id/flbtn_select_board_rest" android:background="@drawable/view_btn_select_board_normal" android:layout_width="60.0dip" android:layout_height="60.0dip" android:layout_margin="10.0dip">
+                        <LinearLayout android:orientation="vertical" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content">
+                            <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:src="@drawable/selector_comm_btn_rest" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:gravity="center" android:textSize="8.0sp" android:text="REST" android:textColor="@drawable/selector_text_color"/>
+                        </LinearLayout>
+                    </FrameLayout>
+                    <FrameLayout android:id="@+id/flbtn_select_board_game" android:background="@drawable/view_btn_select_board_normal" android:layout_width="60.0dip" android:layout_height="60.0dip" android:layout_margin="10.0dip">
+                        <LinearLayout android:orientation="vertical" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content">
+                            <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:src="@drawable/selector_comm_btn_game" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:gravity="center" android:textSize="8.0sp" android:text="GAME" android:textColor="@drawable/selector_text_color"/>
+                        </LinearLayout>
+                    </FrameLayout>
+                    <FrameLayout android:id="@+id/flbtn_select_board_qna" android:background="@drawable/view_btn_select_board_normal" android:layout_width="60.0dip" android:layout_height="60.0dip" android:layout_margin="10.0dip">
+                        <LinearLayout android:orientation="vertical" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content">
+                            <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:src="@drawable/selector_comm_btn_qna" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:gravity="center" android:textSize="8.0sp" android:text="QnA" android:textColor="@drawable/selector_text_color"/>
+                        </LinearLayout>
+                    </FrameLayout>
+                    <FrameLayout android:id="@+id/flbtn_select_board_player1" android:background="@drawable/view_btn_select_board_normal" android:layout_width="60.0dip" android:layout_height="60.0dip" android:layout_margin="10.0dip">
+                        <LinearLayout android:orientation="vertical" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content">
+                            <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:src="@drawable/selector_comm_btn_player" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="center" android:textSize="8.0sp" android:text="CALCIOTORY" android:textColor="@drawable/selector_text_color"/>
+                        </LinearLayout>
+                    </FrameLayout>
+                    <FrameLayout android:id="@+id/flbtn_select_board_specialreport" android:background="@drawable/view_btn_select_board_normal" android:layout_width="60.0dip" android:layout_height="60.0dip" android:layout_margin="10.0dip">
+                        <LinearLayout android:orientation="vertical" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content">
+                            <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:src="@drawable/selector_comm_btn_report" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="center" android:textSize="8.0sp" android:text="REPORT" android:textColor="@drawable/selector_text_color"/>
+                        </LinearLayout>
+                    </FrameLayout>
+                    <FrameLayout android:id="@+id/flbtn_select_board_gag" android:background="@drawable/view_btn_select_board_normal" android:layout_width="60.0dip" android:layout_height="60.0dip" android:layout_margin="10.0dip">
+                        <LinearLayout android:orientation="vertical" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content">
+                            <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:src="@drawable/selector_comm_btn_gag" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:gravity="center" android:textSize="8.0sp" android:text="GAG" android:textColor="@drawable/selector_text_color"/>
+                        </LinearLayout>
+                    </FrameLayout>
+                </GridLayout>
+            </LinearLayout>
+        </RelativeLayout>
+</LinearLayout>

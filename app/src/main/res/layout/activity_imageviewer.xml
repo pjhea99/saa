@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_margin="0.0dip"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.grotesque.saa.common.widget.SlowViewPager android:id="@+id/image_viewpager" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+    <LinearLayout android:gravity="center_horizontal" android:layout_gravity="bottom" android:orientation="vertical" android:id="@+id/imageviewer_navigation_layout" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <ImageButton android:layout_gravity="center|right|top" android:id="@+id/imageviewer_navigation_close_button" android:background="@color/brunchTransparent" android:layout_width="@dimen/common_element_bigger_padding" android:layout_height="@dimen/common_element_bigger_padding" android:src="@drawable/btn_close" android:scaleType="centerInside" />
+        <View android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_weight="1.0" />
+        <TextView android:gravity="center" android:id="@+id/image_attachment_reference_text_view" android:padding="@dimen/common_element_smallest_padding" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content" android:textColor="@color/chateau_gray" android:textSize="9.0sp" />
+        <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="@dimen/common_element_bigger_padding">
+            <ImageButton android:id="@+id/imageviewer_navigation_pre_button" android:background="@color/brunchTransparent" android:layout_width="@dimen/common_element_bigger_padding" android:layout_height="@dimen/common_element_bigger_padding" android:src="@drawable/btn_preview" />
+            <TextView android:gravity="center" android:id="@+id/imageviewer_position_text_view" android:layout_width="0.0dip" android:layout_height="fill_parent" android:layout_weight="1.0" android:textColor="@color/aluminum_gray" android:textSize="10.0sp" android:textStyle="bold"/>
+            <ImageButton android:id="@+id/imageviewer_navigation_next_button" android:background="@color/brunchTransparent" android:layout_width="@dimen/common_element_bigger_padding" android:layout_height="@dimen/common_element_bigger_padding" android:src="@drawable/btn_next" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

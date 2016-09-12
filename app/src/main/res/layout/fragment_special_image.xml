@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:id="@+id/bodyView" android:layout_width="fill_parent" android:layout_height="fill_parent" android:animateLayoutChanges="true"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView android:id="@+id/imageView" android:layout_width="fill_parent" android:layout_height="fill_parent" android:scaleType="centerCrop" />
+    <View android:background="#4c1b1b1b" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+    <LinearLayout android:layout_gravity="center" android:orientation="vertical" android:id="@+id/circleView" android:background="@drawable/bg_content" android:layout_width="240.0dip" android:layout_height="240.0dip">
+        <TextView android:textSize="12.0dip" android:textColor="#ccffffff" android:gravity="center" android:id="@+id/magazineView" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="49.0dip" android:singleLine="true" />
+        <View android:layout_gravity="center_horizontal" android:id="@+id/lineView" android:background="@drawable/div_content02" android:layout_width="15.0dip" android:layout_height="1.0dip" android:layout_marginTop="12.0dip" />
+        <View android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_weight="1.0" />
+        <LinearLayout android:gravity="center" android:layout_gravity="center_horizontal" android:orientation="horizontal" android:id="@+id/userLayout" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="27.5dip">
+            <ImageView android:background="@drawable/img_by" android:layout_width="15.0dip" android:layout_height="15.0dip" />
+            <TextView android:textSize="12.0dip" android:textColor="#7fffffff" android:gravity="center_vertical" android:id="@+id/userView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="3.0dip" />
+        </LinearLayout>
+    </LinearLayout>
+    <TextView android:textSize="20.0dip" android:textColor="@color/white" android:ellipsize="end" android:gravity="center" android:layout_gravity="center" android:id="@+id/titleView" android:layout_width="fill_parent" android:layout_height="wrap_content" android:maxLines="2" android:lineSpacingExtra="4.0dip" />
+</FrameLayout>

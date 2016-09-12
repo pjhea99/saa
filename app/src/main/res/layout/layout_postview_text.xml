@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@color/white" android:layout_width="fill_parent" android:layout_height="wrap_content" android:minHeight="23.0dip"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <View android:id="@+id/view_top_amount" android:visibility="visible" android:layout_width="fill_parent" android:layout_height="10.0dip" />
+    <RelativeLayout android:id="@+id/rl_wrapper_edittext" android:background="@drawable/border_in_trance_out_white" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/editor_content_margin" android:layout_marginRight="@dimen/editor_content_margin">
+      <TextView android:textSize="16.0dip" android:textColor="#ff333333" android:textColorLink="@color/brunch_mint" android:id="@+id/txt_postview_text" android:layout_width="fill_parent" android:layout_height="wrap_content" android:bufferType="spannable" android:autoLink="web" android:lineSpacingExtra="8dp"/>
+    </RelativeLayout>
+    <View android:id="@+id/view_bottom_amount" android:visibility="visible" android:layout_width="fill_parent" android:layout_height="10.0dip" />
+</LinearLayout>

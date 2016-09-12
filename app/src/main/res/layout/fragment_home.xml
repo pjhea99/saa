@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.grotesque.saa.home.HomeFragmentLayout
+    android:orientation="vertical" android:background="?backgroundColor" android:layout_width="fill_parent" android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" xmlns:customView="http://schemas.android.com/apk/res-auto" >
+    <FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <com.facebook.drawee.view.SimpleDraweeView android:id="@+id/top_bg_image" android:layout_width="fill_parent" android:layout_height="@dimen/explore_top_background_height" />
+        <FrameLayout android:id="@+id/wrapper_header" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <LinearLayout android:orientation="vertical" android:id="@+id/overlay" android:background="#66333333" android:visibility="visible" android:layout_width="fill_parent" android:layout_height="140.0dip">
+                <com.grotesque.saa.common.actionbar.BaseActionBar android:id="@+id/actionBar" android:layout_width="fill_parent" android:layout_height="@dimen/brunch_toolbar_height" customView:actionbarType="COMMON" customView:actionbarTitle="@string/app_name" customView:leftButtonDescription="@string/cd_toolbar_side_menu" customView:rightButtonDescription="@string/cd_toolbar_search" customView:leftIcon="@drawable/selector_comm_ico_menu_white" customView:rightIcon="@null" customView:titleColor="@android:color/white" />
+                <android.support.v7.widget.RecyclerView android:id="@+id/today_keyword_list" android:paddingLeft="20.0dip" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="@dimen/explore_top_title_height" />
+            </LinearLayout>
+        </FrameLayout>
+        <FrameLayout android:orientation="vertical" android:id="@+id/wrapper_layout" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginTop="@dimen/brunch_toolbar_height">
+            <ListView android:id="@+id/explore_list_view" android:background="@color/brunchTransparent" android:paddingTop="@dimen/explore_top_title_height" android:scrollbars="none" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="fill_parent" android:listSelector="@color/brunchTransparent" android:divider="@color/common_listview_divider" android:dividerHeight="@dimen/common_one_px" android:headerDividersEnabled="false" android:footerDividersEnabled="false" android:overScrollMode="never" />
+        </FrameLayout>
+    </FrameLayout>
+</com.grotesque.saa.home.HomeFragmentLayout>

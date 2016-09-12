@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/rl_editor_footer" android:background="@color/editor_tool_bar_bg" android:layout_width="fill_parent" android:layout_height="@dimen/brunch_toolbar_height"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <View android:background="@color/editor_tool_bar_top_divider" android:layout_width="fill_parent" android:layout_height="@dimen/editor_tool_bar_top_divider_height" android:layout_alignParentTop="true" />
+    <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:id="@+id/rl_toolbar_default" android:paddingLeft="@dimen/editor_tool_bar_padding_left" android:paddingRight="@dimen/editor_tool_bar_padding_left" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginTop="1.0dip">
+        <ImageButton android:layout_gravity="center_vertical" android:id="@+id/imgbtn_add_photo" android:background="@null" android:layout_width="@dimen/editor_tool_bar_btn_size" android:layout_height="@dimen/editor_tool_bar_btn_size" android:src="@drawable/selector_editor_btn_gallery" />
+        <ImageButton android:layout_gravity="center_vertical" android:id="@+id/imgbtn_add_more" android:background="@null" android:visibility="visible" android:layout_width="@dimen/editor_tool_bar_btn_size" android:layout_height="@dimen/editor_tool_bar_btn_size" android:layout_marginLeft="@dimen/editor_tool_bar_btn_add_padding_left" android:src="@drawable/selector_editor_btn_add" />
+    </LinearLayout>
+</RelativeLayout>

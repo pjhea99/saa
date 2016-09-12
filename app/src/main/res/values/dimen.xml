@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="actionbar_icon_height">50.0dip</dimen>
+    <dimen name="actionbar_left_icon_width">55.5dip</dimen>
+    <dimen name="actionbar_left_padding">5.5dip</dimen>
+    <dimen name="actionbar_right_icon_width">54.5dip</dimen>
+    <dimen name="actionbar_right_padding">4.5dip</dimen>
+    <dimen name="activity_vertical_margin">16.0dip</dimen>
+
+    <dimen name="brunch_toolbar_height">50.0dip</dimen>
+    <dimen name="brunch_toolbar_title_top_padding">1.0dip</dimen>
+
+    <dimen name="common_one_dp">1.0dip</dimen>
+    <dimen name="common_one_px">1.0px</dimen>
+
+    <dimen name="common_element_big_padding">48.0dip</dimen>
+    <dimen name="common_element_bigger_padding">56.0dip</dimen>
+    <dimen name="common_element_medium_padding">36.0dip</dimen>
+    <dimen name="common_element_small_padding">24.0dip</dimen>
+    <dimen name="common_element_smaller_padding">16.0dip</dimen>
+    <dimen name="common_element_smallest_padding">8.0dip</dimen>
+
+    <dimen name="comment_context">15.0dip</dimen>
+    <dimen name="comment_edit_text">15.0dip</dimen>
+    <dimen name="comment_suggest">15.0dip</dimen>
+    <dimen name="comment_time">13.0dip</dimen>
+    <dimen name="comment_user_name">13.0dip</dimen>
+
+
+    <dimen name="editor_top_bar_bottom_divider_height">0.5dip</dimen>
+    <dimen name="editor_content_margin">20.0dip</dimen>
+
+
+
+    <dimen name="editor_content_empty_height">10.0dip</dimen>
+    <dimen name="editor_content_margin_left">20.0dip</dimen>
+    <dimen name="editor_content_text_default_size">16.0dip</dimen>
+    <dimen name="editor_cover_color_pick_window_circle_size">35.0dip</dimen>
+    <dimen name="editor_cover_content_show_text_padding">20.0dip</dimen>
+    <dimen name="editor_cover_content_show_text_size">13.0dip</dimen>
+    <dimen name="editor_cover_recommend_dot_size">10.0dip</dimen>
+    <dimen name="editor_cover_title_bar_height">50.0dip</dimen>
+    <dimen name="editor_cover_title_bar_padding_left">13.0dip</dimen>
+    <dimen name="editor_cover_title_bar_text_size">18.0dip</dimen>
+    <dimen name="editor_cover_toolbar_height">50.0dip</dimen>
+    <dimen name="editor_edit_btn_margin_right">14.0dip</dimen>
+    <dimen name="editor_edit_btn_size">32.0dip</dimen>
+    <dimen name="editor_edit_title_bottom_divider_height">0.5dip</dimen>
+    <dimen name="editor_edit_title_divider_height">0.5dip</dimen>
+    <dimen name="editor_edit_title_height">45.0dip</dimen>
+    <dimen name="editor_edit_title_padding_left">20.0dip</dimen>
+    <dimen name="editor_edit_title_padding_right">60.0dip</dimen>
+    <dimen name="editor_edit_title_sub_text_size">16.0dip</dimen>
+    <dimen name="editor_edit_title_text_size">18.0dip</dimen>
+    <dimen name="editor_iamge_caption_text_size">13.0dip</dimen>
+    <dimen name="editor_sticker_size">100.0dip</dimen>
+    <dimen name="editor_textstyle_color_circle_size">35.0dip</dimen>
+    <dimen name="editor_textstyle_icon_other_size">44.0dip</dimen>
+    <dimen name="editor_textstyle_icon_size">40.0dip</dimen>
+
+    <dimen name="editor_tool_bar_btn_add_padding_left">14.0dip</dimen>
+    <dimen name="editor_tool_bar_btn_align_padding_left">13.5dip</dimen>
+    <dimen name="editor_tool_bar_btn_size">32.0dip</dimen>
+    <dimen name="editor_tool_bar_btn_textstyle_padding_left">14.5dip</dimen>
+    <dimen name="editor_tool_bar_padding_left">14.5dip</dimen>
+    <dimen name="editor_tool_bar_top_divider_height">0.5dip</dimen>
+
+
+    <dimen name="explore_top_background_height">140.0dip</dimen>
+    <dimen name="explore_top_title_height">90.0dip</dimen>
+
+    <dimen name="image_viewer_offset_size">2.0dip</dimen>
+    <dimen name="image_viewer_shadow_size">1.0dip</dimen>
+
+    <dimen name="keyboard_height">230.0dip</dimen>
+
+    <dimen name="navigation_drawer_item_height">39.0dip</dimen>
+    <dimen name="navigation_drawer_item_text">16.0dip</dimen>
+    <dimen name="navigation_drawer_width">207.0dip</dimen>
+
+    <dimen name="player_controller_brightness_seekbar_width">15.0dip</dimen>
+    <dimen name="player_controller_brightness_margin_center">0.0dip</dimen>
+    <dimen name="player_controller_brightness_text_size">65.0dip</dimen>
+
+    <dimen name="player_controller_volume_seekbar_width">15.0dip</dimen>
+    <dimen name="player_controller_volume_seekbar_height">140.0dip</dimen>
+    <dimen name="player_controller_volume_text_size">67.5dip</dimen>
+    <dimen name="player_controller_volume_text_size_v">52.5dip</dimen>
+    <dimen name="player_controller_volume_margin_center">5.0dip</dimen>
+    <dimen name="player_gesture_volume_start">23.0dip</dimen>
+    <dimen name="player_gesture_volume">18.5dip</dimen>
+    <dimen name="player_gesture_brightness_start">15.0dip</dimen>
+    <dimen name="player_gesture_brightness">10.0dip</dimen>
+    <dimen name="player_img_brightness_white_width">62.0dip</dimen>
+    <dimen name="player_img_brightness_white_height">69.0dip</dimen>
+    <dimen name="player_img_shadow03_width">330.5dip</dimen>
+    <dimen name="player_img_shadow03_height">267.5dip</dimen>
+    <dimen name="player_img_volume_mute_width">56.0dip</dimen>
+    <dimen name="player_img_volume_mute_height">38.0dip</dimen>
+    <dimen name="player_img_volume_white_width">56.0dip</dimen>
+    <dimen name="player_img_volume_white_height">38.0dip</dimen>
+
+    <dimen name="ActivityVodController_BottomField_Seekbar_Height">6.0dip</dimen>
+    <dimen name="ActivityVodController_BottomField_Seekbar_ButtonWidth">11.0dip</dimen>
+    <dimen name="ActivityVodController_BottomField_Seekbar_MarginLeft">14.0dip</dimen>
+    <dimen name="ActivityVodController_BottomField_Seekbar_MarginRight">15.25dip</dimen>
+
+    <dimen name="ActivityVodController_BottomField_CurrentPosition_TextSize">11.5dip</dimen>
+    <dimen name="ActivityVodController_BottomField_CurrentPosition_MarginRight">5.0dip</dimen>
+    <dimen name="ActivityVodController_BottomField_CurrentPosition_PaddingTop">1.5dip</dimen>
+    <dimen name="ActivityVodController_BottomField_Duration_TextSize">11.5dip</dimen>
+    <dimen name="ActivityVodController_BottomField_Duration_MarginLeft">5.0dip</dimen>
+    <dimen name="ActivityVodController_BottomField_Duration_PaddingTop">1.5dip</dimen>
+    <dimen name="ActivityVodController_BottomField_Height">49.0dip</dimen>
+    <dimen name="ActivityVodController_BottomField_PaddingLeft">9.5dip</dimen>
+    <dimen name="ActivityVodController_BottomField_PaddingRight">22.5dip</dimen>
+    <dimen name="ActivityVodController_BottomField_Position_Divider_Width">1.0dip</dimen>
+    <dimen name="ActivityVodController_BottomField_Position_Divider_Height">9.0dip</dimen>
+    <dimen name="ActivityVodController_CenterField_PlayButton_Width">137.5dip</dimen>
+    <dimen name="ActivityVodController_CenterField_PlayButton_Height">137.5dip</dimen>
+    <dimen name="ActivityVodController_CenterField_PlayButton_PaddingLR">21.5dip</dimen>
+    <dimen name="ActivityVodController_CenterField_PlayButton_PaddingTB">21.5dip</dimen>
+    <dimen name="ActivityVodController_TopField_Height">46.0dip</dimen>
+    <dimen name="top_bar_title_text_size">16.0dip</dimen>
+
+    <dimen name="tab_height">48.0dip</dimen>
+    <dimen name="tab_item_height">31.0dip</dimen>
+    <dimen name="tab_item_width">41.0dip</dimen>
+
+</resources>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_margin="@dimen/editor_content_margin"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <FrameLayout android:background="@color/black" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <FrameLayout android:layout_gravity="center" android:id="@+id/link_thumbnail_layout" android:layout_width="fill_parent" android:layout_height="fill_parent" android:minHeight="200.0dip">
+            <com.facebook.drawee.view.SimpleDraweeView android:layout_gravity="center" android:id="@+id/link_thumbnail_imageview" android:layout_width="fill_parent" android:layout_height="fill_parent" android:minHeight="200.0dip" android:scaleType="centerCrop"/>
+            <ImageView android:layout_gravity="center" android:id="@+id/play_image_view" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/btn_movie_play" android:scaleType="centerInside" />
+        </FrameLayout>
+        <FrameLayout android:layout_gravity="center_vertical" android:id="@+id/youtube_player_layout" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+    </FrameLayout>
+    <TextView android:ellipsize="end" android:id="@+id/link_title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/common_element_small_padding" android:text="title" android:maxLines="2" android:textSize="13.0sp" android:textStyle="bold" android:textColor="#ff444444"/>
+    <TextView android:ellipsize="end" android:id="@+id/link_content" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/common_element_smallest_padding" android:text="contents" android:maxLines="3" android:textSize="11.0sp" android:textColor="#ff666666" android:lineSpacingMultiplier="1.5" />
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/common_element_smallest_padding">
+        <ImageView android:layout_gravity="center_vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="3.0dip" android:src="@drawable/icon_link_small" />
+        <TextView android:ellipsize="end" android:id="@+id/link_url" android:layout_width="0.0dip" android:layout_height="wrap_content" android:text="reference" android:singleLine="true" android:layout_weight="1.0" android:textSize="9.0sp" android:textColor="#ffa4a4a4" />
+    </LinearLayout>
+    <View android:background="@color/white_gray" android:layout_width="fill_parent" android:layout_height="1.0px" android:layout_marginTop="@dimen/common_element_small_padding" />
+</LinearLayout>

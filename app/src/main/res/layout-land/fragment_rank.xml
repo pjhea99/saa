@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.grotesque.saa.common.fragment.ActionBarFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.grotesque.saa.common.actionbar.BaseActionBar
+            android:id="@+id/actionBar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/brunch_toolbar_height"
+            app:actionbarType="COMMON"
+            app:actionbarTitle="순위"
+            app:actionbarBackground="?attr/backgroundColor"
+            app:leftIcon="?attr/menuDrawable"
+            app:rightIcon="?attr/searchDrawable"
+            app:textColor="?attr/textPrimaryColor"/>
+        <RelativeLayout android:background="#F5F5F5" android:layout_width="fill_parent" android:layout_height="40.0dip">
+            <TextView android:gravity="center" android:id="@+id/header_rank" android:layout_width="51.0dip" android:layout_height="fill_parent" android:text="Pos" android:textSize="20sp" android:background="@color/brunch_mint" android:textColor="@android:color/white" android:textStyle="bold"/>
+            <TextView android:gravity="center" android:id="@+id/header_points" android:layout_width="51.0dip" android:layout_height="fill_parent" android:text="Pts" android:layout_alignParentRight="true" android:textSize="20sp" android:background="@color/brunch_mint" android:textColor="@android:color/white" android:textStyle="bold"/>
+            <TextView android:gravity="center" android:id="@+id/header_goal_diff" android:layout_width="51.0dip" android:layout_height="fill_parent" android:text="+/-" android:layout_toLeftOf="@id/header_points" android:textSize="20sp" android:background="@color/brunch_mint" android:textColor="@android:color/white" android:textStyle="bold"/>
+            <TextView android:gravity="center" android:id="@+id/header_against" android:background="@color/aluminum_gray" android:layout_width="51.0dip" android:layout_height="fill_parent" android:text="A" android:layout_toLeftOf="@id/header_goal_diff" android:textSize="20sp"  android:textColor="@android:color/white" android:textStyle="bold"/>
+            <TextView android:gravity="center" android:id="@+id/header_for_" android:background="@color/aluminum_gray" android:layout_width="51.0dip" android:layout_height="fill_parent" android:text="F" android:layout_toLeftOf="@id/header_against" android:textSize="20sp"   android:textColor="@android:color/white" android:textStyle="bold"/>
+            <TextView android:gravity="center" android:id="@+id/header_lost" android:background="@color/aluminum_gray" android:layout_width="51.0dip" android:layout_height="fill_parent" android:text="L" android:layout_toLeftOf="@id/header_for_" android:textSize="20sp"   android:textColor="@android:color/white" android:textStyle="bold"/>
+            <TextView android:gravity="center" android:id="@+id/header_drawn" android:background="@color/aluminum_gray" android:layout_width="51.0dip" android:layout_height="fill_parent" android:text="D" android:layout_toLeftOf="@id/header_lost" android:textSize="20sp"   android:textColor="@android:color/white" android:textStyle="bold"/>
+            <TextView android:gravity="center" android:id="@+id/header_won" android:background="@color/aluminum_gray" android:layout_width="51.0dip" android:layout_height="fill_parent" android:text="W" android:layout_toLeftOf="@id/header_drawn" android:textSize="20sp"   android:textColor="@android:color/white" android:textStyle="bold"/>
+            <TextView android:gravity="center" android:id="@+id/header_played" android:layout_width="51.0dip" android:layout_height="fill_parent" android:text="P" android:layout_toLeftOf="@id/header_won" android:textSize="20sp" android:background="@color/brunch_mint" android:textColor="@android:color/white" android:textStyle="bold"/>
+            <TextView android:gravity="center_vertical" android:id="@+id/header_name" android:paddingLeft="10.0dip" android:paddingRight="10.0dip" android:layout_width="fill_parent" android:layout_height="fill_parent" android:text="Team" android:singleLine="true" android:layout_toLeftOf="@id/header_played" android:layout_toRightOf="@id/header_rank" android:textSize="20sp" android:background="@color/brunch_mint" android:textColor="@android:color/white" android:textStyle="bold"/>
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#FFF"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rank_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:divider="#FFF"
+            android:dividerHeight="0px"/>
+
+    </LinearLayout>
+</com.grotesque.saa.common.fragment.ActionBarFrameLayout>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="fill_parent" android:layout_height="wrap_content" android:background="@drawable/background_board_item" android:foreground="?android:selectableItemBackground" android:layout_marginTop="10.0dip" android:layout_marginLeft="10.0dip" android:layout_marginRight="10.0dip">
+    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" >
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingTop="10.0dip">
+            <TextView android:paddingLeft="10.0dip" android:paddingRight="10.0dip" android:textSize="17.0dip" android:textStyle="bold" android:textColor="?attr/textPrimaryColor" android:ellipsize="end" android:gravity="left" android:id="@+id/titleView" android:layout_width="wrap_content" android:layout_height="wrap_content"  android:layout_marginTop="4.0dip" android:singleLine="true" android:text="@string/sample_title" />
+            <LinearLayout android:paddingLeft="10.0dip" android:paddingRight="10.0dip" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="6.5dip" android:layout_marginBottom="9.0dip" >
+                <TextView android:textSize="11.0dip" android:textColor="?attr/textSecondaryColor" android:id="@+id/byView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="by" />
+                <TextView android:textSize="12.0dip" android:textColor="?attr/textSecondaryColor" android:ellipsize="end" android:id="@+id/userView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="4.0dip" android:maxWidth="100.0dip" android:singleLine="true" />
+                <ImageView android:layout_gravity="center_vertical" android:background="@drawable/comm_div_dot" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" />
+                <TextView android:textSize="12.0dip" android:textColor="?attr/textSecondaryColor" android:id="@+id/timeView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" />
+                <ImageView android:layout_gravity="center_vertical" android:background="@drawable/comm_div_dot" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" />
+                <TextView android:textSize="12.0dip" android:textColor="?attr/textSecondaryColor" android:id="@+id/countView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" />
+            </LinearLayout>
+            <TextView android:paddingLeft="10.0dip" android:paddingRight="10.0dip" android:paddingBottom="10.0dip" android:textSize="14.0dip" android:textColor="#ff959595" android:ellipsize="end" android:gravity="left" android:id="@+id/subtitleView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:maxLines="2" android:text="@string/sapmle_sub_title"/>
+            <LinearLayout android:visibility="gone" android:id="@+id/tagBody" android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginLeft="10.0dip" android:layout_marginRight="10.0dip" android:layout_marginBottom="10.0dip"/>
+
+            <RelativeLayout android:visibility="gone" android:id="@+id/rlImageBody" android:layout_width="match_parent" android:layout_height="180.0dip" android:layout_marginTop="5.0dip">
+                <com.facebook.drawee.view.SimpleDraweeView android:id="@+id/imageView" android:layout_width="match_parent" android:layout_height="match_parent" />
+                <View android:id="@+id/view_iv_photo_mask" android:background="#4c000000" android:layout_width="match_parent" android:layout_height="fill_parent" />
+                <TextView android:layout_alignParentBottom="true" android:layout_margin="10.0dip" android:gravity="left" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/imageTitleView" android:textColor="@color/white" android:textSize="19.0dip" android:textStyle="bold" android:singleLine="true"/>
+            </RelativeLayout>
+        </LinearLayout>
+        <View android:id="@+id/dividerView" android:layout_width="match_parent" android:layout_height="1px" android:background="#ffe1e0e5"/>
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="10.0dip">
+            <ImageView android:id="@+id/shareView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/selector_view_ico_posting_share"/>
+            <LinearLayout android:id="@+id/likeView" android:layout_toLeftOf="@id/commentView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal">
+                <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/selector_cmt_btn_likeit"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/voteCountView" android:paddingLeft="5.0dip" android:paddingRight="5.0dip" android:textSize="13.0dip" android:textColor="@color/brunch_mint" android:text="16" android:layout_gravity="center"/>
+            </LinearLayout>
+            <LinearLayout android:id="@+id/commentView" android:layout_alignParentRight="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal">
+                <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/selector_view_ico_posting_cmt" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/commentCountView" android:paddingLeft="5.0dip" android:paddingRight="3.0dip" android:textSize="13.0dip" android:textColor="@color/brunch_mint" android:text="16" android:layout_gravity="center"/>
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</FrameLayout>

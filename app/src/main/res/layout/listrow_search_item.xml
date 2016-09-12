@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:background="?attr/backgroundColor" android:layout_width="fill_parent" android:layout_height="80.5dip"
+    xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="80.5dip">
+        <LinearLayout android:gravity="left" android:orientation="vertical" android:layout_width="0.0dip" android:layout_height="fill_parent" android:layout_marginLeft="20.0dip" android:layout_weight="1.0">
+            <TextView android:textSize="12.0dip" android:textColor="@color/brunch_mint" android:gravity="left" android:id="@+id/countView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="16.5dip" />
+            <TextView android:textSize="14.0dip" android:textStyle="bold" android:textColor="?attr/textPrimaryColor" android:ellipsize="end" android:gravity="left" android:id="@+id/titleView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4.0dip" android:singleLine="true" />
+
+            <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="6.5dip">
+                <TextView android:textSize="11.0dip" android:textColor="?attr/textSecondaryColor" android:id="@+id/byView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="by" />
+                <TextView android:textSize="12.0dip" android:textColor="?attr/textSecondaryColor" android:ellipsize="end" android:id="@+id/userView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="4.0dip" android:maxWidth="100.0dip" android:singleLine="true" />
+                <ImageView android:layout_gravity="center_vertical" android:background="@drawable/comm_div_dot" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" />
+                <TextView android:textSize="12.0dip" android:textColor="?attr/textSecondaryColor" android:id="@+id/timeView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" />
+            </LinearLayout>
+        </LinearLayout>
+        <RelativeLayout android:layout_width="72.5dip" android:layout_height="72.5dip" android:layout_gravity="center_vertical" android:layout_marginRight="20.0dip" >
+            <com.facebook.drawee.view.SimpleDraweeView android:id="@+id/imageView" android:layout_width="72.5dip" android:layout_height="72.5dip" android:scaleType="centerCrop" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/commentCountView" android:layout_centerInParent="true" android:textSize="24.0dip" android:textColor="@color/brunch_mint" android:text="+16"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+    <View android:background="?attr/divideItemColor" android:layout_width="fill_parent" android:layout_height="1.0px" android:layout_gravity="bottom"/>
+
+</FrameLayout>

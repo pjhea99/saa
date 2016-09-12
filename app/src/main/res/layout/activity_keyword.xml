@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:toolbar="http://schemas.android.com/apk/res-auto">
+    <android.support.v7.widget.RecyclerView android:id="@+id/keywordBody" android:background="#fff8f8f8" android:layout_width="fill_parent" android:layout_height="fill_parent" android:overScrollMode="never" />
+    <com.grotesque.saa.common.actionbar.BaseActionBar
+        android:id="@+id/toolbar" android:layout_width="fill_parent" android:layout_height="@dimen/brunch_toolbar_height" toolbar:actionbarBackground="@color/brunchTransparent" toolbar:leftIcon="@drawable/selector_comm_btn_prev" toolbar:rightIcon="@drawable/selector_comm_btn_search" toolbar:leftButtonDescription="@string/cd_toolbar_back" />
+</FrameLayout>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="@dimen/brunch_toolbar_height" android:animateLayoutChanges="true"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <FrameLayout android:layout_width="@dimen/actionbar_left_icon_width" android:layout_height="@dimen/actionbar_icon_height">
+        <ImageButton android:id="@+id/leftButton" android:background="@color/brunchTransparent" android:paddingLeft="@dimen/actionbar_left_padding" android:layout_width="@dimen/actionbar_left_icon_width" android:layout_height="@dimen/actionbar_icon_height" />
+        <ImageView android:id="@+id/menu_new_icon" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="36.5dip" android:layout_marginTop="14.0dip" android:src="@drawable/comm_ico_menu_new_icon" />
+    </FrameLayout>
+    <LinearLayout android:orientation="vertical" android:layout_width="0.0dip" android:layout_height="fill_parent" android:layout_weight="1.0" android:animateLayoutChanges="true">
+        <LinearLayout android:gravity="center" android:layout_gravity="center" android:orientation="horizontal" android:id="@+id/common_mode" android:background="@color/brunchTransparent" android:visibility="visible" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <LinearLayout android:gravity="center" android:layout_gravity="center" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="fill_parent" android:animateLayoutChanges="true">
+                <ImageView android:id="@+id/titleImageView" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout android:gravity="center" android:layout_gravity="center" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="fill_parent">
+                <TextView
+                    android:textSize="@dimen/top_bar_title_text_size" android:textStyle="bold" android:textColor="@color/brunch_title_color" android:ellipsize="end" android:gravity="center" android:layout_gravity="center" android:id="@+id/title" android:background="@color/brunchTransparent" android:paddingTop="@dimen/brunch_toolbar_title_top_padding" android:visibility="visible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" />
+                <TextView android:textSize="@dimen/top_bar_title_text_size" android:textStyle="bold" android:textColor="@color/brunch_title_count_color" android:id="@+id/titleCount" android:paddingTop="@dimen/brunch_toolbar_title_top_padding" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="4.0dip" android:text="" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <ImageButton android:id="@+id/rightButton" android:background="@color/brunchTransparent" android:paddingRight="@dimen/actionbar_right_padding" android:layout_width="@dimen/actionbar_right_icon_width" android:layout_height="@dimen/actionbar_icon_height" android:src="@drawable/selector_comm_btn_search" />
+</LinearLayout>
