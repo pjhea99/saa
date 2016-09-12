@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.grotesque.saa.R;
@@ -19,21 +20,19 @@ import static com.grotesque.saa.util.LogUtils.makeLogTag;
 
 public class RecentItem extends AbstractAdapterItem implements RecentData.OnLoadedListener {
 
-    private static final String TAG = makeLogTag(RecentItem.class);
-    private RecentItemAdapter recentCalcioItemAdapter;
+    private RecentItemAdapter mAdapter;
     private Context mContext;
     private String mid;
 
     public RecentItem(Context context, String mid)  {
         super();
-        mContext = context;
+        this.mContext = context;
         this.mid = mid;
-        recentCalcioItemAdapter = new RecentItemAdapter(mid, mContext);
+        this.mAdapter = new RecentItemAdapter(mid, mContext);
         onLoadData();
     }
 
-    public View getView(LayoutInflater layoutinflater, View view)
-    {
+    public View getView(LayoutInflater layoutinflater, View view) {
         ViewHolder vh;
         if(view == null){
             view = layoutinflater.inflate(R.layout.listrow_explore_item_keyword_article, null);
@@ -44,62 +43,67 @@ public class RecentItem extends AbstractAdapterItem implements RecentData.OnLoad
         }
         switch (mid){
             case "calcioboard":
-                vh.titleView.setText(Html.fromHtml("<font color=#00c3bd>CALCIO</font> <font color=#333333>게시판</font>"));
+                vh.mTitleView.setText(Html.fromHtml("<font color=#00c3bd>CALCIO</font> <font color=#333333>게시판</font>"));
                 break;
             case "freeboard3":
-                vh.titleView.setText(Html.fromHtml("<font color=#00c3bd>자유</font> <font color=#333333>게시판</font>"));
+                vh.mTitleView.setText(Html.fromHtml("<font color=#00c3bd>자유</font> <font color=#333333>게시판</font>"));
                 break;
             case "multimedia1":
-                vh.titleView.setText(Html.fromHtml("<font color=#00c3bd>미디어</font> <font color=#333333>게시판</font>"));
+                vh.mTitleView.setText(Html.fromHtml("<font color=#00c3bd>미디어</font> <font color=#333333>게시판</font>"));
                 break;
             case "qna1":
-                vh.titleView.setText(Html.fromHtml("<font color=#00c3bd>질문 </font> <font color=#333333>게시판</font>"));
+                vh.mTitleView.setText(Html.fromHtml("<font color=#00c3bd>질문 </font> <font color=#333333>게시판</font>"));
                 break;
             case "rest":
-                vh.titleView.setText(Html.fromHtml("<font color=#00c3bd>스포츠 </font> <font color=#333333>게시판</font>"));
+                vh.mTitleView.setText(Html.fromHtml("<font color=#00c3bd>스포츠 </font> <font color=#333333>게시판</font>"));
                 break;
             case "game":
-                vh.titleView.setText(Html.fromHtml("<font color=#00c3bd>게임 </font> <font color=#333333>게시판</font>"));
+                vh.mTitleView.setText(Html.fromHtml("<font color=#00c3bd>게임 </font> <font color=#333333>게시판</font>"));
                 break;
 
         }
-
-        vh.titleView.setOnClickListener(new View.OnClickListener() {
+        vh.mTitleView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NavigationUtils.goBoardActivity(mContext, mid);
             }
         });
-        vh.recentArticleList.setAdapter(recentCalcioItemAdapter);
+        vh.mMoreButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavigationUtils.goBoardActivity(mContext, mid);
+            }
+        });
+        vh.mRecyclerView.setAdapter(mAdapter);
         return view;
     }
 
     protected void onLoadData() {
-
         RecentData recentData = new RecentData(mid);
         recentData.setOnLoadedListener(this);
-        recentCalcioItemAdapter.setArrayList(recentData.getCalcioList());
+        mAdapter.setArrayList(recentData.getDocumentList());
         recentData.loadData(mContext);
     }
 
     @Override
     public void onLoaded() {
-        recentCalcioItemAdapter.notifyDataSetChanged();
+        mAdapter.notifyDataSetChanged();
     }
 
     class ViewHolder {
-
-        final RecentItem a;
-        RecyclerView recentArticleList;
-        TextView titleView;
+        final RecentItem mItem;
+        RecyclerView mRecyclerView;
+        TextView mTitleView;
+        ImageButton mMoreButton;
 
         public ViewHolder(Context context, View view){
             super();
-            a = RecentItem.this;
-            recentArticleList = (RecyclerView) view.findViewById(R.id.articleList);
-            titleView = (TextView) view.findViewById(R.id.titleView);
-            FontManager.getInstance(context).setTypeface(titleView);
-            recentArticleList.setLayoutManager(new LinearLayoutManager(context, 0, false));
+            mItem = RecentItem.this;
+            mRecyclerView = (RecyclerView) view.findViewById(R.id.articleList);
+            mTitleView = (TextView) view.findViewById(R.id.titleView);
+            mMoreButton = (ImageButton) view.findViewById(R.id.keyword_more_button);
+            FontManager.getInstance(context).setTypeface(mTitleView);
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(context, 0, false));
         }
     }
 

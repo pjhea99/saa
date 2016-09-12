@@ -1,4 +1,4 @@
-package com.grotesque.saa.activity;
+package com.grotesque.saa.common.activity;
 
 import android.content.Intent;
 import android.os.Build;
@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.grotesque.saa.R;
 import com.grotesque.saa.board.BoardActivity;
-import com.grotesque.saa.common.toolbar.SAAToolbar;
+import com.grotesque.saa.fixture.FixtureActivity;
 import com.grotesque.saa.post.PostActivity;
 import com.grotesque.saa.rank.RankActivity;
 import com.grotesque.saa.util.AccountUtils;
@@ -24,20 +24,21 @@ import com.grotesque.saa.util.ImageLoader;
 import com.grotesque.saa.util.LUtils;
 import com.grotesque.saa.util.LoginAndAuthHelper;
 
+import static com.grotesque.saa.util.LogUtils.LOGE;
 import static com.grotesque.saa.util.LogUtils.makeLogTag;
 
 
-public class BaseActivity extends AppCompatActivity implements View.OnClickListener, SAAToolbar.OnCommonToolBarClickListener{
+public class BaseActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final String TAG = makeLogTag(BaseActivity.class);
+    private static final int NAV_DRAWER_ITEM_SIZE = 6;
     public static final int NAV_DRAWER_INVALID = -1;
     public static final int NAV_DRAWER_BOARD = 0;
     public static final int NAV_DRAWER_RANK = 1;
     public static final int NAV_DRAWER_WRITE = 2;
     public static final int NAV_DRAWER_MEMO = 3;
-    public static final int NAV_DRAWER_NOTIFICATION = 4;
-    public static final int NAV_DRAWER_LIVE = 5;
-    public static final int NAV_DRAWER_SETTING = 6;
+    public static final int NAV_DRAWER_FIXTURE = 4;
+    public static final int NAV_DRAWER_SETTING = 5;
 
     private static final int MAIN_CONTENT_FADEOUT_DURATION = 150;
     private static final int MAIN_CONTENT_FADEIN_DURATION = 250;
@@ -51,7 +52,6 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     private ImageLoader mImageLoader;
     private Handler mHandler;
     private DrawerLayout mDrawerLayout;
-    private SAAToolbar mToolbar;
     private View[] mNavDrawerItemViews = null;
 
     private ImageView mProfileView;
@@ -102,18 +102,16 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
-        //getToolBar();
     }
-
-
 
     public void setupNavDrawer(){
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         if(mDrawerLayout == null){
+            LOGE(TAG, "drawerLayout is a null");
             return;
         }
         LinearLayout navDrawer = (LinearLayout) findViewById(R.id.navdrawer);
-        if(navDrawer != null){
+        if(navDrawer != null) {
             ImageButton settingButton = (ImageButton) findViewById(R.id.setting_button);
 
             settingButton.setOnClickListener(this);
@@ -125,31 +123,29 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
             mNameView.setText(AccountUtils.getActiveAccountName(this));
             mProfileView.setOnClickListener(this);
 
-
             View board = findViewById(R.id.drawer_item_board);
             View rank = findViewById(R.id.drawer_item_rank);
             View write = findViewById(R.id.drawer_item_write);
             View memo = findViewById(R.id.drawer_item_memo);
-            View notification = findViewById(R.id.drawer_item_notification);
+            View fixture = findViewById(R.id.drawer_item_fixture);
 
 
-            mNavDrawerItemViews = new View[5];
-            mNavDrawerItemViews[0] = board;
-            mNavDrawerItemViews[1] = rank;
-            mNavDrawerItemViews[2] = write;
-            mNavDrawerItemViews[3] = memo;
-            mNavDrawerItemViews[4] = notification;
+            mNavDrawerItemViews = new View[NAV_DRAWER_ITEM_SIZE];
+            mNavDrawerItemViews[NAV_DRAWER_BOARD] = board;
+            mNavDrawerItemViews[NAV_DRAWER_RANK] = rank;
+            mNavDrawerItemViews[NAV_DRAWER_WRITE] = write;
+            mNavDrawerItemViews[NAV_DRAWER_MEMO] = memo;
+            mNavDrawerItemViews[NAV_DRAWER_FIXTURE] = fixture;
+            mNavDrawerItemViews[NAV_DRAWER_SETTING] = settingButton;
 
-            if(getSelfNavDrawerItem() != -1)
+            if (getSelfNavDrawerItem() != -1)
                 mNavDrawerItemViews[getSelfNavDrawerItem()].setSelected(true);
 
-            for(View v : mNavDrawerItemViews){
+            for (View v : mNavDrawerItemViews) {
                 v.setOnClickListener(this);
             }
         }
-        if(mToolbar != null){
-            mToolbar.setOnCommonToolBarClickListener(this);
-        }
+
     }
     protected int getSelfNavDrawerItem() {
         return NAV_DRAWER_INVALID;
@@ -167,6 +163,9 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(this, PostActivity.class));
                 return;
             case NAV_DRAWER_MEMO:
+                return;
+            case NAV_DRAWER_FIXTURE:
+                createBackStack(new Intent(this, FixtureActivity.class));
                 return;
             case NAV_DRAWER_SETTING:
                 return;
@@ -191,7 +190,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }
 
-        if(itemId == 2 || itemId == 3 || itemId == 4){
+        if(itemId == NAV_DRAWER_WRITE || itemId == NAV_DRAWER_MEMO){
             goToNavDrawerItem(itemId);
         }else{
             // launch the target Activity after a short delay, to allow the close animation to play
@@ -210,10 +209,6 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 mainContent.animate().alpha(0).setDuration(MAIN_CONTENT_FADEOUT_DURATION);
             }
         }
-
-
-
-
         mDrawerLayout.closeDrawer(GravityCompat.START);
     }
     public void setSelectedNavDrawerItem(int itemId){
@@ -252,20 +247,14 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.drawer_item_memo:
                 onNavDrawerItemClicked(NAV_DRAWER_MEMO);
                 break;
+            case R.id.drawer_item_fixture:
+                onNavDrawerItemClicked(NAV_DRAWER_FIXTURE);
+                break;
             case R.id.setting_button:
                 onNavDrawerItemClicked(NAV_DRAWER_SETTING);
                 break;
             case R.id.profileImage:
                 break;
-        }
-    }
-
-    @Override
-    public void onCommonToolBarClick(int i) {
-        switch (i){
-            case 0:
-                mDrawerLayout.openDrawer(GravityCompat.START);
-                return;
         }
     }
     @Override

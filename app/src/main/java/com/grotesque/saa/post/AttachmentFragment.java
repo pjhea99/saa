@@ -89,6 +89,8 @@ public class AttachmentFragment extends BaseFragment implements YoutubeAdapter.L
             ((AttachmentListener)getActivity()).addVideo(videoItem);
     }
     public void searchYoutube(String search){
+        mArrayList.clear();
+        mAdapter.notifyDataSetChanged();
         mSearchQuery.put("q", search);
         enqueueService();
     }

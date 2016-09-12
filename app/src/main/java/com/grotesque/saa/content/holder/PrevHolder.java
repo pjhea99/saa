@@ -63,7 +63,8 @@ public class PrevHolder extends BaseViewHolder<ContentItem> {
             mCoverView.setBackgroundColor(Color.parseColor("#4c000000"));
         }else{
             Glide.clear(mImageView);
-            mCoverView.setBackgroundColor(Color.parseColor("#4c1e90ff"));
+            mCoverView.setBackgroundColor(Color.parseColor("#4c000000"));
+            //mCoverView.setBackgroundColor(Color.parseColor("#4c1e90ff"));
         }
         mTitleView.setText(Html.fromHtml(item.get(position).getDocumentData().getTitle()));
         mWriterView.setText(item.get(position).getDocumentData().getNickName());

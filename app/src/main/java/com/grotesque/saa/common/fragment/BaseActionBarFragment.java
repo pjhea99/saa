@@ -3,7 +3,7 @@ package com.grotesque.saa.common.fragment;
 import android.app.Activity;
 import android.view.View;
 
-import com.grotesque.saa.activity.BaseActivity;
+import com.grotesque.saa.common.activity.BaseActivity;
 import com.grotesque.saa.common.actionbar.BaseActionBar;
 
 import static com.grotesque.saa.util.LogUtils.makeLogTag;
@@ -15,8 +15,8 @@ public abstract class BaseActionBarFragment
         extends BaseFragment
         implements BaseActionBar.OnActionBarListener {
     private static final String TAG = makeLogTag(BaseActionBarFragment.class);
-    private ActionBarFragmentLayout b;
-    private Activity c;
+    private ActionBarFrameLayout mActionBarFragmentLayout;
+    private Activity mActivity;
 
     public void onDestroy() {
         super.onDestroy();
@@ -30,9 +30,9 @@ public abstract class BaseActionBarFragment
 
     public void onLeftButtonClicked() {
 
-        if ((this.c instanceof BaseActivity)) {
-            if (!((BaseActivity) this.c).isNavDrawerOpen()) {
-                ((BaseActivity) this.c).openNavDrawer();
+        if ((this.mActivity instanceof BaseActivity)) {
+            if (!((BaseActivity) this.mActivity).isNavDrawerOpen()) {
+                ((BaseActivity) this.mActivity).openNavDrawer();
             }
             return;
         }
@@ -49,93 +49,77 @@ public abstract class BaseActionBarFragment
 
     public void onRightButtonClicked() {}
 
-    public void onSearchButtonClicked() {}
-
-    public void onTitleTextClicked(){
-
-    }
+    public void onTitleTextClicked() {}
 
     protected void registerView(View view) {
-
-        if ((view instanceof ActionBarFragmentLayout)) {
-            this.b = ((ActionBarFragmentLayout) view);
-            this.b.setOnActionBarListener(this);
+        if ((view instanceof ActionBarFrameLayout)) {
+            this.mActionBarFragmentLayout = ((ActionBarFrameLayout) view);
+            this.mActionBarFragmentLayout.setOnActionBarListener(this);
         }
-        this.c = getActivity();
+        this.mActivity = getActivity();
     }
+
     public int getActionBarHeight(){
-        if (this.b != null) {
-            return this.b.getActionBarHeight();
+        if (this.mActionBarFragmentLayout != null) {
+            return this.mActionBarFragmentLayout.getActionBarHeight();
         }
         return 0;
     }
 
     public void setActionBarBackgroundResource(int resource){
-        if(this.b != null) {
-            this.b.setActionBarBackgroundResource(resource);
+        if(this.mActionBarFragmentLayout != null) {
+            this.mActionBarFragmentLayout.setActionBarBackgroundResource(resource);
         }
     }
 
     public void setActionBarColor(int paramInt) {
-        if (this.b != null) {
-            this.b.setActionBarColor(paramInt);
+        if (this.mActionBarFragmentLayout != null) {
+            this.mActionBarFragmentLayout.setActionBarColor(paramInt);
         }
     }
 
     public void setActionBarLeftButtonContentDescription(int paramInt) {
-        if (this.b != null) {
-            this.b.setLeftButtonContentDescription(paramInt);
+        if (this.mActionBarFragmentLayout != null) {
+            this.mActionBarFragmentLayout.setLeftButtonContentDescription(paramInt);
         }
     }
 
     public void setActionBarLeftButtonUI(int paramInt) {
-        if (this.b != null) {
-            this.b.setLeftButton(paramInt);
+        if (this.mActionBarFragmentLayout != null) {
+            this.mActionBarFragmentLayout.setLeftButton(paramInt);
         }
     }
 
     public void setActionBarRightButtonContentDescription(int paramInt) {
-        if (this.b != null) {
-            this.b.setRightButtonContentDescription(paramInt);
+        if (this.mActionBarFragmentLayout != null) {
+            this.mActionBarFragmentLayout.setRightButtonContentDescription(paramInt);
         }
     }
 
     public void setActionBarRightButtonUI(int paramInt) {
-        if (this.b != null) {
-            this.b.setRightButton(paramInt);
+        if (this.mActionBarFragmentLayout != null) {
+            this.mActionBarFragmentLayout.setRightButton(paramInt);
         }
     }
 
     public void setActionBarTitle(String paramString) {
-        this.b.setActionBarTitle(paramString);
+        this.mActionBarFragmentLayout.setActionBarTitle(paramString);
     }
 
     public void setActionBarTitleCount(int paramInt) {
-        this.b.setActionBarTitleCount(paramInt);
+        this.mActionBarFragmentLayout.setActionBarTitleCount(paramInt);
     }
 
     public void setActionBarVisibility(boolean paramBoolean) {
-        if (this.b != null) {
-            this.b.setActionBarVisibility(paramBoolean);
+        if (this.mActionBarFragmentLayout != null) {
+            this.mActionBarFragmentLayout.setActionBarVisibility(paramBoolean);
         }
     }
 
     public void setHasNewMessage(boolean paramBoolean) {
-        if (this.b != null) {
-            this.b.setHasNewMessage(paramBoolean);
+        if (this.mActionBarFragmentLayout != null) {
+            this.mActionBarFragmentLayout.setHasNewMessage(paramBoolean);
         }
     }
 
-    protected void setOnSelectedTitleTab(BaseActionBar.OnSelectedTitleTab paramOnSelectedTitleTab) {
-        if (this.b != null) {
-            this.b.setOnSelectedTitleTab(paramOnSelectedTitleTab);
-        }
-    }
-
-    protected void setSelectedTitleTab(BaseActionBar.TitleTap paramTitleTap) {
-
-        if (this.b != null) {
-            this.b.setSelectedTitleTab(paramTitleTap);
-        }
-    }
 }

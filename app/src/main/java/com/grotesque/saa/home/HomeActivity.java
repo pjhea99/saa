@@ -1,31 +1,26 @@
 package com.grotesque.saa.home;
 
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.grotesque.saa.R;
-import com.grotesque.saa.activity.BaseActivity;
-import com.grotesque.saa.auth.AuthTokenManager;
-import com.grotesque.saa.util.AccountUtils;
-import com.grotesque.saa.util.LoginAndAuthHelper;
+import com.grotesque.saa.common.activity.BaseActivity;
 
 import static com.grotesque.saa.util.LogUtils.LOGE;
 import static com.grotesque.saa.util.LogUtils.makeLogTag;
 
 
-public class HomeActivity extends BaseActivity implements LoginAndAuthHelper.Callbacks {
+public class HomeActivity extends BaseActivity {
 
     private static final String TAG = makeLogTag(HomeActivity.class);
 
     private long backKeyPressedTime = 0;
-    private long startTime = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        startTime = SystemClock.elapsedRealtime();
-        LOGE(TAG, "start : " + startTime);
+
         setContentView(R.layout.activity_home);
         getFragmentManager().beginTransaction().add(R.id.main_content, HomeFragment.newInstance()).commit();
     }
@@ -43,7 +38,6 @@ public class HomeActivity extends BaseActivity implements LoginAndAuthHelper.Cal
     @Override
     protected void onStart() {
         super.onStart();
-        //startLoginProcess();
     }
 
     @Override
@@ -75,36 +69,6 @@ public class HomeActivity extends BaseActivity implements LoginAndAuthHelper.Cal
         super.onBackPressed();
     }
 
-
-
-
-    private void startLoginProcess() {
-
-        if(!AccountUtils.getAutoLogin(this)){
-            return;
-        }
-        String accountName = AccountUtils.getActiveAccountName(this);
-        String password = AuthTokenManager.getInstance().getAuthToken(this);
-
-
-        mLoginAndAuthHelper = new LoginAndAuthHelper(this, this, accountName, password);
-        mLoginAndAuthHelper.start();
-    }
-
-
-
-    @Override
-    public void onAuthSuccess(String accountName, boolean newlyAuthenticated) {
-    }
-
-    @Override
-    public void onAuthFailure(int error) {
-        switch (error){
-            case 2:
-                Toast.makeText(this, "자동 로그인에 실패하였습니다.", Toast.LENGTH_LONG).show();
-                break;
-        }
-    }
 
     private void clearApplicationCache(java.io.File dir){
         if(dir==null)

@@ -90,7 +90,7 @@ public class RankFragment extends BaseActionBarFragment implements RankPortAdapt
     @Override
     protected void onInitCreated(Bundle paramBundle) {
         mService
-                .getRankData("record/soccer/seriea/trnk.daum")
+                .getStringHtml("record/soccer/seriea/trnk.daum")
                 .enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {

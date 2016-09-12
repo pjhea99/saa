@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -30,6 +31,7 @@ import com.grotesque.saa.home.HomeActivity;
 import com.grotesque.saa.util.AccountUtils;
 import com.grotesque.saa.util.FontManager;
 import com.grotesque.saa.util.LoginAndAuthHelper;
+import com.grotesque.saa.util.PermissionUtils;
 
 import static com.grotesque.saa.util.LogUtils.LOGD;
 import static com.grotesque.saa.util.LogUtils.LOGE;
@@ -53,8 +55,6 @@ public class SignInActivity extends AppCompatActivity implements LoginAndAuthHel
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        startTime = SystemClock.elapsedRealtime();
-        LOGE(TAG, "start : " + startTime);
         setContentView(R.layout.activity_signin);
 
         mImageView = (SimpleDraweeView) findViewById(R.id.imageView);
@@ -80,23 +80,12 @@ public class SignInActivity extends AppCompatActivity implements LoginAndAuthHel
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             checkPermission();
+        }else{
+            isAutoLogin();
         }
 
 
-        if (!AccountUtils.getAutoLogin(this)) {
-            showProgress(false);
-        } else {
-            showProgress(true);
-            autoLogin();
-            /*
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    autoLogin();
-                }
-            }, SPLASH_TIME);
-            */
-        }
+
 
 
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -111,6 +100,13 @@ public class SignInActivity extends AppCompatActivity implements LoginAndAuthHel
             }
         });
 
+    }
+    private void isAutoLogin(){
+        if (!AccountUtils.getAutoLogin(this)) showProgress(false);
+        else {
+            showProgress(true);
+            autoLogin();
+        }
     }
 
     private boolean isIdValid(String id) {
@@ -264,35 +260,24 @@ public class SignInActivity extends AppCompatActivity implements LoginAndAuthHel
 
     @TargetApi(Build.VERSION_CODES.M)
     private void checkPermission() {
-        LOGE(TAG, "CheckPermission : " + checkSelfPermission(Manifest.permission.READ_PHONE_STATE));
-        if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            // Should we show an explanation?
-            if (shouldShowRequestPermissionRationale(Manifest.permission.READ_PHONE_STATE)) {
-                // Explain to the user why we need to write the permission.
-                Toast.makeText(this, "비밀번호를 암호화하여 저장하기 위해 권한이 필요합니다.", Toast.LENGTH_SHORT).show();
-            }
-            LOGE(TAG, "비밀번호를 암호화하여 저장하기 위해 권한이 필요합니다.");
-            requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE},
-                    MY_PERMISSION_REQUEST_PHONE_STATE);
-
-            // MY_PERMISSION_REQUEST_PHONE_STATE is an
-            // app-defined int constant
-
+        if (PermissionUtils.hasMustHavePermissions(this)) {
+            isAutoLogin();
+            return;
         }
+
+        String[] getNotGrantedPermissions = PermissionUtils.getNotGrantedPermissions(this, PermissionUtils.MUST_HAVE_PERMISSIONS);
+        if (getNotGrantedPermissions != null) {
+            ActivityCompat.requestPermissions(this, getNotGrantedPermissions, 207);
+            return;
+        }
+        isAutoLogin();
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSION_REQUEST_PHONE_STATE:
-                if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    LOGE(TAG, "Permission always deny");
-                    finish();
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-                }
-                break;
-        }
+        if (!PermissionUtils.hasMustHavePermissions(this)) {
+            Toast.makeText(this, getString(R.string.permission_finish_message_by_must_have), Toast.LENGTH_LONG).show();
+            finish();
+        }else isAutoLogin();
+
     }
 }

@@ -12,8 +12,10 @@ import retrofit2.http.Url;
  * Created by 경환 on 2016-05-21.
  */
 public interface StringResponseInterface {
+
     @GET()
-    Call<String> getRankData(@Url String url);
+    Call<String> getStringHtml(@Url String url);
+
     @Headers({
             "Connection: keep-alive",
             "Accept-Encoding: identity",
@@ -22,4 +24,14 @@ public interface StringResponseInterface {
     })
     @GET("?_filter=search")
     Call<String> getSearch(@QueryMap HashMap<String, String> query);
+
+
+    @Headers({
+            "Connection: keep-alive",
+            "Accept-Encoding: identity",
+            "Content-Type: text/html; charset=UTF-8",
+            "Accept-Language: ko-KR, ko",
+    })
+    @GET()
+    Call<String> getPointRanking(@Url String url);
 }

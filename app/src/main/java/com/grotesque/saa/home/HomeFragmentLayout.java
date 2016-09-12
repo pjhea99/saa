@@ -11,9 +11,9 @@ import android.view.MotionEvent;
 import android.widget.FrameLayout;
 
 import com.grotesque.saa.R;
-import com.grotesque.saa.common.fragment.ActionBarFragmentLayout;
+import com.grotesque.saa.common.fragment.ActionBarFrameLayout;
 
-public class HomeFragmentLayout extends ActionBarFragmentLayout
+public class HomeFragmentLayout extends ActionBarFrameLayout
 {
 
     private float b;

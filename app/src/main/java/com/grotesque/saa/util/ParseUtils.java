@@ -1,7 +1,12 @@
 package com.grotesque.saa.util;
 
 
+import android.os.Parcelable;
+
 import com.grotesque.saa.content.data.ContentItem;
+import com.grotesque.saa.fixture.data.FixtureData;
+import com.grotesque.saa.home.data.PointRankData;
+import com.grotesque.saa.home.data.PointRankList;
 import com.grotesque.saa.rank.data.LeagueTable;
 import com.grotesque.saa.search.data.SearchItem;
 
@@ -22,7 +27,16 @@ public class ParseUtils {
     private static final String TAG = makeLogTag("ParseUtils");
     private static final String BLANK = "<td height=\"150\" style=\"word-break:break-all; padding:10px;\"> \n" +
             "                                                                         <!-- 내용 출력 --> <span id=\"writeContents\">";
+    public static ArrayList<FixtureData> parseFixtue(Document doc){
+        ArrayList<FixtureData> fixtureDatas = new ArrayList<>();
+        Elements elements = doc.select("section[class^=risultati] div.box-partita");
+        for(Element e : elements){
+            Elements team = e.select("div[class^=col-xs-6");
+            fixtureDatas.add(new FixtureData(e.select("div[class^=datipartita] span").text().replaceAll("\\D", "").substring(0, 12), team.get(0).text().split(" "), team.get(1).text().split(" "), "", team.get(0).select("img[src]").attr("src"), team.get(1).select("img[src").attr("src")));
 
+        }
+        return  fixtureDatas;
+    }
     public static ArrayList<LeagueTable> parseRankDaum(Document doc){
         ArrayList<LeagueTable> arrayList = new ArrayList<>();
         Elements rankdata = doc.select("tbody tr");
@@ -162,6 +176,21 @@ public class ParseUtils {
                     content.select("span[class^=replyNum").text(),
                     content.select("td[class^=date").text(),
                     document_srl));
+        }
+        LOGE(TAG, "arrayList size : " + arrayList.size());
+        return arrayList;
+    }
+    public static ArrayList<PointRankList> parsePointRank(String html){
+        ArrayList<PointRankList> arrayList = new ArrayList<>();
+
+        for(Element e : Jsoup.parse(html).select("tbody tr")){
+            arrayList.add(new PointRankList(e.select("img").attr("src"),
+                    e.select("td.nick").text(),
+                    e.select("td.point").text()));
+        }
+
+        for(PointRankList p : arrayList){
+            LOGE(TAG, p.getNick() + " " + p.getProfile());
         }
 
         return arrayList;

@@ -18,7 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.grotesque.saa.R;
-import com.grotesque.saa.board.adapter.LinearBoardAdapter;
 import com.grotesque.saa.board.adapter.NewBoardAdapter;
 import com.grotesque.saa.board.adapter.StaggeredBoardAdapter;
 import com.grotesque.saa.board.adapter.VerticalFragmentPagerAdapter;
@@ -52,7 +51,7 @@ public class BoardFragment extends BaseActionBarFragment implements SwipeRefresh
 
     private int mCurrentPage = 1;
 
-    private String mSection;
+    private String mModuleId;
     private HashMap<String, String> mQuery;
     private ArrayList<DocumentList> mArrayList = new ArrayList<>();
     private RecyclerView mRecyclerView;
@@ -93,11 +92,11 @@ public class BoardFragment extends BaseActionBarFragment implements SwipeRefresh
     protected void initOnCreate(Bundle paramBundle) {
 
         if(getArguments() != null)
-            mSection = getArguments().getString(BOARD_SECTION);
+            mModuleId = getArguments().getString(BOARD_SECTION);
 
         mQuery = new HashMap<>();
         mQuery.put("act", "dispBoardContentList");
-        mQuery.put("mid", mSection);
+        mQuery.put("mid", mModuleId);
         mQuery.put("page", "1");
     }
 
@@ -112,12 +111,13 @@ public class BoardFragment extends BaseActionBarFragment implements SwipeRefresh
 
         mSwipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
         mSwipeLayout.setOnRefreshListener(this);
+        mSwipeLayout.setProgressViewOffset(true, DensityScaleUtil.dipToPixel(mContext, 0), DensityScaleUtil.dipToPixel(mContext, 90));
         mSwipeLayout.setProgressBackgroundColorSchemeResource(R.color.brunch_mint);
         mSwipeLayout.setColorSchemeResources(android.R.color.white);
 
         mNavigationView = (NavigationView) view.findViewById(R.id.navigationView);
         mNavigationView.setOnButtonClickListener(this);
-        mNavigationView.setSelectedMid(mSection);
+        mNavigationView.setSelectedMid(mModuleId);
 
         mProgressView = (RelativeLayout) view.findViewById(R.id.loading_progress);
         mTabLayout = (RelativeLayout) view.findViewById(R.id.tabLayout);
@@ -137,10 +137,10 @@ public class BoardFragment extends BaseActionBarFragment implements SwipeRefresh
         boardContainer.setVisibility(View.VISIBLE);
         pager.setVisibility(View.GONE);
 
-        switch (mSection) {
+        switch (mModuleId) {
             case "multimedia1":
                 mTabLayout.setVisibility(View.GONE);
-                mAdapter = new StaggeredBoardAdapter(mSection, mArrayList, mContext);
+                mAdapter = new StaggeredBoardAdapter(mModuleId, mArrayList, mContext);
                 StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, 1);
                 mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
                 FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(-1, -1);
@@ -157,7 +157,7 @@ public class BoardFragment extends BaseActionBarFragment implements SwipeRefresh
                 pager.setVisibility(View.VISIBLE);
                 setActionBarBackgroundResource(R.color.brunchTransparent);
                 setActionBarColor(getResources().getColor(R.color.white));
-                mVerticalAdapter = new VerticalFragmentPagerAdapter(getChildFragmentManager(), mArrayList);
+                mVerticalAdapter = new VerticalFragmentPagerAdapter(getChildFragmentManager(), mArrayList, mModuleId);
                 pager.setAdapter(mVerticalAdapter);
                 pager.setPageTransformer(false, this);
                 pager.setOnPageChangeListener(this);
@@ -169,15 +169,15 @@ public class BoardFragment extends BaseActionBarFragment implements SwipeRefresh
                 pager.setVisibility(View.VISIBLE);
                 setActionBarBackgroundResource(R.color.brunchTransparent);
                 setActionBarColor(getResources().getColor(R.color.white));
-                mVerticalAdapter = new VerticalFragmentPagerAdapter(getChildFragmentManager(), mArrayList);
+                mVerticalAdapter = new VerticalFragmentPagerAdapter(getChildFragmentManager(), mArrayList, mModuleId);
                 pager.setAdapter(mVerticalAdapter);
                 pager.setPageTransformer(false, this);
                 pager.setOnPageChangeListener(this);
                 pager.setOffscreenPageLimit(1);
                 break;
             default: {
-                //mAdapter = new LinearBoardAdapter(mSection, mArrayList, mContext);
-                mAdapter = new NewBoardAdapter(mSection);
+                //mAdapter = new LinearBoardAdapter(mModuleId, mArrayList, mContext);
+                mAdapter = new NewBoardAdapter(mModuleId);
                 LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(mContext);
                 mRecyclerView.setLayoutManager(mLinearLayoutManager);
                 mRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(mLinearLayoutManager));
@@ -192,9 +192,9 @@ public class BoardFragment extends BaseActionBarFragment implements SwipeRefresh
 
     @Override
     protected void onInitCreated(Bundle paramBundle) {
-        setActionBarTitle(StringUtils.getBoardName(mSection));
-        mProgressView.setVisibility(View.VISIBLE);
-        if(mSection.equals("players1") || mSection.equals("specialreport"))
+        setActionBarTitle(StringUtils.getBoardName(mModuleId));
+
+        if(mModuleId.equals("players1") || mModuleId.equals("specialreport"))
             onVerticalRefresh();
         else
             onRefresh();
@@ -216,7 +216,7 @@ public class BoardFragment extends BaseActionBarFragment implements SwipeRefresh
                 mAdapter.notifyDataSetChanged();
 
                 mSwipeLayout.setRefreshing(false);
-                mProgressView.setVisibility(View.GONE);
+
             }
 
             @Override
@@ -227,12 +227,13 @@ public class BoardFragment extends BaseActionBarFragment implements SwipeRefresh
                 }
 
                 mSwipeLayout.setRefreshing(false);
-                mProgressView.setVisibility(View.GONE);
+
             }
 
         });
     }
     private void onVerticalRefresh(){
+        mProgressView.setVisibility(View.VISIBLE);
         mCurrentPage = 1;
         mQuery.put("act", "dispBoardContentList");
         mQuery.put("page","1");
@@ -302,13 +303,10 @@ public class BoardFragment extends BaseActionBarFragment implements SwipeRefresh
             tempAdapter.notifyDataSetChanged();
         }
     }
-
-
-
     @Override
     public void onRightButtonClicked() {
         super.onRightButtonClicked();
-        NavigationUtils.goSearchActivity(mContext, mSection);
+        NavigationUtils.goSearchActivity(mContext, mModuleId);
     }
 
     @Override
@@ -443,7 +441,6 @@ public class BoardFragment extends BaseActionBarFragment implements SwipeRefresh
         public void showTab(){
             mTabLayout.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
         }
-
         public void onLoadMore(int current_page){
             // 리스트 업데이트 시 하단에 새로고침 표시를 위해 null 삽입
 

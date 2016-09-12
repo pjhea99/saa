@@ -48,6 +48,14 @@ public abstract class MultiItemAdapter extends RecyclerView.Adapter<BaseViewHold
         this.mRows.remove(position);
     }
 
+    public boolean hasItemViewType(int itemViewType){
+        for(Row r : mRows){
+            if(r.getItemViewType() == itemViewType)
+                return true;
+        }
+        return false;
+    }
+
 
     @Override
     public int getItemCount() {

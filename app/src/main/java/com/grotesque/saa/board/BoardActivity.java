@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.grotesque.saa.R;
-import com.grotesque.saa.activity.BaseActivity;
+import com.grotesque.saa.common.activity.BaseActivity;
 
 import static com.grotesque.saa.util.LogUtils.makeLogTag;
 

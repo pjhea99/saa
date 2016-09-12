@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class VerticalFragmentPagerAdapter extends FragmentStatePagerAdapter {
     private static final String TAG = VerticalFragmentPagerAdapter.class.getSimpleName();
     private ArrayList<DocumentList> mArrayList;
+    private String moduleId;
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
@@ -24,14 +25,15 @@ public class VerticalFragmentPagerAdapter extends FragmentStatePagerAdapter {
         super(fm);
     }
 
-    public VerticalFragmentPagerAdapter(FragmentManager fm, ArrayList<DocumentList> mArrayList) {
+    public VerticalFragmentPagerAdapter(FragmentManager fm, ArrayList<DocumentList> mArrayList, String moduleId) {
         super(fm);
         this.mArrayList = mArrayList;
+        this.moduleId = moduleId;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return SpecialFragment.newInstance(mArrayList.get(position));
+        return SpecialFragment.newInstance(moduleId, mArrayList.get(position));
     }
 
     @Override

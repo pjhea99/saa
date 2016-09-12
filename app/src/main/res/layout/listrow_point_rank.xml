@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:padding="10.0dip">
+    <TextView android:id="@+id/rankView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="12.0dip" android:text="1" android:textColor="@color/brunch_mint"/>
+    <com.facebook.drawee.view.SimpleDraweeView android:layout_marginLeft="4.0dip" android:id="@+id/profileView" android:layout_width="30.0dip" android:layout_height="30.0dip"  />
+    <LinearLayout android:paddingLeft="10.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical">
+        <TextView android:id="@+id/nickView" android:gravity="left" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="그로테스크" android:textSize="12.0dip"/>
+        <TextView android:id="@+id/pointView" android:gravity="left" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="581447" android:textSize="12.0dip"/>
+    </LinearLayout>
+
+</LinearLayout>

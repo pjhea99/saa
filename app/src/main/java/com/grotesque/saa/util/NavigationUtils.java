@@ -6,6 +6,7 @@ import android.content.Intent;
 
 import com.grotesque.saa.R;
 import com.grotesque.saa.board.BoardActivity;
+import com.grotesque.saa.comment.CommentListActivity;
 import com.grotesque.saa.content.ContentActivity;
 import com.grotesque.saa.content.data.ContentItem;
 import com.grotesque.saa.home.data.DocumentList;
@@ -20,6 +21,13 @@ import java.util.ArrayList;
  * Created by 경환 on 2016-04-04.
  */
 public class NavigationUtils {
+    public static void goCommentListAcitivity(Context context, String mid, DocumentList documentList){
+        Intent intent = new Intent(context, CommentListActivity.class);
+        intent.putExtra("mid", mid);
+        intent.putExtra("array", documentList);
+        context.startActivity(intent);
+    }
+
     public static void goContentActivity(Context context, String condition){
         Intent intent = new Intent(context, ContentActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);

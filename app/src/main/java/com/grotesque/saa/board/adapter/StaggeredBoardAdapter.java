@@ -16,16 +16,22 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.drawable.ScalingUtils;
+import com.facebook.drawee.generic.GenericDraweeHierarchy;
+import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.common.ResizeOptions;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.grotesque.saa.R;
+import com.grotesque.saa.common.Drawables;
+import com.grotesque.saa.common.widget.CustomProgressbarDrawable;
 import com.grotesque.saa.home.data.DocumentList;
 import com.grotesque.saa.util.FontManager;
 import com.grotesque.saa.util.NavigationUtils;
 import com.grotesque.saa.util.ParseUtils;
+import com.grotesque.saa.util.StringUtils;
 
 import java.util.ArrayList;
 
@@ -78,12 +84,21 @@ public class StaggeredBoardAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             super(v);
 
             imageView = (SimpleDraweeView) v.findViewById(R.id.imageView);
+            GenericDraweeHierarchy gdh = new GenericDraweeHierarchyBuilder(context.getResources())
+                    .setProgressBarImage(new CustomProgressbarDrawable())
+                    .setActualImageScaleType(ScalingUtils.ScaleType.CENTER_CROP)
+                    .build();
+            imageView.setHierarchy(gdh);
+
             byView = (TextView) v.findViewById(R.id.byView);
             byView.setTypeface(FontManager.getInstance(context).getTypefaceItalic());
+
             titleView = (TextView) v.findViewById(R.id.titleView);
             titleView.setTypeface(FontManager.getInstance(context).getTypeface());
+
             userView = (TextView) v.findViewById(R.id.userView);
             userView.setTypeface(FontManager.getInstance(context).getTypeface());
+
             commentCountView = (TextView) v.findViewById(R.id.commentCountView);
             commentCountView.setTypeface(FontManager.getInstance(context).getTypeface());
         }
@@ -121,6 +136,7 @@ public class StaggeredBoardAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     NavigationUtils.goContentActivity(context, mid, arrayItems, position);
                 }
             });
+            vh.imageView.setVisibility(View.VISIBLE);
             if(arrayItems.get(position).hasImg()){
                 ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(ParseUtils.parseImgUrl(arrayItems.get(position).getContent())))
                         .setResizeOptions(new ResizeOptions(150, 180))
@@ -130,12 +146,23 @@ public class StaggeredBoardAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         .setOldController(vh.imageView.getController())
                         .build();
                 vh.imageView.setController(draweeController);
-                vh.imageView.setVisibility(View.VISIBLE);
-
                 vh.commentCountView.setTextColor(Color.parseColor("#FFFFFF"));
             }else{
-                vh.imageView.setVisibility(View.INVISIBLE);
-                vh.commentCountView.setTextColor(Color.parseColor("#ff00c3bd"));
+                if(arrayItems.get(position).hasYoutube()){
+                    ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse("http://img.youtube.com/vi/"+StringUtils.getYoutubeId(arrayItems.get(position).getContent()) + "/0.jpg"))
+                            .setResizeOptions(new ResizeOptions(150, 180))
+                            .build();
+                    DraweeController draweeController = Fresco.newDraweeControllerBuilder()
+                            .setImageRequest(request)
+                            .setOldController(vh.imageView.getController())
+                            .build();
+                    vh.imageView.setController(draweeController);
+                    vh.commentCountView.setTextColor(Color.parseColor("#FFFFFF"));
+                }else {
+                    vh.imageView.setVisibility(View.INVISIBLE);
+                    vh.commentCountView.setTextColor(Color.parseColor("#ff00c3bd"));
+                }
+
             }
         }
     }

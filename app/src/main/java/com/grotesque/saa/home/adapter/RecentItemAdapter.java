@@ -12,8 +12,17 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.drawable.ScalingUtils;
+import com.facebook.drawee.generic.GenericDraweeHierarchy;
+import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
+import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.grotesque.saa.R;
+import com.grotesque.saa.common.Drawables;
+import com.grotesque.saa.common.widget.CustomProgressbarDrawable;
 import com.grotesque.saa.home.data.DocumentList;
 import com.grotesque.saa.util.FontManager;
 import com.grotesque.saa.util.NavigationUtils;
@@ -51,6 +60,13 @@ public class RecentItemAdapter extends RecyclerView.Adapter<RecentItemAdapter.Vi
             mByView = (TextView) itemView.findViewById(R.id.byView);
             mWriterView = (TextView) itemView.findViewById(R.id.writerView);
 
+            GenericDraweeHierarchy gdh = new GenericDraweeHierarchyBuilder(mContext.getResources())
+                    .setFailureImage(Drawables.sErrorDrawable)
+                    .setProgressBarImage(new CustomProgressbarDrawable())
+                    .setPlaceholderImage(Drawables.sPlaceholderDrawable, ScalingUtils.ScaleType.CENTER_CROP)
+                    .setActualImageScaleType(ScalingUtils.ScaleType.FOCUS_CROP)
+                    .build();
+            mImageView.setHierarchy(gdh);
             mByView.setTypeface(FontManager.getInstance(mContext).getTypefaceItalic());
             mCategoryView.setTypeface(FontManager.getInstance(mContext).getTypefaceItalic());
         }
@@ -60,8 +76,7 @@ public class RecentItemAdapter extends RecyclerView.Adapter<RecentItemAdapter.Vi
         this.mid = mid;
         this.mContext = context;
     }
-    public void setArrayList(ArrayList<DocumentList> arraylist)
-    {
+    public void setArrayList(ArrayList<DocumentList> arraylist) {
         mArrayList = arraylist;
         notifyDataSetChanged();
     }
@@ -101,7 +116,15 @@ public class RecentItemAdapter extends RecyclerView.Adapter<RecentItemAdapter.Vi
             vh.mColorCover.setVisibility(View.GONE);
             vh.mSubTitleView.setVisibility(View.GONE);
 
-            vh.mImageView.setImageURI(Uri.parse(ParseUtils.parseImgUrl(mArrayList.get(position).getContent())));
+            ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(ParseUtils.parseImgUrl(mArrayList.get(position).getContent())))
+                    .build();
+            DraweeController draweeController = Fresco.newDraweeControllerBuilder()
+                    .setImageRequest(request)
+                    .setOldController(vh.mImageView.getController())
+                    .build();
+            vh.mImageView.setController(draweeController);
+
+
             vh.mTitleView.setTextColor(Color.parseColor("#FFFFFFFF"));
             vh.mWriterView.setTextColor(Color.parseColor("#99FFFFFF"));
             vh.mByView.setTextColor(Color.parseColor("#99FFFFFF"));

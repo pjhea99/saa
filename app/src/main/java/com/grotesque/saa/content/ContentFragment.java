@@ -2,46 +2,70 @@ package com.grotesque.saa.content;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
 import android.webkit.WebView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.drawable.ScalingUtils;
+import com.facebook.drawee.generic.GenericDraweeHierarchy;
+import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
+import com.facebook.drawee.interfaces.DraweeController;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.google.gson.JsonObject;
 import com.grotesque.saa.R;
+import com.grotesque.saa.common.Colors;
+import com.grotesque.saa.common.Drawables;
 import com.grotesque.saa.common.adapter.MultiItemAdapter;
 import com.grotesque.saa.common.api.RetrofitApi;
 import com.grotesque.saa.common.data.ResponseData;
 import com.grotesque.saa.common.fragment.BaseActionBarFragment;
 import com.grotesque.saa.common.widget.CommentBar;
 import com.grotesque.saa.common.widget.CustomAlertDialog;
-import com.grotesque.saa.content.adapter.CommentAdapter;
+import com.grotesque.saa.comment.adapter.CommentAdapter;
 import com.grotesque.saa.content.adapter.NewContentAdapter;
 import com.grotesque.saa.content.data.CommentContainer;
 import com.grotesque.saa.content.data.CommentList;
 import com.grotesque.saa.content.data.ContentItem;
 import com.grotesque.saa.home.data.DocumentList;
+import com.grotesque.saa.post.helper.IntentHelper;
 import com.grotesque.saa.util.AccountUtils;
 import com.grotesque.saa.util.DensityScaleUtil;
+import com.grotesque.saa.util.FontManager;
 import com.grotesque.saa.util.ParseUtils;
 import com.grotesque.saa.util.StringUtils;
+import com.grotesque.saa.util.UIUtils;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -56,13 +80,19 @@ import static com.grotesque.saa.util.LogUtils.makeLogTag;
 public class ContentFragment extends BaseActionBarFragment implements CommentBar.OnCommentBarListener, CommentAdapter.Listener, SwipeRefreshLayout.OnRefreshListener {
     private static final String TAG = makeLogTag(ContentFragment.class);
 
+    private RelativeLayout mCoverLayout;
+    private LinearLayout mCommentDragView;
+    private TextView mCommentCountView;
+    private TextView mEmptyView;
     private RecyclerView mRecyclerView;
     private RecyclerView mCommentRecyclerView;
     private ImageView mVoteAnimationView;
     private SwipeRefreshLayout mSwipeLayout;
+    private SimpleDraweeView mCoverImageView;
 
     private boolean mTitleVisible = true;
     private boolean mInfoVisible = true;
+    private boolean mHasImage = false;
 
     private int mPosition;
     private int mGetTopBoardName = 0;
@@ -72,7 +102,9 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
     private int mWidthPixels;
     private int mHeightPixels;
 
-    private String mMid;
+    private int mActionBarColor;
+
+    private String mModuleId;
     private String REFERER;
     private int mTotalCommentPage;
     private int mCurrentCommentPage = 1;
@@ -81,8 +113,6 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
 
     private SlidingUpPanelLayout mSlidingLayout;
     private CommentBar mCommentBar;
-    private View mCoverLayout;
-    private TextView mCommentCountView;
     private ObjectAnimator mObjectAnimator;
     private ObjectAnimator mObjectAnimator1;
     private ObjectAnimator mObjectAnimator2;
@@ -117,13 +147,14 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
     protected void initOnCreate(Bundle paramBundle) {
         Bundle args = getArguments();
         if(args != null){
-            mMid = args.getString("mid");
+            mModuleId = args.getString("mid");
             mCurrentDocument = args.getParcelable("array");
             mDocuData = args.getParcelableArrayList("arrayList");
             mPosition = args.getInt("position");
         }
 
         mWidthPixels = getResources().getDisplayMetrics().widthPixels;
+        mHeightPixels = getResources().getDisplayMetrics().heightPixels;
 
         DocumentList prevDocument = null;
         DocumentList nextDocument = null;
@@ -133,12 +164,14 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
             nextDocument = mPosition - 1 >= 0 ? mDocuData.get(mPosition - 1) : null;
         }
 
-        REFERER = RetrofitApi.API_BASE_URL + mMid +"/"+mCurrentDocument.getDocumentSrl();
+        REFERER = RetrofitApi.API_BASE_URL + mModuleId +"/"+mCurrentDocument.getDocumentSrl();
+        mHasImage = mCurrentDocument.hasImg();
 
         mArrayList.add(new ContentItem(mCurrentDocument.getTitle(), null, null, "cover", false));
         mArrayList.add(new ContentItem("divider", null));
         mArrayList.addAll(ParseUtils.parseContent(mCurrentDocument.getContent()));
         mArrayList.add(new ContentItem(mCurrentDocument.getTags(), null, null, "tags", false));
+
         if(prevDocument != null)
             mArrayList.add(new ContentItem("prev", prevDocument));
         if(nextDocument != null)
@@ -160,26 +193,102 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
     protected void registerView(View view) {
         super.registerView(view);
 
+        mCoverImageView = (SimpleDraweeView) view.findViewById(R.id.img_coverview_cover);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.content_list);
         mCommentRecyclerView = (RecyclerView) view.findViewById(R.id.commentList);
         mVoteAnimationView = (ImageView) view.findViewById(R.id.vote_animation);
-        mCoverLayout = view.findViewById(R.id.ll_postview_cover_text);
+        mCoverLayout = (RelativeLayout) view.findViewById(R.id.ll_postview_cover);
+        mCommentDragView = (LinearLayout) view.findViewById(R.id.commentDragView);
         mSwipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.commentSwipeLayout);
+        mEmptyView = (TextView) view.findViewById(R.id.emptyText);
+        mCommentCountView = (TextView) view.findViewById(R.id.commentCount);
+        mCommentCountView.setTypeface(FontManager.getInstance(getActivity()).getTypeface());
 
-        TextView categoryName = (TextView) view.findViewById(R.id.txt_cover_board_name);
-        TextView title = (TextView) view.findViewById(R.id.txt_coverview_title);
+        TextView textCategory = (TextView) view.findViewById(R.id.txt_cover_board_name);
+        TextView textTitle = (TextView) view.findViewById(R.id.txt_coverview_title);
         TextView textWriter = (TextView) view.findViewById(R.id.txt_postview_writer_name);
         TextView textTime = (TextView) view.findViewById(R.id.txt_postview_write_time);
 
-        if(!mCurrentDocument.getCategorySrl().equals("0")){
-            String category = StringUtils.getCategoryName(mCurrentDocument.getCategorySrl());
-            categoryName.setVisibility(View.VISIBLE);
-            categoryName.setText(category);
+        View imageMask = view.findViewById(R.id.view_iv_photo_mask);
+
+        int categoryColor = UIUtils.getCategoryColor(mCurrentDocument.getCategorySrl());
+        Drawable categoryBackground = getResources().getDrawable(R.drawable.view_div_title_line_white);
+        String categoryText = StringUtils.convertCategoryName(mCurrentDocument.getCategorySrl());
+
+        if(mCurrentDocument.getCategorySrl().equals("0") && !mHasImage) {
+
+            mActionBarColor = Colors.sBlackColor;
+            setActionBarColor(mActionBarColor);
+
+            mCoverLayout.setBackgroundColor(Colors.sWhiteColor);
+            mCoverLayout.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, (mHeightPixels - DensityScaleUtil.dipToPixel(getActivity(), 50F)) / 2));
+
+            if (categoryBackground != null) {
+                categoryBackground.setColorFilter(Colors.sMintColor, PorterDuff.Mode.SRC_IN);
+            }
+
+            mCoverImageView.setVisibility(View.GONE);
+            imageMask.setVisibility(View.GONE);
+
+
+        }else if(mHasImage){
+            mActionBarColor = Colors.sWhiteColor;
+            setActionBarColor(mActionBarColor);
+
+            mCoverLayout.setBackgroundColor(Colors.sWhiteColor);
+            mCoverLayout.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, mHeightPixels ));
+
+            if (categoryBackground != null) {
+                categoryBackground.setColorFilter(Colors.sWhiteColor, PorterDuff.Mode.SRC_IN);
+            }
+
+            mCoverImageView.setVisibility(View.VISIBLE);
+            imageMask.setVisibility(View.VISIBLE);
+
+            GenericDraweeHierarchy gdh = new GenericDraweeHierarchyBuilder(getActivity().getResources())
+                    .setFailureImage(Drawables.sErrorDrawable, ScalingUtils.ScaleType.CENTER_CROP)
+                    .setActualImageScaleType(ScalingUtils.ScaleType.CENTER_CROP)
+                    .build();
+            mCoverImageView.setHierarchy(gdh);
+
+            ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(ParseUtils.parseImgUrl(mCurrentDocument.getContent())))
+                    .build();
+            DraweeController draweeController = Fresco.newDraweeControllerBuilder()
+                    .setImageRequest(request)
+                    .setOldController(mCoverImageView.getController())
+                    .build();
+
+            mCoverImageView.setController(draweeController);
+
+
+            textCategory.setTextColor(Colors.sWhiteColor);
+            textWriter.setTextColor(Colors.sWhiteColor);
+            textTitle.setTextColor(Colors.sWhiteColor);
         }else{
-            categoryName.setVisibility(View.INVISIBLE);
+            mActionBarColor = Colors.sWhiteColor;
+            setActionBarColor(mActionBarColor);
+
+            mCoverLayout.setBackgroundColor(categoryColor);
+            mCoverLayout.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, (mHeightPixels - DensityScaleUtil.dipToPixel(getActivity(), 50F)) / 2));
+
+            if (categoryBackground != null) {
+                categoryBackground.setColorFilter(Colors.sWhiteColor, PorterDuff.Mode.SRC_IN);
+            }
+
+            mCoverImageView.setVisibility(View.GONE);
+            imageMask.setVisibility(View.GONE);
+
+            textCategory.setTextColor(Colors.sWhiteColor);
+            textWriter.setTextColor(Colors.sWhiteColor);
+            textTitle.setTextColor(Colors.sWhiteColor);
         }
-        setActionBarTitle(StringUtils.getBoardName(mMid));
-        title.setText(Html.fromHtml(mCurrentDocument.getTitle()));
+
+
+        textCategory.setText(categoryText);
+        textCategory.setBackground(categoryBackground);
+
+        setActionBarTitle(StringUtils.getBoardName(mModuleId));
+        textTitle.setText(Html.fromHtml(mCurrentDocument.getTitle()));
         textWriter.setText(mCurrentDocument.getNickName());
         textTime.setText(StringUtils.getCommentTime(mCurrentDocument.getRegdate()));
 
@@ -188,9 +297,7 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
         mObjectAnimator2 = ObjectAnimator.ofFloat(view.findViewById(R.id.ll_cover_info), View.ALPHA, 1.0F, 0.0F);
         mObjectAnimator3 = ObjectAnimator.ofFloat(view.findViewById(R.id.ll_cover_info), View.ALPHA, 0.0F, 1.0F);
 
-
         mContentAdapter = new NewContentAdapter();
-        //ContentAdapter mAdapter = new ContentAdapter(getActivity(), mArrayList);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mContentAdapter);
@@ -214,13 +321,10 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
             public void onClick(View view) { mSlidingLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);     }
         });
 
-        mCommentCountView = (TextView) view.findViewById(R.id.commentCount);
         mCommentBar = (CommentBar) view.findViewById(R.id.commentBar);
         mCommentBar.setOnCommentBarListener(this);
 
-
-
-        mCommentCountView.setText(mCurrentDocument.getCommentCount());
+        mCommentCountView.setText(String.format(Locale.KOREA, "댓글 %s", mCurrentDocument.getCommentCount()));
 
         mSwipeLayout.setOnRefreshListener(this);
         mSwipeLayout.setProgressBackgroundColorSchemeResource(R.color.brunch_mint);
@@ -279,8 +383,11 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
             public void onResponse(Call<CommentContainer> call, Response<CommentContainer> response) {
                 if(response.code() == 200) {
                     mCommentData.addAll(response.body().getCommentList());
-                    LOGE(TAG, "코멘트 갯수 : " + mCommentData.size());
-                    mCommentCountView.setText(String.valueOf(mCommentData.size()));
+                    if(mCommentData.size() == 0)
+                        mEmptyView.setVisibility(View.VISIBLE);
+                    else
+                        mEmptyView.setVisibility(View.GONE);
+                    mCommentCountView.setText(String.format(Locale.KOREA, "댓글 %d", mCommentData.size()));
                     mCommentAdapter.notifyDataSetChanged();
 
                     if(mTotalCommentPage > 1 && mTotalCommentPage > mCurrentCommentPage){
@@ -342,6 +449,184 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
             }
         return 0;
     }
+
+    @Override
+    public void onCommentButtonClick(int type, String content) {
+        switch (type){
+            case CommentBar.SUBMIT:
+                RetrofitApi.getInstance()
+                        .submitComment(mModuleId
+                                , ""
+                                , mCurrentDocument.getDocumentSrl()
+                                , ""
+                                , content
+                                , RetrofitApi.API_BASE_URL + mModuleId +"/"+mCurrentDocument.getDocumentSrl())
+                        .enqueue(commentCallback);
+                break;
+            case CommentBar.REPLY:
+                RetrofitApi.getInstance()
+                        .submitComment(mModuleId
+                                , mCurrentComment.getCommentSrl()
+                                , mCurrentDocument.getDocumentSrl()
+                                , ""
+                                , content
+                                , RetrofitApi.API_BASE_URL + mModuleId +"/"+mCurrentDocument.getDocumentSrl())
+                        .enqueue(commentCallback);
+                break;
+            case CommentBar.EDIT:
+                RetrofitApi.getInstance()
+                        .submitComment(mModuleId
+                                , ""
+                                , mCurrentDocument.getDocumentSrl()
+                                , mCurrentComment.getCommentSrl()
+                                , content
+                                , RetrofitApi.API_BASE_URL + mModuleId +"/"+mCurrentDocument.getDocumentSrl())
+                        .enqueue(commentCallback);
+                break;
+        }
+        return;
+    }
+    @Override
+    public void onCommentLongClick(final int position) {
+        mCurrentComment = mCommentData.get(position);
+        ArrayList arraylist = new ArrayList();
+        arraylist.add("답변");
+        if(AccountUtils.getActiveAccountName(mContext).equals(mCurrentComment.getUserId())) {
+            arraylist.add("수정");
+            arraylist.add("삭제");
+        }
+        CharSequence acharsequence[] = (CharSequence[])arraylist.toArray(new CharSequence[arraylist.size()]);
+        (new CustomAlertDialog(mContext)).setItems(acharsequence, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case 0:
+                        mCommentBar.setHint("@"+mCurrentComment.getUserName());
+                        mCommentBar.setRightButtonText(CommentBar.REPLY);
+                        break;
+                    case 1:
+                        IntentHelper.commentWriteIntent(getActivity(), mCurrentComment.getContent());
+                        break;
+                    case 2:
+                        RetrofitApi.getInstance().procBoardDeleteComment(
+                                mModuleId,
+                                mCurrentDocument.getDocumentSrl(),
+                                mCurrentComment.getContent(),
+                                REFERER).enqueue(deleteCallback);
+                        break;
+                }
+            }
+        }).show();
+    }
+    @Override
+    public void onCommentClick() {
+
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
+                    if(mCommentBar.getCommentType() == CommentBar.EDIT || mCommentBar.getCommentType() == CommentBar.REPLY){
+                        mCurrentComment = null;
+                        mCommentBar.clearBar();
+                    }else if(mSlidingLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED)
+                        mSlidingLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                    else {
+                        pauseWebView();
+                        getActivity().finish();
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
+
+    }
+    private void pauseWebView(){
+        View view;
+        for(int i=0 ; i<mContentAdapter.getItemCount(); i++){
+            view = mRecyclerView.getChildAt(i);
+            if(view != null){
+                if(view instanceof LinearLayout){
+                    if(((LinearLayout)view).getChildAt(0) != null){
+                        if(((LinearLayout)mRecyclerView.getChildAt(i)).getChildAt(0) instanceof WebView)
+                            ((WebView) ((LinearLayout)mRecyclerView.getChildAt(i)).getChildAt(0)).destroy();
+                    }
+                }
+            }
+        }
+    }
+    public void setAdapterItems(List<ContentItem> items) {
+        List<MultiItemAdapter.Row<?>> rows = new ArrayList<>();
+
+        for (int i = 0; i < items.size(); i++) {
+            ContentItem item = items.get(i);
+            if (item.getType().equals("cover")) {
+                rows.add(
+                        MultiItemAdapter.Row.create(item, NewContentAdapter.VIEW_TYPE_COVER));
+            }else if(item.getType().equals("text")){
+                rows.add(
+                        MultiItemAdapter.Row.create(item, NewContentAdapter.VIEW_TYPE_TEXT));
+            }else if(item.getType().equals("image")){
+                rows.add(
+                        MultiItemAdapter.Row.create(item, NewContentAdapter.VIEW_TYPE_IMAGE));
+            }else if(item.getType().equals("video")){
+                rows.add(
+                        MultiItemAdapter.Row.create(item, NewContentAdapter.VIEW_TYPE_VIDEO));
+            }else if(item.getType().equals("tags")){
+                rows.add(
+                        MultiItemAdapter.Row.create(item, NewContentAdapter.VIEW_TYPE_TAGS));
+            }else if(item.getType().equals("next")){
+                rows.add(
+                        MultiItemAdapter.Row.create(item, NewContentAdapter.VIEW_TYPE_NEXT));
+            }else if(item.getType().equals("prev")){
+                rows.add(
+                        MultiItemAdapter.Row.create(item, NewContentAdapter.VIEW_TYPE_PREV));
+            }else if(item.getType().equals("divider")){
+                rows.add(
+                        MultiItemAdapter.Row.create(item, NewContentAdapter.VIEW_TYPE_DIVIDER));
+            }
+        }
+
+        mContentAdapter.setRows(rows);
+        mContentAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == IntentHelper.COMMENT_WRITE) {
+            if (resultCode != Activity.RESULT_OK) {
+                return;
+            }
+            LOGE(TAG, "onActivityResult");
+            RetrofitApi.getInstance()
+                    .submitComment(mModuleId
+                            , ""
+                            , mCurrentDocument.getDocumentSrl()
+                            , mCurrentComment.getCommentSrl()
+                            , data.getExtras().getString("comment")
+                            , RetrofitApi.API_BASE_URL + mModuleId +"/"+mCurrentDocument.getDocumentSrl())
+                    .enqueue(commentCallback);
+        }
+    }
+
+    @Override
+    public void onRefresh() {
+        mSwipeLayout.setRefreshing(true);
+        mCommentQuery.put("act", "dispBoardContentCommentList");
+        mCommentQuery.put("document_srl", mCurrentDocument.getDocumentSrl());
+        mCommentQuery.put("cpage", "1#comment");
+        mTotalCommentPage =  Integer.parseInt(mCurrentDocument.getCommentCount()) / 50  + 1;
+        mCommentData.clear();
+        onLoadCommentData();
+    }
+
     private final RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
         @Override
         public void onScrollStateChanged(final RecyclerView recyclerView, final int newState) {
@@ -356,6 +641,7 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
             int scrolledY = getScrollY();
             int toolbarHeight = DensityScaleUtil.dipToPixel(mContext, 50f);
 
+            mCoverImageView.setLayoutParams(new RelativeLayout.LayoutParams(-1, mCoverLayout.getHeight() - scrolledY));
 
             if(scrolledY > DensityScaleUtil.dipToPixel(mContext, 10f)){
                 View view = mLayoutManager.findViewByPosition(0);
@@ -366,18 +652,31 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
                 if(view != null)
                     view.findViewById(R.id.view_divider_postcover).setVisibility(View.GONE);
             }
-            View view = recyclerView.getChildAt(0);
-            if (totalItemCount >= 1 && view != null) {
-                float firstItemHeight = view.getHeight();
+
+            if(mHasImage){
+                if(scrolledY > DensityScaleUtil.dipToPixel(mContext, 50f)){
+                    mCommentDragView.setBackground(getResources().getDrawable(R.drawable.comm_bg_home_top));
+                    mCommentCountView.setTextColor(getResources().getColor(R.color.black));
+                }else{
+                    mCommentDragView.setBackgroundColor(getResources().getColor(R.color.brunchTransparent));
+                    mCommentCountView.setTextColor(getResources().getColor(R.color.white));
+                }
+            }
+
+
+            View firstItem = recyclerView.getChildAt(0);
+            if (totalItemCount >= 1 && firstItem != null) {
+                float firstItemHeight = firstItem.getHeight();
                 int l;
                 int a = 0;
-                if (view.getY() + firstItemHeight > (float) toolbarHeight)
+                if (firstItem.getY() + firstItemHeight > (float) toolbarHeight)
                     l = firstVisibleItemPosition;
                 else
                     l = firstVisibleItemPosition + 1;
                 if (l == 0) {
                     setActionBarBackgroundResource(0);
-                    if (scrolledY > mCoverLayout.getHeight()-mGetBottomTitle) {
+                    setActionBarColor(mActionBarColor);
+                    if (scrolledY > mCoverLayout.getHeight() - mGetBottomTitle) {
                         if (mTitleVisible) {
                             mObjectAnimator.setInterpolator(new LinearInterpolator());
                             mObjectAnimator.setDuration(400L);
@@ -464,6 +763,7 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
                 } else if (firstVisibleItemPosition + visibleItemCount == totalItemCount) {
                     View view1 = recyclerView.getChildAt(visibleItemCount - 1);
                     if (view1 != null && view1.getBottom() == recyclerView.getBottom()) {
+                        setActionBarColor(getResources().getColor(R.color.black));
                         setActionBarBackgroundResource(R.drawable.comm_bg_home_top);
                         setActionBarVisibility(true);
                     }
@@ -471,11 +771,13 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
                     if(dy > 0) {
                         setActionBarVisibility(false);
                     }else{
+                        setActionBarColor(getResources().getColor(R.color.black));
                         setActionBarBackgroundResource(R.drawable.comm_bg_home_top);
                         setActionBarVisibility(true);
                     }
 
                 } else if (a > l) {
+                    setActionBarColor(getResources().getColor(R.color.black));
                     setActionBarBackgroundResource(R.drawable.comm_bg_home_top);
                     setActionBarVisibility(true);
                 }
@@ -483,7 +785,6 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
             }
         }
     };
-
     private final Callback<JsonObject> commentCallback = new Callback<JsonObject>() {
         @Override
         public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -530,163 +831,4 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
 
         }
     };
-
-    @Override
-    public void onButtonClicked(int type, String content) {
-        switch (type){
-            case CommentBar.SUBMIT:
-                RetrofitApi.getInstance()
-                        .submitComment(mMid
-                                , ""
-                                , mCurrentDocument.getDocumentSrl()
-                                , ""
-                                , content
-                                , RetrofitApi.API_BASE_URL + mMid +"/"+mCurrentDocument.getDocumentSrl())
-                        .enqueue(commentCallback);
-                break;
-            case CommentBar.REPLY:
-                RetrofitApi.getInstance()
-                        .submitComment(mMid
-                                , mCurrentComment.getCommentSrl()
-                                , mCurrentDocument.getDocumentSrl()
-                                , ""
-                                , content
-                                , RetrofitApi.API_BASE_URL + mMid +"/"+mCurrentDocument.getDocumentSrl())
-                        .enqueue(commentCallback);
-                break;
-            case CommentBar.EDIT:
-                RetrofitApi.getInstance()
-                        .submitComment(mMid
-                                , ""
-                                , mCurrentDocument.getDocumentSrl()
-                                , mCurrentComment.getCommentSrl()
-                                , content
-                                , RetrofitApi.API_BASE_URL + mMid +"/"+mCurrentDocument.getDocumentSrl())
-                        .enqueue(commentCallback);
-                break;
-        }
-        return;
-    }
-    @Override
-    public void onLongClicked(final int position) {
-        mCurrentComment = mCommentData.get(position);
-        ArrayList arraylist = new ArrayList();
-        arraylist.add("답변");
-        if(AccountUtils.getActiveAccountName(mContext).equals(mCurrentComment.getUserId())) {
-            arraylist.add("수정");
-            arraylist.add("삭제");
-        }
-        CharSequence acharsequence[] = (CharSequence[])arraylist.toArray(new CharSequence[arraylist.size()]);
-        (new CustomAlertDialog(mContext)).setItems(acharsequence, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which){
-                    case 0:
-                        mCommentBar.setHint("@"+mCurrentComment.getUserName());
-                        mCommentBar.setRightButtonText(CommentBar.REPLY);
-                        break;
-                    case 1:
-                        mCommentBar.setRightButtonText(CommentBar.EDIT);
-                        mCommentBar.setText(mCommentData.get(position).getContent());
-                        break;
-                    case 2:
-                        RetrofitApi.getInstance().procBoardDeleteComment(
-                                mMid,
-                                mCurrentDocument.getDocumentSrl(),
-                                mCurrentComment.getContent(),
-                                REFERER).enqueue(deleteCallback);
-                        break;
-                }
-            }
-        }).show();
-    }
-    @Override
-    public void onClicked() {
-
-    }
-    @Override
-    public void onResume() {
-        super.onResume();
-        getView().setFocusableInTouchMode(true);
-        getView().requestFocus();
-        getView().setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
-                    if(mCommentBar.getCommentType() == CommentBar.EDIT || mCommentBar.getCommentType() == CommentBar.REPLY){
-                        mCurrentComment = null;
-                        mCommentBar.clearBar();
-                    }else if(mSlidingLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED)
-                        mSlidingLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-                    else {
-                        pauseWebView();
-                        getActivity().finish();
-                    }
-                    return true;
-                }
-                return false;
-            }
-        });
-
-    }
-    private void pauseWebView(){
-        View view;
-        for(int i=0 ; i<mContentAdapter.getItemCount(); i++){
-            view = mRecyclerView.getChildAt(i);
-            if(view != null){
-                if(view instanceof LinearLayout){
-                    if(((LinearLayout)view).getChildAt(0) != null){
-                        if(((LinearLayout)mRecyclerView.getChildAt(i)).getChildAt(0) instanceof WebView)
-                            ((WebView) ((LinearLayout)mRecyclerView.getChildAt(i)).getChildAt(0)).destroy();
-                    }
-                }
-            }
-        }
-    }
-    public void setAdapterItems(List<ContentItem> items) {
-        List<MultiItemAdapter.Row<?>> rows = new ArrayList<>();
-
-        for (int i = 0; i < items.size(); i++) {
-            ContentItem item = items.get(i);
-            if (item.getType().equals("cover")) {
-                rows.add(
-                        MultiItemAdapter.Row.create(item, NewContentAdapter.VIEW_TYPE_COVER));
-            }else if(item.getType().equals("text")){
-                rows.add(
-                        MultiItemAdapter.Row.create(item, NewContentAdapter.VIEW_TYPE_TEXT));
-            }else if(item.getType().equals("image")){
-                rows.add(
-                        MultiItemAdapter.Row.create(item, NewContentAdapter.VIEW_TYPE_IMAGE));
-            }else if(item.getType().equals("video")){
-                rows.add(
-                        MultiItemAdapter.Row.create(item, NewContentAdapter.VIEW_TYPE_VIDEO));
-            }else if(item.getType().equals("tags")){
-                rows.add(
-                        MultiItemAdapter.Row.create(item, NewContentAdapter.VIEW_TYPE_TAGS));
-            }else if(item.getType().equals("next")){
-                rows.add(
-                        MultiItemAdapter.Row.create(item, NewContentAdapter.VIEW_TYPE_NEXT));
-            }else if(item.getType().equals("prev")){
-                rows.add(
-                        MultiItemAdapter.Row.create(item, NewContentAdapter.VIEW_TYPE_PREV));
-            }else if(item.getType().equals("divider")){
-                rows.add(
-                        MultiItemAdapter.Row.create(item, NewContentAdapter.VIEW_TYPE_DIVIDER));
-            }
-        }
-
-        mContentAdapter.setRows(rows);
-        mContentAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onRefresh() {
-        mSwipeLayout.setRefreshing(true);
-        mCommentQuery.put("act", "dispBoardContentCommentList");
-        mCommentQuery.put("document_srl", mCurrentDocument.getDocumentSrl());
-        mCommentQuery.put("cpage", "1#comment");
-        mTotalCommentPage =  Integer.parseInt(mCurrentDocument.getCommentCount()) / 50  + 1;
-        mCommentData.clear();
-        onLoadCommentData();
-    }
 }

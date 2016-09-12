@@ -140,7 +140,9 @@ public class SearchItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }else{
             final ViewItemHolder vh = (ViewItemHolder) holder;
             vh.mCountView.setText(String.format(Locale.US, "%s hit", mArrayItems.get(position).getHit()));
-            vh.mTitleView.setText(Html.fromHtml(mArrayItems.get(position).getTitle()));
+            String title = mArrayItems.get(position).getTitle();
+            title = title.substring(0, title.length() - mArrayItems.get(position).getReply().length());
+            vh.mTitleView.setText(Html.fromHtml(title));
             vh.mTimeView.setText(mArrayItems.get(position).getDate());
             vh.mUserView.setText(mArrayItems.get(position).getAuthor());
             vh.mCommentView.setText(String.format(Locale.US, "+ %s", mArrayItems.get(position).getReply().equals("") ? 0 : mArrayItems.get(position).getReply()));

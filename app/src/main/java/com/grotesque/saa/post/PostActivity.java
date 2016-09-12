@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.grotesque.saa.R;
 import com.grotesque.saa.common.actionbar.BaseActionBar;
 import com.grotesque.saa.common.api.RetrofitApi;
+import com.grotesque.saa.common.widget.NavigationView;
 import com.grotesque.saa.home.data.DocumentList;
 import com.grotesque.saa.imgur.ImgurApi;
 import com.grotesque.saa.post.adapter.RecyclerListAdapter;
@@ -49,8 +50,10 @@ import static com.grotesque.saa.util.LogUtils.makeLogTag;
 /**
  * Created by 경환 on 2016-04-12.
  */
-public class PostActivity extends AppCompatActivity implements OnPostAdapterListener, TextView.OnEditorActionListener, View.OnClickListener, View.OnFocusChangeListener, AttachmentFragment.AttachmentListener, BaseActionBar.OnActionBarListener {
+public class PostActivity extends AppCompatActivity implements OnPostAdapterListener, TextView.OnEditorActionListener, View.OnClickListener, View.OnFocusChangeListener, AttachmentFragment.AttachmentListener, BaseActionBar.OnActionBarListener, NavigationView.OnButtonClickListener {
     private final String TAG = makeLogTag(PostActivity.class);
+
+    private String mSection ="freeboard3";
 
     private Upload upload; // Upload object containging image and meta data
     private File chosenFile; //chosen file from intent
@@ -60,10 +63,14 @@ public class PostActivity extends AppCompatActivity implements OnPostAdapterList
     private ImageButton mImageUpload;
     private ImageButton mAddMore;
     private ImageButton mCloseAll;
+    private ImageButton mCancelSearch;
     private RecyclerView mRecyclerView;
+    private LinearLayout mPostLayout;
     private LinearLayout mSearchLayout;
     private FrameLayout mFragmentLayout;
     private RelativeLayout mProgressView;
+
+    private NavigationView mNavigationView;
 
     private AttachmentFragment mAttachmentFragment;
 
@@ -82,16 +89,22 @@ public class PostActivity extends AppCompatActivity implements OnPostAdapterList
         mImageUpload = (ImageButton) findViewById(R.id.imgbtn_add_photo);
         mAddMore = (ImageButton) findViewById(R.id.imgbtn_add_more);
         mCloseAll = (ImageButton) findViewById(R.id.ib_close_all);
+        mCancelSearch = (ImageButton) findViewById(R.id.ib_clear_text);
         mRecyclerView = (RecyclerView) findViewById(R.id.post_list);
+        mPostLayout = (LinearLayout) findViewById(R.id.ll_post_layout);
         mSearchLayout = (LinearLayout) findViewById(R.id.ll_search_item_layout);
         mFragmentLayout = (FrameLayout) findViewById(R.id.attachment_search_fragment);
         mProgressView = (RelativeLayout) findViewById(R.id.loading_progress);
+
+        mNavigationView = (NavigationView) findViewById(R.id.navigationView);
+        mNavigationView.setOnButtonClickListener(this);
 
         mSearchEditText.setOnEditorActionListener(this);
         mSearchEditText.setOnFocusChangeListener(this);
         mImageUpload.setOnClickListener(this);
         mAddMore.setOnClickListener(this);
         mCloseAll.setOnClickListener(this);
+        mCancelSearch.setOnClickListener(this);
 
         mAdapter = new RecyclerListAdapter(this, mDatas, this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -102,9 +115,6 @@ public class PostActivity extends AppCompatActivity implements OnPostAdapterList
         mItemTouchHelper.attachToRecyclerView(mRecyclerView);
 
         mDatas.add(new PostData("title", ""));
-
-
-
     }
     private Fragment getFragment(int paramInt)
     {
@@ -147,7 +157,7 @@ public class PostActivity extends AppCompatActivity implements OnPostAdapterList
             }
             String document_srl = data.getExtras().getString("document_srl");
             HashMap<String, String> query = new HashMap<>();
-            query.put("mid", "freeboard3");
+            query.put("mid", mSection);
             query.put("document_srl", document_srl);
 
             RetrofitApi.getInstance().getPostBoardContent(query).enqueue(new Callback<ContentContainer>() {
@@ -156,7 +166,7 @@ public class PostActivity extends AppCompatActivity implements OnPostAdapterList
                     if(response.body().getMessage().equals("success")){
                         ArrayList<DocumentList> arrayList = new ArrayList<>();
                         arrayList.add(response.body().getDocumentList());
-                        NavigationUtils.goContentActivity(PostActivity.this, "freeboard3", arrayList, 0);
+                        NavigationUtils.goContentActivity(PostActivity.this, mSection, arrayList, 0);
                     }
                 }
 
@@ -266,6 +276,9 @@ public class PostActivity extends AppCompatActivity implements OnPostAdapterList
                 hideAttachLayout();
                 mAddMore.setSelected(false);
                 break;
+            case R.id.ib_clear_text:
+                mSearchEditText.setText("");
+                break;
        }
     }
 
@@ -290,7 +303,8 @@ public class PostActivity extends AppCompatActivity implements OnPostAdapterList
 
     @Override
     public void onTitleTextClicked() {
-
+        mNavigationView.setVisibility(View.VISIBLE);
+        mPostLayout.setVisibility(View.GONE);
     }
 
     @Override
@@ -304,8 +318,10 @@ public class PostActivity extends AppCompatActivity implements OnPostAdapterList
     }
 
     @Override
-    public void onSearchButtonClicked() {
-
+    public void onClicked(String mid) {
+        mSection = mid;
+        mNavigationView.setVisibility(View.GONE);
+        mPostLayout.setVisibility(View.VISIBLE);
     }
 
     private class UiCallback implements Callback<ImageResponse> {

@@ -16,29 +16,27 @@ import static com.grotesque.saa.util.LogUtils.makeLogTag;
 
 public class RecentData extends RecentDataDynamicModel{
     private static final String TAG = makeLogTag(RecentData.class);
-    public ArrayList<DocumentList> calcioList;
+    public ArrayList<DocumentList> mDocumentList;
     private String mMid;
     private HashMap<String, String> mQuery = new HashMap<>();
     private OnLoadedListener mOnloadedListener;
 
-
-
     public RecentData(String mid) {
-        calcioList = new ArrayList<>();
+        mDocumentList = new ArrayList<>();
         mMid = mid;
         mQuery.put("act", "dispBoardContentList");
         mQuery.put("mid", mMid);
         mQuery.put("page", "1");
     }
-    public ArrayList<DocumentList> getCalcioList() {
-        if(calcioList != null)
-            return calcioList;
+    public ArrayList<DocumentList> getDocumentList() {
+        if(mDocumentList != null)
+            return mDocumentList;
         return null;
     }
 
-    public void setCalcioList(ArrayList<DocumentList> list) {
-        calcioList.clear();
-        calcioList.addAll(list);
+    public void setDocumentList(ArrayList<DocumentList> list) {
+        mDocumentList.clear();
+        mDocumentList.addAll(list);
         mOnloadedListener.onLoaded();
     }
 
@@ -49,12 +47,11 @@ public class RecentData extends RecentDataDynamicModel{
 
     @Override
     public void loadData(Context context) {
-
         Call<DocumentContainer> call = RetrofitApi.getInstance().getBoardList(mQuery);
         call.enqueue(new Callback<DocumentContainer>() {
             @Override
             public void onResponse(Call<DocumentContainer> call, Response<DocumentContainer> response) {
-                setCalcioList(response.body().getDocumentList());
+                setDocumentList(response.body().getDocumentList());
             }
 
             @Override
@@ -63,8 +60,6 @@ public class RecentData extends RecentDataDynamicModel{
             }
 
         });
-
-
     }
 
     public void setOnLoadedListener(OnLoadedListener listener){

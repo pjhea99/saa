@@ -24,6 +24,7 @@ import com.grotesque.saa.common.Drawables;
 import com.grotesque.saa.common.holder.BaseViewHolder;
 import com.grotesque.saa.common.widget.CustomProgressbarDrawable;
 import com.grotesque.saa.home.data.DocumentList;
+import com.grotesque.saa.util.DensityScaleUtil;
 import com.grotesque.saa.util.FontManager;
 import com.grotesque.saa.util.NavigationUtils;
 import com.grotesque.saa.util.ParseUtils;
@@ -77,7 +78,7 @@ public class BoardBasicHolder extends BaseViewHolder<DocumentList> {
                 .setFailureImage(Drawables.sErrorDrawable)
                 .setProgressBarImage(new CustomProgressbarDrawable())
                 .setPlaceholderImage(Drawables.sPlaceholderDrawable, ScalingUtils.ScaleType.CENTER_CROP)
-                .setActualImageScaleType(ScalingUtils.ScaleType.FIT_CENTER)
+                .setActualImageScaleType(ScalingUtils.ScaleType.CENTER_CROP)
                 .build();
         mImageView.setHierarchy(gdh);
     }
@@ -121,7 +122,7 @@ public class BoardBasicHolder extends BaseViewHolder<DocumentList> {
         if(item.get(position).hasImg()){
             mImageView.setVisibility(View.VISIBLE);
             ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(ParseUtils.parseImgUrl(item.get(position).getContent())))
-                    .setResizeOptions(new ResizeOptions(75, 75))
+                    .setResizeOptions(new ResizeOptions(DensityScaleUtil.dipToPixel(getContext(), 75), DensityScaleUtil.dipToPixel(getContext(), 75)))
                     .build();
             DraweeController draweeController = Fresco.newDraweeControllerBuilder()
                     .setImageRequest(request)

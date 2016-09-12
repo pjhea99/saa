@@ -113,7 +113,7 @@ public class CommentBar extends LinearLayout implements View.OnClickListener, Vi
 
     @Override
     public void onClick(View v) {
-        onCommentBarListener.onButtonClicked(mType, mCommentBarEditText.getText().toString().replace("\n","<br></br>"));
+        onCommentBarListener.onCommentButtonClick(mType, mCommentBarEditText.getText().toString().replace("\n","<br></br>"));
     }
 
     @Override
@@ -143,7 +143,7 @@ public class CommentBar extends LinearLayout implements View.OnClickListener, Vi
     }
 
     public interface OnCommentBarListener{
-        void onButtonClicked(int type, String content);
+        void onCommentButtonClick(int type, String content);
     }
 
 

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_height="wrap_content" android:layout_width="wrap_content">
+    <LinearLayout android:background="@drawable/background_board_item" android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginRight="10.0dip">
+        <com.grotesque.saa.common.widget.TypefacedTextView android:layout_gravity="center" android:gravity="center" android:paddingLeft="5.0dip" android:paddingTop="5.0dip" android:paddingBottom="5.0dip" android:textSize="12.0dip" android:textColor="@color/black" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="#"/>
+        <com.grotesque.saa.common.widget.TypefacedTextView android:layout_gravity="center" android:gravity="center" android:paddingRight="5.0dip" android:textSize="12.0dip" android:textColor="@color/brunch_black" android:id="@+id/txt_postview_tags" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="태그" android:textColorLink="@color/brunch_mint" android:bufferType="spannable" android:autoLink="web" />
+    </LinearLayout>
+</RelativeLayout>

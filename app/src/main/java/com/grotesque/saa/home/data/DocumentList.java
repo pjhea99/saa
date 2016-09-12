@@ -213,6 +213,13 @@ public class DocumentList implements Parcelable{
         else
             return false;
     }
+    public boolean hasYoutube(){
+        if(this.content.contains("youtube.com"))
+            return true;
+        else
+            return false;
+    }
+
     public DocumentList(Parcel in) {
         readFromParcel(in);
     }

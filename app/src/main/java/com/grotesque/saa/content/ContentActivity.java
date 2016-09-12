@@ -1,5 +1,6 @@
 package com.grotesque.saa.content;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -60,4 +61,11 @@ public class ContentActivity extends YouTubeBaseActivity {
         Glide.get(this).clearMemory();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Fragment fragment = getFragmentManager().findFragmentById(R.id.documentFragment);
+        if(fragment != null)
+            fragment.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }

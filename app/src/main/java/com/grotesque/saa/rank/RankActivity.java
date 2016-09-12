@@ -5,8 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.grotesque.saa.R;
-import com.grotesque.saa.activity.BaseActivity;
-
+import com.grotesque.saa.common.activity.BaseActivity;
 
 public class RankActivity extends BaseActivity implements RankFragment.Listener{
     private static final String SEARCH_SUBJECT = "Search_Subject";
@@ -14,7 +13,6 @@ public class RankActivity extends BaseActivity implements RankFragment.Listener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rank);
-
         getFragmentManager().beginTransaction().add(R.id.main_content, RankFragment.newInstance()).commit();
     }
 

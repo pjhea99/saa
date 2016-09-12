@@ -1,4 +1,4 @@
-package com.grotesque.saa.content.adapter;
+package com.grotesque.saa.comment.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -108,7 +108,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
             holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    mListener.onLongClicked(position);
+                    mListener.onCommentLongClick(position);
                     return false;
                 }
             });
@@ -332,7 +332,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     }
 
     public interface Listener{
-        void onLongClicked(int position);
-        void onClicked();
+        void onCommentLongClick(int position);
+        void onCommentClick();
     }
 }

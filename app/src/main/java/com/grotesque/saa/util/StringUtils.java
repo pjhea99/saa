@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import static com.grotesque.saa.util.LogUtils.LOGE;
 import static com.grotesque.saa.util.LogUtils.makeLogTag;
@@ -92,6 +93,22 @@ public class StringUtils {
         }else
             return imgUrl;
     }
+    public static String convertFixtureDate(String str){
+        SimpleDateFormat format = new SimpleDateFormat("ddMMyyyyHHmm", Locale.ITALY);
+        TimeZone tz = TimeZone.getTimeZone("Europe/Rome");
+        format.setTimeZone(tz);
+        try {
+            Date date = format.parse(str);
+            SimpleDateFormat format1 = new SimpleDateFormat("M월 d일\nE요일 HH:mm", Locale.KOREA);
+            tz = TimeZone.getTimeZone("Asia/Seoul");
+            format1.setTimeZone(tz);
+            return format1.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
     public static String convertDate(String str){
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss", Locale.KOREA);
         SimpleDateFormat convertFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.KOREA);
@@ -157,7 +174,7 @@ public class StringUtils {
         }
         return video;
     }
-    public static String getCategoryName(String category){
+    public static String convertCategoryName(String category){
         switch (category){
             case "10282945":
                 return "국대";
@@ -193,6 +210,52 @@ public class StringUtils {
                 return "세븐나이츠";
             case "46192952":
                 return "오버워치";
+            default:
+                return "";
+        }
+    }
+    public static String convertTeamName(String team) {
+        switch (team) {
+            case "Roma":
+                return "AS로마";
+            case "Udinese":
+                return "우디네세";
+            case "Juventus":
+                return "유벤투스";
+            case "Fiorentina":
+                return "피오렌티나";
+            case "Milan":
+                return "AC밀란";
+            case "Torino":
+                return "토리노";
+            case "Atalanta":
+                return "아탈란타";
+            case "Lazio":
+                return "라치오";
+            case "Bologna":
+                return "볼로냐";
+            case "Crotone":
+                return "크로토네";
+            case "Chievoverona":
+                return "키에보 베로나";
+            case "Inter":
+                return "인터밀란";
+            case "Empoli":
+                return "엠폴리";
+            case "Sampdoria":
+                return "삼프도리아";
+            case "Genoa":
+                return "제노아";
+            case "Cagliari":
+                return "칼리아리";
+            case "Pescara":
+                return "페스카라";
+            case "Napoli":
+                return "나폴리";
+            case "Palermo":
+                return "팔레르모";
+            case "Sassuolo":
+                return "사수올로";
         }
         return "";
     }
@@ -210,6 +273,10 @@ public class StringUtils {
     public static String getYoutubeId(String videoId){
         videoId = videoId.substring(!videoId.contains("/embed/") ? (videoId.contains(".be/") ? videoId.indexOf(".be/")+4 : videoId.indexOf("/v/")+3) : videoId.indexOf("embed/")+6, videoId.length());
         videoId = videoId.contains("?") ? videoId.substring(0, videoId.indexOf("?")) : videoId;
+        if(videoId.contains("\"")){
+            videoId = videoId.substring(0, videoId.indexOf("\""));
+        }
+        LOGE(TAG, "videoid : " + videoId);
         return videoId;
     }
     public static String getYoutubeIframe(String videoId){

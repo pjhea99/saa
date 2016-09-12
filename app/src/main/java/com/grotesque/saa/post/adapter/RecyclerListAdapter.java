@@ -125,12 +125,10 @@ public class RecyclerListAdapter extends RecyclerView.Adapter
                     mItems.get(position).setHtml(s.toString().replace("\n", "</br>"));
                 }
             });
-            textHolder.textView.setOnTouchListener(new View.OnTouchListener() {
+            textHolder.textView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
-                        mDragStartListener.onStartDrag(holder);
-                    }
+                public boolean onLongClick(View view) {
+                    mDragStartListener.onStartDrag(holder);
                     return false;
                 }
             });

@@ -14,21 +14,24 @@ import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.grotesque.saa.R;
 import com.grotesque.saa.common.fragment.BaseFragment;
 import com.grotesque.saa.home.data.DocumentList;
+import com.grotesque.saa.util.NavigationUtils;
 import com.grotesque.saa.util.ParseUtils;
 
 /**
  * Created by 경환 on 2016-05-03.
  */
 public class SpecialFragment extends BaseFragment {
+    private String mModuleId;
     private DocumentList mDocuData;
     private SimpleDraweeView mImageView;
     private TextView mTitleView;
     private TextView mUserView;
     private TextView mCategoryView;
     private TextView mSummaryView;
-    public static SpecialFragment newInstance(DocumentList data){
+    public static SpecialFragment newInstance(String moduleId, DocumentList data){
         SpecialFragment fragment = new SpecialFragment();
         Bundle args = new Bundle();
+        args.putString("mid", moduleId);
         args.putParcelable("data", data);
         fragment.setArguments(args);
         return fragment;
@@ -42,6 +45,7 @@ public class SpecialFragment extends BaseFragment {
     @Override
     protected void initOnCreate(Bundle paramBundle) {
         if(getArguments() != null){
+            mModuleId = getArguments().getString("mid");
             mDocuData = getArguments().getParcelable("data");
         }
     }
@@ -78,6 +82,12 @@ public class SpecialFragment extends BaseFragment {
         mUserView = (TextView) view.findViewById(R.id.userView);
         mCategoryView = (TextView) view.findViewById(R.id.magazineView);
         mSummaryView = (TextView) view.findViewById(R.id.summaryView);
+        mSummaryView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavigationUtils.goContentActivity(getActivity(), mModuleId, mDocuData);
+            }
+        });
 
     }
 

@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
+import com.grotesque.saa.common.Arrays;
+import com.grotesque.saa.common.Colors;
 import com.grotesque.saa.common.Drawables;
 import com.grotesque.saa.util.OkHttpNetworkFetcher;
 
@@ -24,6 +26,8 @@ public class MyApplication extends Application {
                 .build();
 
         Fresco.initialize(this, config);
+        Arrays.init(getResources());
+        Colors.init(getResources());
         Drawables.init(getResources());
         appInstance = this;
     }

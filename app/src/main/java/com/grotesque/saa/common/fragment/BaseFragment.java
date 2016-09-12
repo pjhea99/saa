@@ -26,29 +26,22 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract void initOnCreate(Bundle paramBundle);
 
-    public void onActivityCreated(Bundle bundle)
-    {
-
+    public void onActivityCreated(Bundle bundle) {
         super.onActivityCreated(bundle);
         onInitCreated(bundle);
     }
 
-    public void onAttach(Activity paramActivity)
-    {
-
+    public void onAttach(Activity paramActivity) {
         super.onAttach(paramActivity);
         this.mContext = paramActivity;
     }
 
-    public void onCreate(Bundle paramBundle)
-    {
-
+    public void onCreate(Bundle paramBundle) {
         super.onCreate(paramBundle);
         initOnCreate(paramBundle);
     }
 
-    public View onCreateView(LayoutInflater paramLayoutInflater, ViewGroup paramViewGroup, Bundle paramBundle)
-    {
+    public View onCreateView(LayoutInflater paramLayoutInflater, ViewGroup paramViewGroup, Bundle paramBundle) {
         this.mViewGroupContainer = paramViewGroup;
         View view = paramLayoutInflater.inflate(getContentViewResource(), paramViewGroup, false);
         setGlobalFont((ViewGroup)view);
@@ -56,56 +49,42 @@ public abstract class BaseFragment extends Fragment {
         return view;
     }
 
-    public void onDestroy()
-    {
-
+    public void onDestroy() {
         super.onDestroy();
     }
 
-    public void onDestroyView()
-    {
-
+    public void onDestroyView() {
         super.onDestroyView();
         this.mIsFragmentDestroy = true;
     }
 
-    public void onDetach()
-    {
-
+    public void onDetach() {
         super.onDetach();
     }
 
     protected abstract void onInitCreated(Bundle paramBundle);
 
-    public void onPause()
-    {
-
+    public void onPause() {
         super.onPause();
     }
 
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
         this.mIsFragmentDestroy = false;
     }
 
-    public void onStart()
-    {
-
+    public void onStart() {
         super.onStart();
     }
 
-    public void onStop()
-    {
-
+    public void onStop() {
         super.onStop();
     }
 
     protected abstract void registerView(View view);
 
 
-    protected void setGlobalFont(ViewGroup viewgroup)
-    {
+    protected void setGlobalFont(ViewGroup viewgroup) {
         int i = 0;
         while(i < viewgroup.getChildCount())
         {

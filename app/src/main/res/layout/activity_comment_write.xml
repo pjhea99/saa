@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.grotesque.saa.common.actionbar.BaseActionBar android:id="@+id/actionBar" android:layout_width="match_parent" android:layout_height="@dimen/brunch_toolbar_height" custom:leftIcon="@drawable/selector_comm_btn_cancel" custom:rightIcon="@drawable/selector_comm_btn_apply" custom:actionbarBackground="@drawable/comm_bg_home_top"/>
+    <EditText android:id="@+id/edittext_comment" android:layout_width="match_parent" android:layout_height="match_parent" android:padding="18.0dip" android:gravity="left|top" android:lineSpacingExtra="5.0dip" android:imeOptions="flagNoExtractUi" android:textCursorDrawable="@drawable/comment_cursor" android:background="@drawable/selector_comment_text_bg"/>
+</LinearLayout>

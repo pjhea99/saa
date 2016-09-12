@@ -9,6 +9,7 @@ import android.view.View;
 import com.grotesque.saa.R;
 import com.grotesque.saa.common.api.service.StringResponseInterface;
 import com.grotesque.saa.common.toolbar.SearchToolbar;
+import com.grotesque.saa.common.widget.TypefacedTextView;
 import com.grotesque.saa.search.adapter.SearchItemAdapter;
 import com.grotesque.saa.search.data.SearchItem;
 import com.grotesque.saa.util.ParseUtils;
@@ -16,6 +17,7 @@ import com.grotesque.saa.util.ToStringConverterFactory;
 import com.rey.material.widget.ProgressView;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 import retrofit2.Call;
@@ -34,6 +36,7 @@ public class SearchActivity extends Activity implements SearchToolbar.SearchBarL
     private StringResponseInterface mInterface;
     private SearchToolbar mSearchToolbar;
     private RecyclerView mRecyclerView;
+    private TypefacedTextView mEmptyText;
     private SearchItemAdapter mAdapter;
     private ArrayList<SearchItem> mArrayList = new ArrayList<>();
     private HashMap<String, String> mQuery = new HashMap<>();
@@ -61,6 +64,8 @@ public class SearchActivity extends Activity implements SearchToolbar.SearchBarL
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mAdapter);
 
+        mEmptyText = (TypefacedTextView) findViewById(R.id.emptyText);
+
         mProgressView = (ProgressView) findViewById(R.id.loading_progress);
 
         mQuery.put("act", "");
@@ -83,10 +88,17 @@ public class SearchActivity extends Activity implements SearchToolbar.SearchBarL
                 .enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                if(response.body() != null)
+                if(response.body() != null) {
                     mArrayList.clear();
-                    mArrayList.addAll(ParseUtils.parseSearch(response.body()));
+                    ArrayList<?> arrayList = ParseUtils.parseSearch(response.body());
+                    if(arrayList != null) {
+                        mEmptyText.setVisibility(View.GONE);
+                        mArrayList.addAll((Collection<? extends SearchItem>) arrayList);
+                    }else
+                        mEmptyText.setVisibility(View.VISIBLE);
+
                     mAdapter.notifyDataSetChanged();
+                }
                 mProgressView.setVisibility(View.GONE);
             }
 

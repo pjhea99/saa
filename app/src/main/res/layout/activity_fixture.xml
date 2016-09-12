@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" android:orientation="vertical">
+        <com.grotesque.saa.common.actionbar.BaseActionBar android:id="@+id/actionBar" android:layout_width="fill_parent" android:layout_height="@dimen/brunch_toolbar_height" custom:actionbarType="COMMON" custom:actionbarTitle="라운드" custom:leftButtonDescription="@string/cd_toolbar_close"  custom:leftIcon="@drawable/selector_comm_ico_menu" custom:rightIcon="@null" custom:actionbarBackground="@drawable/comm_bg_home_top" />
+        <android.support.v4.view.ViewPager
+            android:id="@+id/main_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
+
+    <include layout="@layout/layout_navdrawer"/>
+
+</android.support.v4.widget.DrawerLayout>
