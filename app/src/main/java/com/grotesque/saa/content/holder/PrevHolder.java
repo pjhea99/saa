@@ -15,6 +15,7 @@ import com.grotesque.saa.common.holder.BaseViewHolder;
 import com.grotesque.saa.content.data.ContentItem;
 import com.grotesque.saa.util.NavigationUtils;
 import com.grotesque.saa.util.ParseUtils;
+import com.grotesque.saa.util.UIUtils;
 
 import java.util.List;
 
@@ -64,6 +65,7 @@ public class PrevHolder extends BaseViewHolder<ContentItem> {
         }else{
             Glide.clear(mImageView);
             mCoverView.setBackgroundColor(Color.parseColor("#4c000000"));
+
             //mCoverView.setBackgroundColor(Color.parseColor("#4c1e90ff"));
         }
         mTitleView.setText(Html.fromHtml(item.get(position).getDocumentData().getTitle()));
