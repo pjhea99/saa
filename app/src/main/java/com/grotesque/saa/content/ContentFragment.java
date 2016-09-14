@@ -158,13 +158,14 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
 
         DocumentList prevDocument = null;
         DocumentList nextDocument = null;
+
         if(mDocuData != null) {
             mCurrentDocument = mDocuData.get(mPosition);
             prevDocument = mPosition + 1 < mDocuData.size() ? mDocuData.get(mPosition + 1) : null;
             nextDocument = mPosition - 1 >= 0 ? mDocuData.get(mPosition - 1) : null;
         }
 
-        REFERER = RetrofitApi.API_BASE_URL + mModuleId +"/"+mCurrentDocument.getDocumentSrl();
+        REFERER = RetrofitApi.API_BASE_URL + mModuleId + "/" + mCurrentDocument.getDocumentSrl();
         mHasImage = mCurrentDocument.hasImg();
 
         mArrayList.add(new ContentItem(mCurrentDocument.getTitle(), null, null, "cover", false));
@@ -215,6 +216,7 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
         Drawable categoryBackground = getResources().getDrawable(R.drawable.view_div_title_line_white);
         String categoryText = StringUtils.convertCategoryName(mCurrentDocument.getCategorySrl());
 
+        /*
         if(mCurrentDocument.getCategorySrl().equals("0") && !mHasImage) {
 
             mActionBarColor = Colors.sBlackColor;
@@ -231,7 +233,11 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
             imageMask.setVisibility(View.GONE);
 
 
-        }else if(mHasImage){
+        }else
+        */
+
+
+        if(mHasImage){
             mActionBarColor = Colors.sWhiteColor;
             setActionBarColor(mActionBarColor);
 
@@ -423,7 +429,7 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
                     }
                 }
                 if(mGetBottomTitle == 0) {
-                    view = view1.findViewById(R.id.txt_coverview_title);
+                    view = view1.findViewById(R.id.ll_title);
                     if(view != null) {
                         mGetBottomTitle = view.getBottom();
                     }
@@ -488,15 +494,16 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
     }
     @Override
     public void onCommentLongClick(final int position) {
+        LOGE(TAG, "position : " + mPosition);
         mCurrentComment = mCommentData.get(position);
-        ArrayList arraylist = new ArrayList();
-        arraylist.add("답변");
+        ArrayList<String> arrayList = new ArrayList<>();
+        arrayList.add("답변");
         if(AccountUtils.getActiveAccountName(mContext).equals(mCurrentComment.getUserId())) {
-            arraylist.add("수정");
-            arraylist.add("삭제");
+            arrayList.add("수정");
+            arrayList.add("삭제");
         }
-        CharSequence acharsequence[] = (CharSequence[])arraylist.toArray(new CharSequence[arraylist.size()]);
-        (new CustomAlertDialog(mContext)).setItems(acharsequence, new DialogInterface.OnClickListener() {
+        CharSequence charsequence[] = arrayList.toArray(new CharSequence[arrayList.size()]);
+        (new CustomAlertDialog(mContext)).setItems(charsequence, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 switch (which){
@@ -512,7 +519,8 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
                                 mModuleId,
                                 mCurrentDocument.getDocumentSrl(),
                                 mCurrentComment.getContent(),
-                                REFERER).enqueue(deleteCallback);
+                                REFERER)
+                                .enqueue(deleteCallback);
                         break;
                 }
             }
@@ -604,7 +612,7 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
             if (resultCode != Activity.RESULT_OK) {
                 return;
             }
-            LOGE(TAG, "onActivityResult");
+            LOGE(TAG, "position : " + mPosition);
             RetrofitApi.getInstance()
                     .submitComment(mModuleId
                             , ""
@@ -628,6 +636,7 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
     }
 
     private final RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
+        private int a = 0;
         @Override
         public void onScrollStateChanged(final RecyclerView recyclerView, final int newState) {
             // code
@@ -656,24 +665,27 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
             if(mHasImage){
                 if(scrolledY > DensityScaleUtil.dipToPixel(mContext, 50f)){
                     mCommentDragView.setBackground(getResources().getDrawable(R.drawable.comm_bg_home_top));
-                    mCommentCountView.setTextColor(getResources().getColor(R.color.black));
+                    mCommentCountView.setTextColor(Colors.sBlackColor);
                 }else{
                     mCommentDragView.setBackgroundColor(getResources().getColor(R.color.brunchTransparent));
-                    mCommentCountView.setTextColor(getResources().getColor(R.color.white));
+                    mCommentCountView.setTextColor(Colors.sWhiteColor);
                 }
             }
-
 
             View firstItem = recyclerView.getChildAt(0);
             if (totalItemCount >= 1 && firstItem != null) {
                 float firstItemHeight = firstItem.getHeight();
                 int l;
-                int a = 0;
+
                 if (firstItem.getY() + firstItemHeight > (float) toolbarHeight)
                     l = firstVisibleItemPosition;
                 else
                     l = firstVisibleItemPosition + 1;
-                if (l == 0) {
+
+                LOGE(TAG, "firstVisibleItemPosition is " + firstVisibleItemPosition);
+                LOGE(TAG, "l is " + l);
+                LOGE(TAG, "a is " + a);
+                if (l == 0) { // 첫번째 아이템이 커버일 경우
                     setActionBarBackgroundResource(0);
                     setActionBarColor(mActionBarColor);
                     if (scrolledY > mCoverLayout.getHeight() - mGetBottomTitle) {
@@ -763,21 +775,21 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
                 } else if (firstVisibleItemPosition + visibleItemCount == totalItemCount) {
                     View view1 = recyclerView.getChildAt(visibleItemCount - 1);
                     if (view1 != null && view1.getBottom() == recyclerView.getBottom()) {
-                        setActionBarColor(getResources().getColor(R.color.black));
+                        setActionBarColor(Colors.sBlackColor);
                         setActionBarBackgroundResource(R.drawable.comm_bg_home_top);
                         setActionBarVisibility(true);
                     }
-                } else if (a < l) {
+                } else if (a <= l) {
                     if(dy > 0) {
                         setActionBarVisibility(false);
                     }else{
-                        setActionBarColor(getResources().getColor(R.color.black));
+                        setActionBarColor(Colors.sBlackColor);
                         setActionBarBackgroundResource(R.drawable.comm_bg_home_top);
                         setActionBarVisibility(true);
                     }
 
                 } else if (a > l) {
-                    setActionBarColor(getResources().getColor(R.color.black));
+                    setActionBarColor(Colors.sBlackColor);
                     setActionBarBackgroundResource(R.drawable.comm_bg_home_top);
                     setActionBarVisibility(true);
                 }
