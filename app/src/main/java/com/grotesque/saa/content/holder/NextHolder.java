@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.grotesque.saa.R;
 import com.grotesque.saa.common.holder.BaseViewHolder;
 import com.grotesque.saa.content.data.ContentItem;
+import com.grotesque.saa.util.FontManager;
 import com.grotesque.saa.util.NavigationUtils;
 import com.grotesque.saa.util.ParseUtils;
 import com.grotesque.saa.util.UIUtils;
@@ -39,6 +40,9 @@ public class NextHolder extends BaseViewHolder<ContentItem> {
         mImageView = (ImageView) itemView.findViewById(R.id.img_next);
         mTitleView = (TextView) itemView.findViewById(R.id.txt_postview_next_post_title);
         mWriterView = (TextView) itemView.findViewById(R.id.txt_postview_next_post_subtitle);
+
+        mTitleView.setTypeface(FontManager.getInstance(context).getTypeface());
+        mWriterView.setTypeface(FontManager.getInstance(context).getTypeface());
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
