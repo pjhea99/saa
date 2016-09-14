@@ -94,7 +94,6 @@ public class RankFragment extends BaseActionBarFragment implements RankPortAdapt
                 .enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
-                            LOGE(TAG, response.body());
                             mArrayList.clear();
                             mArrayList.addAll(ParseUtils.parseRankDaum(Jsoup.parse(response.body())));
                             mLandAdapter.notifyDataSetChanged();

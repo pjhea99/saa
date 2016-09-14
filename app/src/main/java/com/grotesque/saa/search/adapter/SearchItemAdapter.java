@@ -100,7 +100,6 @@ public class SearchItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     RetrofitApi.getInstance().getBoardView(query).enqueue(new Callback<SearchItemContainer>() {
                         @Override
                         public void onResponse(Call<SearchItemContainer> call, Response<SearchItemContainer> response) {
-
                             NavigationUtils.goContentActivity(mContext, mid, response.body().getDocumentList());
                         }
 

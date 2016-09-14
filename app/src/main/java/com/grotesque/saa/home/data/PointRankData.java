@@ -55,9 +55,7 @@ public class PointRankData extends RecentDataDynamicModel{
         mInterface.getPointRanking("point").enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                LOGE(TAG, response.body());
                 if(response.body() != null){
-                    LOGE(TAG, "onResponse");
                     setPointRankList(ParseUtils.parsePointRank(response.body()));
                 }
             }

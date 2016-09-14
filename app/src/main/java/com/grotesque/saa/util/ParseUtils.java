@@ -177,7 +177,6 @@ public class ParseUtils {
                     content.select("td[class^=date").text(),
                     document_srl));
         }
-        LOGE(TAG, "arrayList size : " + arrayList.size());
         return arrayList;
     }
     public static ArrayList<PointRankList> parsePointRank(String html){
@@ -188,11 +187,6 @@ public class ParseUtils {
                     e.select("td.nick").text(),
                     e.select("td.point").text()));
         }
-
-        for(PointRankList p : arrayList){
-            LOGE(TAG, p.getNick() + " " + p.getProfile());
-        }
-
         return arrayList;
     }
 }
