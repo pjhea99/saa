@@ -31,7 +31,7 @@ public class NavigationUtils {
     public static void goContentActivity(Context context, String condition){
         Intent intent = new Intent(context, ContentActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra("condition", condition);
+        intent.putExtra("direction", condition);
         context.startActivity(intent);
     }
     public static void goContentActivity(Context context, String mid,  ArrayList<DocumentList> documentLists, int position){
