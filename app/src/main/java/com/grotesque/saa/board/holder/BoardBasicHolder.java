@@ -108,10 +108,11 @@ public class BoardBasicHolder extends BaseViewHolder<DocumentList> {
         mCountView.setText(String.format(Locale.US, "%s hit", item.get(position).getReadedCount()));
         mUserView.setText(item.get(position).getNickName());
         mCommentCountView.setText(String.format(Locale.US, "+ %s", item.get(position).getCommentCount()));
+
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavigationUtils.goContentActivity(getContext(), mid, (ArrayList<DocumentList>) item, position);
+                NavigationUtils.goContentActivity(getContext(), mid, (ArrayList<DocumentList>) item, position-1);
             }
         });
 

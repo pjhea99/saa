@@ -221,7 +221,7 @@ public class BoardCardHolder extends BaseViewHolder<DocumentList> {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavigationUtils.goContentActivity(getContext(), mid, (ArrayList<DocumentList>) item, position);
+                NavigationUtils.goContentActivity(getContext(), mid, (ArrayList<DocumentList>) item, position-1);
             }
         });
     }
