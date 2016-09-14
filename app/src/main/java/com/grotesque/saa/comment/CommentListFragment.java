@@ -1,7 +1,9 @@
 package com.grotesque.saa.comment;
 
 
+import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +26,7 @@ import com.grotesque.saa.comment.adapter.CommentAdapter;
 import com.grotesque.saa.content.data.CommentContainer;
 import com.grotesque.saa.content.data.CommentList;
 import com.grotesque.saa.home.data.DocumentList;
+import com.grotesque.saa.post.helper.IntentHelper;
 import com.grotesque.saa.util.AccountUtils;
 
 import java.util.ArrayList;
@@ -49,7 +52,7 @@ public class CommentListFragment extends BaseActionBarFragment implements Commen
 
     private HashMap<String, String> mCommentQuery = new HashMap<>();
 
-    private String mMid;
+    private String mModuleId;
     private String REFERER;
 
     private DocumentList mDocument;
@@ -86,10 +89,10 @@ public class CommentListFragment extends BaseActionBarFragment implements Commen
     protected void initOnCreate(Bundle paramBundle) {
         Bundle args = getArguments();
         if(args != null){
-            mMid = args.getString("mid");
+            mModuleId = args.getString("mid");
             mDocument = args.getParcelable("document");
         }
-        REFERER = RetrofitApi.API_BASE_URL + mMid +"/"+mDocument.getDocumentSrl();
+        REFERER = RetrofitApi.API_BASE_URL + mModuleId +"/"+mDocument.getDocumentSrl();
     }
 
     @Override
@@ -170,32 +173,32 @@ public class CommentListFragment extends BaseActionBarFragment implements Commen
         switch (type){
             case CommentBar.SUBMIT:
                 RetrofitApi.getInstance()
-                        .submitComment(mMid
+                        .submitComment(mModuleId
                                 , ""
                                 , mDocument.getDocumentSrl()
                                 , ""
                                 , content
-                                , RetrofitApi.API_BASE_URL + mMid +"/"+mDocument.getDocumentSrl())
+                                , RetrofitApi.API_BASE_URL + mModuleId +"/"+mDocument.getDocumentSrl())
                         .enqueue(commentCallback);
                 break;
             case CommentBar.REPLY:
                 RetrofitApi.getInstance()
-                        .submitComment(mMid
+                        .submitComment(mModuleId
                                 , mComment.getCommentSrl()
                                 , mDocument.getDocumentSrl()
                                 , ""
                                 , content
-                                , RetrofitApi.API_BASE_URL + mMid +"/"+mDocument.getDocumentSrl())
+                                , RetrofitApi.API_BASE_URL + mModuleId +"/"+mDocument.getDocumentSrl())
                         .enqueue(commentCallback);
                 break;
             case CommentBar.EDIT:
                 RetrofitApi.getInstance()
-                        .submitComment(mMid
+                        .submitComment(mModuleId
                                 , ""
                                 , mDocument.getDocumentSrl()
                                 , mComment.getCommentSrl()
                                 , content
-                                , RetrofitApi.API_BASE_URL + mMid +"/"+mDocument.getDocumentSrl())
+                                , RetrofitApi.API_BASE_URL + mModuleId +"/"+mDocument.getDocumentSrl())
                         .enqueue(commentCallback);
                 break;
         }
@@ -233,12 +236,11 @@ public class CommentListFragment extends BaseActionBarFragment implements Commen
                         mCommentBar.setRightButtonText(CommentBar.REPLY);
                         break;
                     case 1:
-                        mCommentBar.setRightButtonText(CommentBar.EDIT);
-                        mCommentBar.setText(mCommentList.get(position).getContent());
+                        IntentHelper.commentWriteIntent(getActivity(), mComment.getContent());
                         break;
                     case 2:
                         RetrofitApi.getInstance().procBoardDeleteComment(
-                                mMid,
+                                mModuleId,
                                 mDocument.getDocumentSrl(),
                                 mComment.getContent(),
                                 REFERER).enqueue(deleteCallback);
@@ -304,4 +306,22 @@ public class CommentListFragment extends BaseActionBarFragment implements Commen
 
         }
     };
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == IntentHelper.COMMENT_WRITE) {
+            if (resultCode != Activity.RESULT_OK) {
+                return;
+            }
+            LOGE(TAG, "onActivityResult");
+            RetrofitApi.getInstance()
+                    .submitComment(mModuleId
+                            , ""
+                            , mDocument.getDocumentSrl()
+                            , mComment.getCommentSrl()
+                            , data.getExtras().getString("comment")
+                            , RetrofitApi.API_BASE_URL + mModuleId +"/"+ mDocument.getDocumentSrl())
+                    .enqueue(commentCallback);
+        }
+    }
 }
