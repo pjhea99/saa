@@ -148,7 +148,7 @@ public class BoardCardHolder extends BaseViewHolder<DocumentList> {
 
         if(item.get(position).hasImg()){
             mImageTitleView.setText(Html.fromHtml(title));
-            ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(ParseUtils.parseImgUrl(item.get(position).getContent())))
+            ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(ParseUtils.parseCardImgUrl(item.get(position).getContent())))
                     .build();
             DraweeController draweeController = Fresco.newDraweeControllerBuilder()
                     .setImageRequest(request)
