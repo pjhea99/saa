@@ -16,6 +16,7 @@ import com.grotesque.saa.content.data.ContentItem;
 import com.grotesque.saa.util.FontManager;
 import com.grotesque.saa.util.NavigationUtils;
 import com.grotesque.saa.util.ParseUtils;
+import com.grotesque.saa.util.StringUtils;
 import com.grotesque.saa.util.UIUtils;
 
 import java.util.List;
@@ -62,7 +63,14 @@ public class PrevHolder extends BaseViewHolder<ContentItem> {
         if(item.get(position).getDocumentData().hasImg()){
             Glide
                     .with(mImageView.getContext())
-                    .load(ParseUtils.parseImgUrl(item.get(position).getDocumentData().getContent()))
+                    .load(ParseUtils.parseCardImgUrl(item.get(position).getDocumentData().getContent()))
+                    .asBitmap()
+                    .into(mImageView);
+            mCoverView.setBackgroundColor(Color.parseColor("#4c000000"));
+        }else if(item.get(position).getDocumentData().hasYoutube()){
+            Glide
+                    .with(mImageView.getContext())
+                    .load("http://img.youtube.com/vi/"+ StringUtils.getYoutubeId(item.get(position).getDocumentData().getContent()) + "/0.jpg")
                     .asBitmap()
                     .into(mImageView);
             mCoverView.setBackgroundColor(Color.parseColor("#4c000000"));
