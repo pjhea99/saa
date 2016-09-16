@@ -240,7 +240,7 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
                     .build();
             mCoverImageView.setHierarchy(gdh);
 
-            ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(ParseUtils.parseImgUrl(mCurrentDocument.getContent())))
+            ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(ParseUtils.parseCardImgUrl(mCurrentDocument.getContent())))
                     .build();
             DraweeController draweeController = Fresco.newDraweeControllerBuilder()
                     .setImageRequest(request)
