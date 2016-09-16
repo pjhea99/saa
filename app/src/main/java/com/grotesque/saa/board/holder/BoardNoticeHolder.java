@@ -64,18 +64,12 @@ public class BoardNoticeHolder extends BaseViewHolder<DocumentList>  {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavigationUtils.goContentActivity(getContext(), mid, (ArrayList<DocumentList>) item, position);
+                NavigationUtils.goContentActivity(getContext(), mid, (ArrayList<DocumentList>) item, position-1);
             }
         });
         String title = item.get(position).getTitle();
         mTitleView.setText(Html.fromHtml(title));
         mTimeView.setText(StringUtils.convertDate(item.get(position).getRegdate()));
         mUserView.setText(item.get(position).getNickName());
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavigationUtils.goContentActivity(getContext(), mid, (ArrayList<DocumentList>) item, position);
-            }
-        });
     }
 }
