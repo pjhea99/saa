@@ -468,7 +468,16 @@ public class BoardFragment extends BaseActionBarFragment implements SwipeRefresh
                         mAdapter.notifyItemRemoved(mArrayList.size());
                     }
 
-                    mArrayList.addAll(response.body().getDocumentList());
+                    for (DocumentList d : response.body().getDocumentList()) {
+                        boolean equal = false;
+                        for (DocumentList dd : mArrayList) {
+                            if(dd.getDocumentSrl().equals(d.getDocumentSrl()))
+                                equal = true;
+                        }
+                        if(!equal)
+                            mArrayList.add(d);
+                    }
+
                     setAdapterItems(mArrayList);
                     mAdapter.notifyDataSetChanged();
                     loading = false;
