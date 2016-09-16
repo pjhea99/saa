@@ -5,7 +5,6 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
@@ -16,7 +15,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +37,8 @@ import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.google.gson.JsonObject;
 import com.grotesque.saa.R;
+import com.grotesque.saa.comment.adapter.NewCommentAdapter;
+import com.grotesque.saa.comment.data.CommentData;
 import com.grotesque.saa.common.Colors;
 import com.grotesque.saa.common.Drawables;
 import com.grotesque.saa.common.adapter.MultiItemAdapter;
@@ -77,7 +77,7 @@ import static com.grotesque.saa.util.LogUtils.makeLogTag;
 /**
  * Created by 경환 on 2016-04-04.
  */
-public class ContentFragment extends BaseActionBarFragment implements CommentBar.OnCommentBarListener, CommentAdapter.Listener, SwipeRefreshLayout.OnRefreshListener {
+public class ContentFragment extends BaseActionBarFragment implements CommentBar.OnCommentBarListener, CommentAdapter.Listener, SwipeRefreshLayout.OnRefreshListener, NewCommentAdapter.Listener {
     private static final String TAG = makeLogTag(ContentFragment.class);
 
     private RelativeLayout mCoverLayout;
@@ -121,9 +121,12 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
 
     private CommentList mCurrentComment;
     private DocumentList mCurrentDocument;
-    private ArrayList<CommentList> mCommentData = new ArrayList<>();
-    private ArrayList<DocumentList> mDocuData;
-    private ArrayList<ContentItem> mArrayList = new ArrayList<>();
+
+    private ArrayList<CommentList> mCommentLists = new ArrayList<>();
+    private ArrayList<CommentData> mCommentDataList = new ArrayList<>();
+
+    private ArrayList<DocumentList> mDocumentLists;
+    private ArrayList<ContentItem> mContentItems = new ArrayList<>();
     private CommentAdapter mCommentAdapter;
     private NewContentAdapter mContentAdapter;
 
@@ -149,7 +152,7 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
         if(args != null){
             mModuleId = args.getString("mid");
             mCurrentDocument = args.getParcelable("array");
-            mDocuData = args.getParcelableArrayList("arrayList");
+            mDocumentLists = args.getParcelableArrayList("arrayList");
             mPosition = args.getInt("position");
         }
 
@@ -159,30 +162,30 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
         DocumentList prevDocument = null;
         DocumentList nextDocument = null;
 
-        if(mDocuData != null) {
-            mCurrentDocument = mDocuData.get(mPosition);
-            prevDocument = mPosition + 1 < mDocuData.size() ? mDocuData.get(mPosition + 1) : null;
-            nextDocument = mPosition - 1 >= 0 ? mDocuData.get(mPosition - 1) : null;
+        if(mDocumentLists != null) {
+            mCurrentDocument = mDocumentLists.get(mPosition);
+            prevDocument = mPosition + 1 < mDocumentLists.size() ? mDocumentLists.get(mPosition + 1) : null;
+            nextDocument = mPosition - 1 >= 0 ? mDocumentLists.get(mPosition - 1) : null;
         }
 
         REFERER = RetrofitApi.API_BASE_URL + mModuleId + "/" + mCurrentDocument.getDocumentSrl();
         mHasImage = mCurrentDocument.hasImg();
 
-        mArrayList.add(new ContentItem(mCurrentDocument.getTitle(), null, null, "cover", false));
-        mArrayList.add(new ContentItem("divider", null));
-        mArrayList.addAll(ParseUtils.parseContent(mCurrentDocument.getContent()));
-        mArrayList.add(new ContentItem(mCurrentDocument.getTags(), null, null, "tags", false));
+        mContentItems.add(new ContentItem(mCurrentDocument.getTitle(), null, null, "cover", false));
+        mContentItems.add(new ContentItem("divider", null));
+        mContentItems.addAll(ParseUtils.parseContent(mCurrentDocument.getContent()));
+        mContentItems.add(new ContentItem(mCurrentDocument.getTags(), null, null, "tags", false));
 
         if(prevDocument != null)
-            mArrayList.add(new ContentItem("prev", prevDocument));
+            mContentItems.add(new ContentItem("prev", prevDocument));
         if(nextDocument != null)
-            mArrayList.add(new ContentItem("next", nextDocument));
+            mContentItems.add(new ContentItem("next", nextDocument));
 
     }
 
     @Override
     protected void onInitCreated(Bundle paramBundle) {
-        setAdapterItems(mArrayList);
+        setAdapterItems(mContentItems);
         mCommentQuery.put("act", "dispBoardContentCommentList");
         mCommentQuery.put("document_srl", mCurrentDocument.getDocumentSrl());
         mCommentQuery.put("cpage", "1#comment");
@@ -209,33 +212,13 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
         TextView textTitle = (TextView) view.findViewById(R.id.txt_coverview_title);
         TextView textWriter = (TextView) view.findViewById(R.id.txt_postview_writer_name);
         TextView textTime = (TextView) view.findViewById(R.id.txt_postview_write_time);
+        ImageView imageBy = (ImageView) view.findViewById(R.id.img_writer_by);
 
         View imageMask = view.findViewById(R.id.view_iv_photo_mask);
 
         int categoryColor = UIUtils.getCategoryColor(mCurrentDocument.getCategorySrl());
         Drawable categoryBackground = getResources().getDrawable(R.drawable.view_div_title_line_white);
         String categoryText = StringUtils.convertCategoryName(mCurrentDocument.getCategorySrl());
-
-        /*
-        if(mCurrentDocument.getCategorySrl().equals("0") && !mHasImage) {
-
-            mActionBarColor = Colors.sBlackColor;
-            setActionBarColor(mActionBarColor);
-
-            mCoverLayout.setBackgroundColor(Colors.sWhiteColor);
-            mCoverLayout.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, (mHeightPixels - DensityScaleUtil.dipToPixel(getActivity(), 50F)) / 2));
-
-            if (categoryBackground != null) {
-                categoryBackground.setColorFilter(Colors.sMintColor, PorterDuff.Mode.SRC_IN);
-            }
-
-            mCoverImageView.setVisibility(View.GONE);
-            imageMask.setVisibility(View.GONE);
-
-
-        }else
-        */
-
 
         if(mHasImage){
             mActionBarColor = Colors.sWhiteColor;
@@ -287,6 +270,8 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
             textCategory.setTextColor(Colors.sWhiteColor);
             textWriter.setTextColor(Colors.sWhiteColor);
             textTitle.setTextColor(Colors.sWhiteColor);
+            textTime.setTextColor(Colors.sWhiteColor);
+            imageBy.setImageResource(R.drawable.comm_ico_view_by02);
         }
 
 
@@ -336,7 +321,7 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
         mSwipeLayout.setProgressBackgroundColorSchemeResource(R.color.brunch_mint);
         mSwipeLayout.setColorSchemeResources(android.R.color.white);
 
-        mCommentAdapter = new CommentAdapter(getActivity(), mCommentData, this);
+        mCommentAdapter = new CommentAdapter(getActivity(), mCommentLists, this);
         mCommentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mCommentRecyclerView.setAdapter(mCommentAdapter);
 
@@ -381,24 +366,29 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
                 }
             }
         }, timeBetweenChecks);
-    };
-    private void onLoadCommentData(){
+    }
+
+    private void onLoadCommentData() {
         Call<CommentContainer> call = RetrofitApi.getInstance().getCommentList(mCommentQuery);
         call.enqueue(new Callback<CommentContainer>() {
             @Override
             public void onResponse(Call<CommentContainer> call, Response<CommentContainer> response) {
-                if(response.code() == 200) {
-                    mCommentData.addAll(response.body().getCommentList());
-                    if(mCommentData.size() == 0)
+                if (response.code() == 200) {
+                    mCommentLists.addAll(response.body().getCommentList());
+
+                    if (mCommentLists.size() == 0)
                         mEmptyView.setVisibility(View.VISIBLE);
                     else
                         mEmptyView.setVisibility(View.GONE);
-                    mCommentCountView.setText(String.format(Locale.KOREA, "댓글 %d", mCommentData.size()));
+
+                    mCommentCountView.setText(String.format(Locale.KOREA, "댓글 %d", mCommentLists.size()));
                     mCommentAdapter.notifyDataSetChanged();
 
-                    if(mTotalCommentPage > 1 && mTotalCommentPage > mCurrentCommentPage){
+                    if (mTotalCommentPage > 1 && mTotalCommentPage > mCurrentCommentPage) {
                         mCommentQuery.put("cpage", (++mCurrentCommentPage) + "#comment");
                         onLoadCommentData();
+                    } else {
+                        mCommentRecyclerView.scrollToPosition(mCommentLists.size() - 1 < 0 ?  0 : mCommentLists.size() - 1);
                     }
                     mSwipeLayout.setRefreshing(false);
                 }
@@ -406,12 +396,12 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
 
             @Override
             public void onFailure(Call<CommentContainer> call, Throwable t) {
-                LOGE(TAG, "onFailure : " + t);
+                Toast.makeText(mContext, "서버 연결이 지연되고 있습니다.", Toast.LENGTH_LONG).show();
             }
 
         });
     }
-    public int getScrollY(){
+    public int getScrollY() {
         int i1;
         int j1 = 0;
         int firstVisibleItemPosition;
@@ -494,8 +484,7 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
     }
     @Override
     public void onCommentLongClick(final int position) {
-        LOGE(TAG, "position : " + mPosition);
-        mCurrentComment = mCommentData.get(position);
+        mCurrentComment = mCommentLists.get(position);
         ArrayList<String> arrayList = new ArrayList<>();
         arrayList.add("답변");
         if(AccountUtils.getActiveAccountName(mContext).equals(mCurrentComment.getUserId())) {
@@ -526,6 +515,17 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
             }
         }).show();
     }
+
+    @Override
+    public void onReplyClick(int position) {
+        ArrayList<CommentData> arrayList = mCommentDataList.get(position).getCommentDatas();
+        for(CommentData c : arrayList){
+            mCommentDataList.add(++position, c);
+        }
+        mCommentAdapter.notifyDataSetChanged();
+        mRecyclerView.scrollToPosition(position);
+    }
+
     @Override
     public void onCommentClick() {
 
@@ -631,7 +631,7 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
         mCommentQuery.put("document_srl", mCurrentDocument.getDocumentSrl());
         mCommentQuery.put("cpage", "1#comment");
         mTotalCommentPage =  Integer.parseInt(mCurrentDocument.getCommentCount()) / 50  + 1;
-        mCommentData.clear();
+        mCommentLists.clear();
         onLoadCommentData();
     }
 
@@ -682,9 +682,6 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
                 else
                     l = firstVisibleItemPosition + 1;
 
-                LOGE(TAG, "firstVisibleItemPosition is " + firstVisibleItemPosition);
-                LOGE(TAG, "l is " + l);
-                LOGE(TAG, "a is " + a);
                 if (l == 0) { // 첫번째 아이템이 커버일 경우
                     setActionBarBackgroundResource(0);
                     setActionBarColor(mActionBarColor);
@@ -806,7 +803,7 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
                         , Toast.LENGTH_LONG)
                         .show();
                 mCommentBar.clearBar();
-                mCommentData.clear();
+                mCommentLists.clear();
                 onLoadCommentData();
             }else{
                 Toast.makeText(mContext
@@ -831,7 +828,7 @@ public class ContentFragment extends BaseActionBarFragment implements CommentBar
                             , "댓글 삭제"
                             , Toast.LENGTH_LONG)
                             .show();
-                    mCommentData.clear();
+                    mCommentLists.clear();
                     onLoadCommentData();
 
                 }
