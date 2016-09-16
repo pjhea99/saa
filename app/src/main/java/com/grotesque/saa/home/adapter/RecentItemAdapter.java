@@ -27,6 +27,7 @@ import com.grotesque.saa.home.data.DocumentList;
 import com.grotesque.saa.util.FontManager;
 import com.grotesque.saa.util.NavigationUtils;
 import com.grotesque.saa.util.ParseUtils;
+import com.grotesque.saa.util.StringUtils;
 
 import java.util.ArrayList;
 
@@ -116,7 +117,7 @@ public class RecentItemAdapter extends RecyclerView.Adapter<RecentItemAdapter.Vi
             vh.mColorCover.setVisibility(View.GONE);
             vh.mSubTitleView.setVisibility(View.GONE);
 
-            ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(ParseUtils.parseImgUrl(mArrayList.get(position).getContent())))
+            ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(ParseUtils.parseCardImgUrl(mArrayList.get(position).getContent())))
                     .build();
             DraweeController draweeController = Fresco.newDraweeControllerBuilder()
                     .setImageRequest(request)
@@ -124,6 +125,22 @@ public class RecentItemAdapter extends RecyclerView.Adapter<RecentItemAdapter.Vi
                     .build();
             vh.mImageView.setController(draweeController);
 
+            vh.mTitleView.setTextColor(Color.parseColor("#FFFFFFFF"));
+            vh.mWriterView.setTextColor(Color.parseColor("#99FFFFFF"));
+            vh.mByView.setTextColor(Color.parseColor("#99FFFFFF"));
+            vh.mCategoryView.setTextColor(ContextCompat.getColorStateList(mContext, R.color.white));
+        }else if(mArrayList.get(position).hasYoutube()){
+            vh.mImageCoverLayout.setVisibility(View.VISIBLE);
+            vh.mColorCover.setVisibility(View.GONE);
+            vh.mSubTitleView.setVisibility(View.GONE);
+
+            ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse("http://img.youtube.com/vi/"+ StringUtils.getYoutubeId(mArrayList.get(position).getContent()) + "/0.jpg"))
+                    .build();
+            DraweeController draweeController = Fresco.newDraweeControllerBuilder()
+                    .setImageRequest(request)
+                    .setOldController(vh.mImageView.getController())
+                    .build();
+            vh.mImageView.setController(draweeController);
 
             vh.mTitleView.setTextColor(Color.parseColor("#FFFFFFFF"));
             vh.mWriterView.setTextColor(Color.parseColor("#99FFFFFF"));
